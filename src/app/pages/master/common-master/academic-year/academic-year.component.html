@@ -1,0 +1,143 @@
+<div class="container-fluid ">
+    <div class="row">
+        <div class="col-xl-6">
+            <!-- <app-page-title title="ACADEMIC YEAR"></app-page-title> -->
+            <div class="mb-2 pageHeading">
+                <h4 class="">Academic Year</h4>
+              </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="text-right my-auto ">
+                <button type="button" (click)="openModal(scheme)" class="btn btn-success btn-sm mb-2 ">
+                    <i class="mdi mdi-plus  mb-3"></i>Add Academic Year
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-2">
+        <div class="card-body">
+
+            <table id="academic" class=" table table-bordered mx-auto" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Short Name</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr *ngFor="let batchList of BatchArr;let i = index">
+                      <td>{{i + 1}}</td>
+                      <td>{{batchList.name}}</td>
+                      <td>{{batchList.shortName}}</td>
+                      <td>{{batchList.fromDate}}</td>
+                      <td>{{batchList.toDate}}</td>
+
+                      <td>
+                        <i class="fas fa-edit  text-success mr-2" (click)="editBatch(batchList, scheme)"></i>
+                        <i class="fa fa-trash text-danger" aria-hidden="true" (click)="openModall(dModal,batchList.id)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-template #scheme let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Academic Year</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]=" BatchForm" autocomplete="off"(ngSubmit)="addYear(modal)">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group ">
+                        <label for="name">Name</label>
+                        <input class="form-control" id="name" formControlName="name"  type="text" class="form-control"
+                            placeholder="Name" [(ngModel)]="batchObj.name"
+                            [ngClass]="{ 'is-invalid': BatchSubmitted && f.name.errors || f.name.invalid && (f.name.dirty || f.name.touched)}">
+                        <div *ngIf="BatchSubmitted && f.name.errors || f.name.invalid && (f.name.dirty || f.name.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="f.name.errors.required">Required</div>
+                            <div *ngIf="f.name.errors.pattern">
+                                Name must be a number
+                              </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group ">
+                        <label for="Short name">Short Name</label>
+                        <input class="form-control" id="shortName" formControlName="shortName" [(ngModel)]="batchObj.shortName" type="text"
+                            class="form-control" placeholder="Short Name"
+                            [ngClass]="{ 'is-invalid': BatchSubmitted && f.shortName.errors || f.shortName.invalid && (f.shortName.dirty || f.shortName.touched)}">
+                        <div *ngIf="BatchSubmitted && f.shortName.errors || f.shortName.invalid && (f.shortName.dirty || f.shortName.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="f.shortName.errors.required">Required</div>
+                            <div *ngIf="f.shortName.errors.pattern">
+                                Short Name must be a number
+                              </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="From Date">From Date</label>
+                        <input class="form-control" ngbDatepicker
+                        #fromDate="ngbDatepicker" (click)="fromDate.toggle()" id="fromDate" formControlName="fromDate" [(ngModel)]="batchObj.fromDate" 
+                            class="form-control" placeholder="From Date"
+                            [ngClass]="{ 'is-invalid': BatchSubmitted && f.fromDate.errors || f.fromDate.invalid && (f.fromDate.dirty || f.fromDate.touched)}">
+                        <div *ngIf="BatchSubmitted && f.fromDate.errors || f.fromDate.invalid && (f.fromDate.dirty || f.fromDate.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="f.fromDate.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="To Date">To Date</label>
+                        <input class="form-control" (click)="toDate.toggle()" id="To Date" formControlName="toDate" [(ngModel)]="batchObj.toDate"
+                            class="form-control" placeholder="To Date" ngbDatepicker
+                            #toDate="ngbDatepicker"
+                            [ngClass]="{ 'is-invalid': BatchSubmitted && f.toDate.errors || f.toDate.invalid && (f.toDate.dirty || f.toDate.touched)}">
+                        <div *ngIf="BatchSubmitted && f.toDate.errors || f.toDate.invalid && (f.toDate.dirty || f.toDate.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="f.toDate.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="text-right">
+                <button type="submit" class="btn btn-sm btn-primary mb-2">{{buttonText}}</button>
+            </div>
+        </form>
+    </div>
+</ng-template>
+<ng-template #dModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Confirm Delete</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div>
+      <h6 class="ml-3 mt-2">Are you sure want to delete this ?</h6>
+      <div class="text-right mt-2 mr-2">
+        <button type="button" class="btn btn-sm btn-primary mb-2 " (click)="deleteData(modal)">Yes</button>
+      </div>
+    </div>
+  </ng-template>
+
+
+ 

@@ -1,0 +1,110 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-6">
+        <!-- <app-page-title title="Location"></app-page-title> -->
+        <div class="mb-2 pageHeading">
+          <h4 class=""> Location</h4>
+        </div>
+      </div>
+      <div class="col-xl-6">
+        <div class="text-right my-auto mb-4">
+          <button type="button" class="btn btn-success btn-sm mb-2" (click)="openlocation(location)">
+            <i class="mdi mdi-plus mr-1"></i> Add Location
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class=" card-2">
+      <div class="card-body">
+        <table id="location" class="table table-bordered">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Location</th>
+              <th>District</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody >
+            <tr *ngFor="let locationList of locationArr;let i = index">
+              <td>{{i+1}}</td>
+              <td>{{locationList.locationName}}</td>
+              <td>{{locationList.cityName}}</td> 
+             
+              <td class="">
+                <i class="fas fa-edit  text-success mr-2" (click)="editLocation(locationList, location)"></i>
+                <i class="fa fa-trash text-danger" aria-hidden="true" (click)="openModal(dModal,locationList.id)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #location let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Location</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" id="batch">
+      <form [formGroup]="locationform" autocomplete="off" (ngSubmit)="addLocation(modal)">
+        
+        <div class="row">
+          <div class="col-sm-12"> 
+            <div class="form-group ">
+              <label for="District">District</label>
+              <ng-select [items]="cityArr"  id="District" type="text" placeholder="Choose"  bindLabel="name" bindValue="id"
+                formControlName="cityId" [(ngModel)]="locationObj.cityId"
+                [ngClass]="{ 'is-invalid': locationSubmitted && b.cityId.errors || b.cityId.invalid && (b.cityId.dirty || b.cityId.touched)}">
+              </ng-select>
+              <div
+                *ngIf="locationSubmitted && b.cityId.errors || b.cityId.invalid && (b.cityId.dirty || b.cityId.touched)"
+                class="invalid-feedback"> 
+                <div *ngIf="b.cityId.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group ">
+              <label for="location">Location</label>
+              <input class="form-control" formControlName="locationName" bindLabel="locationName" bindValue="id" id="location"
+                placeholder="Location " [(ngModel)]="locationObj.locationName"
+                [ngClass]="{ 'is-invalid': locationSubmitted && b.locationName.errors || b.locationName.invalid && (b.locationName.dirty || b.locationName.touched)}">
+              <div
+                *ngIf="locationSubmitted && b.locationName.errors || b.locationName.invalid && (b.locationName.dirty || b.locationName.touched)"
+                class="invalid-feedback">
+                <div *ngIf="b.locationName.errors.required">Required</div>
+              </div>
+            </div>
+          </div> 
+        </div>  
+
+
+
+  
+        <div class="text-right">
+          <button type="submit" class="btn btn-sm btn-primary mb-2">{{buttonText}}</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  <ng-template #dModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Confirm Delete</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div>
+      <h6 class="ml-3 mt-2">Are you sure want to delete this ?</h6>
+      <div class="text-right mt-2 mr-2">
+       
+        <button type="button" class="btn btn-primary btn-sm ml-2 mb-3"  (click)="deleteData(modal)">Yes</button>
+      </div>
+    </div>
+  </ng-template>

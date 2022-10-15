@@ -1,0 +1,130 @@
+<div class="container-fluid">
+  <div class="mb-3 pageHeading">
+    <h4 class="">Standard Fee</h4>
+  </div>
+  <form [formGroup]="mainForm" (ngSubmit)="submit()">
+    <div class="row mt-1">
+      <div class="col-xl-12">
+        <div class="card-2  cardBorder">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group ">
+                  <label >Standard</label>
+                  <ng-select [items]="standardArr" formControlName="stdId" id="stdId" bindLabel="name" bindValue="id"
+                    placeholder="Choose" (change)="getStandardFeeList($event)"
+                    [ngClass]="{ 'is-invalid': submitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)}">
+                  </ng-select>
+                  <div *ngIf="submitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="f.stdId.errors.required">Required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4 ">
+                <div class="">
+                  
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 text-right">
+        <button *ngIf="enableFeeCard" type="button" class="btn btn-success btn-sm" (click)="addFee()">
+          <i class="mdi mdi-plus mr-1"></i> Add 
+        </button>
+      </div>
+    </div>
+
+    <perfect-scrollbar *ngIf="enableFeeCard" class="cardHt" [config]="{suppressScrollX: false, suppressScrollY: true}">
+      <div class="d-inline-flex" formArrayName="feeDtlList">
+        <div class="repeat inner-repeater mr-3 mt-3 mb-4"
+          *ngFor="let feeDtlObj of feeCompoLists.controls; let i = index;" [formGroupName]="i">
+          <perfect-scrollbar class="card-2  cardBorder inner" [config]="configData">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-sm-8">
+                  <div class="form-group  ml-5">
+                    <label>Fee</label>
+                    <ng-select [items]="feeArr" formControlName="feeId" bindLabel="feesName" bindValue="id"
+                      placeholder="Choose" (change)="selectFeeComponents($event,i,feeDtlObj)"
+                      [ngClass]="{ 'is-invalid': submitted && feeCompoLists.controls[i].get('feeId').errors || feeCompoLists.controls[i].get('feeId').invalid && (feeCompoLists.controls[i].get('feeId').dirty || feeCompoLists.controls[i].get('feeId').touched)}">
+                    </ng-select>
+                    <div
+                      *ngIf="submitted && feeCompoLists.controls[i].get('feeId').errors || feeCompoLists.controls[i].get('feeId').invalid && (feeCompoLists.controls[i].get('feeId').dirty || feeCompoLists.controls[i].get('feeId').touched)"
+                      class="invalid-feedback">
+                      <div *ngIf="feeCompoLists.controls[i].get('feeId').errors.required">
+                        Required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3 mt-3">
+                  <i class="fa fa-trash text-danger ml-2 mt-4" aria-hidden="true" (click)="deleteRow(i, feeDtlObj)"></i>
+                </div>
+                <div class="col-12" *ngIf="feeDtlObj.value.enableCard">
+                  <table class="table mx-auto" style="width:100%" formArrayName="feeCompList">
+                    <thead>
+                      <tr>
+                        <th class="">Component</th>
+                        <th class="">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="noBorder" [formGroupName]="j"
+                        *ngFor="let feelists of feeDtlObj.controls.feeCompList.controls; let j = index">
+                        <td>
+                          <div>
+                            <input formControlName="name" class="form-control" placeholder="Choose" readonly>
+                          </div>
+                        </td>
+                        <td>
+                          <div *ngIf="feeDtlObj" class="form-group required">
+                            <input type="number" class="form-control mb-2" placeholder="Amount" formControlName="amount"
+                              (keyup)="calculate(feeDtlObj,i)"
+                              [ngClass]="{ 'is-invalid': submitted && feeDtlObj.controls.feeCompList.controls[j].get('amount').errors || feeDtlObj.controls.feeCompList.controls[j].get('amount').invalid && (feeDtlObj.controls.feeCompList.controls[j].get('amount').dirty || feeDtlObj.controls.feeCompList.controls[j].get('amount').touched)}">
+                            <div
+                              *ngIf="submitted && feeDtlObj.controls.feeCompList.controls[j].get('amount').errors || feeDtlObj.controls.feeCompList.controls[j].get('amount').invalid && (feeDtlObj.controls.feeCompList.controls[j].get('amount').dirty || feeDtlObj.controls.feeCompList.controls[j].get('amount').touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="feeDtlObj.controls.feeCompList.controls[j].get('amount').errors.required">
+                                Required</div>
+                            </div>
+                          </div>
+                          <!-- <div *ngIf="feeDtlObj.amount == !null ">
+  kaviya
+  </div> -->
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="row total">
+                    <div class="col-4"></div>
+                    <div class="col-3"></div>
+                    <div class="col-5">
+                      <div class="has-float-label mr-3">
+                        <input readonly class="form-control" placeholder="Total" formControlName="total">
+                        <label class="col-form-label ">Total</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </perfect-scrollbar>
+        </div>
+      </div>
+    </perfect-scrollbar>
+
+    <div class="row" *ngIf="enableFeeCard">
+      <div class="col-4"> </div>
+      <div class="col-4"> </div>
+      <div class="col-4 text-right mb-4 mt-2">
+        <button type="submit" class="btn btn-primary btn-md  ml-auto " *ngIf="enableFeeCard">Submit</button>
+      </div>
+    </div>
+
+  </form>
+</div>

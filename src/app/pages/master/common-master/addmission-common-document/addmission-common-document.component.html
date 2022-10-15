@@ -1,0 +1,84 @@
+<div class="container-fluid">  
+    <!-- <div class="text-right mb-2"> -->
+      <div class="row">
+        <div class="col-xl-6">
+          <!-- <app-page-title title="Admission Common Document"></app-page-title> -->
+          <div class="mb-2 pageHeading">
+            <h4 class="">Admission Common Document</h4>
+          </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="text-right my-auto ">
+              <button type="button" (click)="openModal(myModal)" class="btn btn-success btn-sm mb-2">
+                <i class="mdi mdi-plus mr-1 mb-3"></i>Add Document
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+    <div class=" card-2 ">
+      <div class="card-body">
+      
+        <table id="document" class="table table-bordered">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Admission Common Document</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody >
+            <tr *ngFor="let documentList of documentArr;let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{documentList.documentName}}</td>
+              <td>
+                <i class="fa fa-trash text-danger" aria-hidden="true" (click)="openModall(dModal,documentList.id)"></i>              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #myModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Document Name</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" id="myModal">
+      <form [formGroup]="documentForm" autocomplete="off" (ngSubmit)="adddocument(modal)">
+        <div class="form-group ">
+          <label for="name">Document Name</label>
+          <ng-select [items]="doctArr" formControlName="documentId" type="text"
+          placeholder="Choose" bindLabel="name" bindValue="id"
+          id="documentId"
+          [ngClass]="{ 'is-invalid': documentSubmitted && f.documentId.errors || f.documentId.invalid && (f.documentId.dirty || f.documentId.touched)}">
+      </ng-select>
+          <div *ngIf="documentSubmitted && f.documentId.errors || f.documentId.invalid && (f.documentId.dirty || f.documentId.touched)"
+            class="invalid-feedback">
+            <div *ngIf="f.documentId.errors.required">Required</div>
+          </div>
+        </div>
+        <div class="text-right mt-2">
+          <button type="submit" class="btn btn-sm btn-primary mb-2">{{buttonText}}</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  <ng-template #dModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Confirm Delete</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div>
+      <h6 class="ml-3 mt-2">Are you sure want to delete this ?</h6>
+      <div class="text-right mt-2 mr-2">
+        <!-- <button type="button" class="btn btn-danger  mb-3" (click)="modal.dismiss('Cross click')">No</button> -->
+        <button type="button" class="btn btn-primary btn-sm ml-2 mb-3" (click)="deleteDocument(modal)">Yes</button>
+      </div>
+    </div>
+  </ng-template>

@@ -1,0 +1,88 @@
+.nav-tabs{
+    border-bottom: 2px solid lightgrey;
+}
+.delIconSize{
+    font-size: large;
+}
+.margin{
+    padding-bottom: 0px !important;
+}
+.isDefault{
+    margin-left: -25px;
+}
+.card-max-height{
+    height: 600px !important;
+}
+.card-min-height-tab1{
+    height: 370px !important;
+}
+// .card-min-height-tab1{
+//     overflow-y: auto;
+// }
+
+.card-min-height-tab2{
+    height: 370px !important;
+}
+// .card-min-height-tab2{
+//     overflow-y: auto;
+// }
+
+.card-min-height-tab3{
+    height: 370px !important;
+}
+.card-min-height-tab3{
+    overflow-y: auto;
+}
+
+.card-min-height-tab4{
+    height: 370px !important;
+}
+.card-min-height-tab4{
+    overflow-y: auto;
+}
+.userCard{
+    height: 59.2vh !important;
+  }
+
+.add{
+padding-right: 12.5px;
+padding-left: 12.5px;
+margin-top:5px;
+}
+hr{
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+}
+.size{
+    padding: 0.25rem 0.5rem;
+    font-size:10px;
+    
+    }
+    .mdi-account-circle{
+        font-size: 71px;
+        color: rgb(180, 175, 175);
+     
+    }
+    .circle-img {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+     }
+     .wid{
+        margin-left: -6px;
+        width: 304px;
+        }
+
+        #file-upload{
+            display: none;
+        }
+        .custom-file-upload {
+            border: 1px solid rgb(31, 146, 3);
+            display: inline-block;
+            padding: 6.8px 5.5px;
+            background-color:  rgb(31, 146, 3);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+      

@@ -1,0 +1,110 @@
+<div class="container-fluid">
+    <div class="">
+        <!-- <app-page-title title="Fee"></app-page-title> -->
+        <div class="mb-3 pageHeading">
+            <h4 class="">Fee</h4>
+        </div>
+
+    </div>
+    <form [formGroup]="feesForm" autocomplete="off">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card-2  mt-2">
+                    <div class="card-body box ">
+                        <div class="row">
+                            <!-- <div class="col-xl-4"></div> -->
+                            <div class="col-xl-3">
+                                <div class="form-group ">
+                                    <label for="productfeesName">Term Fee</label>
+                                    <input class="form-control" id="productfeesName" [(ngModel)]="feesObj.feesName "
+                                        type="text" class="form-control" placeholder="Term Fee"
+                                        formControlName="feesName"
+                                        [ngClass]="{ 'is-invalid': feesSubmitted && f.feesName.errors || f.feesName.invalid && (f.feesName.dirty || f.feesName.touched)}">
+                                    <div *ngIf="feesSubmitted && f.feesName.errors || f.feesName.invalid && (f.feesName.dirty || f.feesName.touched)"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.feesName.errors.required">Required</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="mb-2 pageHeading">
+                    <h4 class="">Component</h4>
+                    </div> -->
+                    
+                <div class="card-2 pt-2">
+                    <label class="card-2-hedaing">Component</label>
+                    <perfect-scrollbar class="" [config]="configData">
+                    <div class="card-body  box  userCard ">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="" formArrayName="feesMasterComponentList">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <!-- <h6 class="mt-2">Component</h6> -->
+                                        </div>
+                                        <div class="col-sm-6"></div>
+                                        <div class=" col-sm-2 text-right">
+
+                                            <button type="button" class="btn btn-success btn-sm mb-2 "
+                                                (click)="addterm()">
+                                                <i class="mdi mdi-plus  mb-3"></i>Add Component
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <table id="example" class="table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th width="8%">Fee Name</th>
+                                                <th width="8%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let feesObj of feesArr.controls; let i = index"
+                                                [formGroupName]="i">
+
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-xl-4">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Fee Name" name="name"
+                                                                formControlName="name"
+                                                                [ngClass]="{ 'is-invalid': feesSubmitted && feesArr.controls[i].get('name').errors || feesArr.controls[i].get('name').invalid && (feesArr.controls[i].get('name').dirty || feesArr.controls[i].get('name').touched)}">
+                                                            <div *ngIf="feesSubmitted && feesArr.controls[i].get('name').errors || feesArr.controls[i].get('name').invalid && (feesArr.controls[i].get('name').dirty || feesArr.controls[i].get('name').touched)"
+                                                                class="invalid-feedback">
+                                                                <div
+                                                                    *ngIf="feesArr.controls[i].get('name').errors.required">
+                                                                    Required</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td><i class="fa fa-trash text-danger delIconSize ml-3 mt-2"
+                                                        (click)="deleteterm(i)"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </perfect-scrollbar>
+                </div>
+
+                <div class="text-right mb-4">
+                    <button type="submit" class="btn btn-primary btn-md ml-1 " (click)="submit()"
+                        *ngIf="!feesObj.id">Submit</button>
+                    <button type="submit" *ngIf="feesObj.id" class="btn btn-primary btn-md ml-auto "
+                        (click)="submit()">Update</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

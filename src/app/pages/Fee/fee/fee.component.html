@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row">
+        <div class="col-xl-6">
+          <div class="mb-3 pageHeading">
+            <h4 class="">Fee List</h4>
+        </div>        
+      </div>
+        <div class="col-xl-6">
+          <div class="text-right my-auto ">
+            <button type="button" class="btn btn-success btn-sm mb-2" routerLink="/finance/fee/new">
+              <i class="mdi mdi-plus mb-3"></i> Add Fee
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-2">
+        <div class="card-body ">
+          <table id="feelist" class="table table-bordered" style="width:100%">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th class="mr-1">Fee Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let categoryData of feelist;let i = index">
+                <td>{{i+1}}</td>
+                <td>{{categoryData.feesName}}</td>
+                <td>
+                  <i class="fas fa-edit  text-success mr-2"  routerLink="/fee/new/{{categoryData.id}}"></i>
+                  <i class="fa fa-trash text-danger" aria-hidden="true" (click)="openCat(dModal,categoryData.id)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <ng-template #dModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Confirm Delete</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div>
+      <h6 class="ml-3 mt-2">Are you sure Want to Delete this ?</h6>
+      <div class="text-right mt-2 mr-2">
+        <button type="submit" class="btn btn-sm btn-primary mb-2 " aria-label="Close"
+          (click)="deletedata(modal)">Yes</button>
+      </div>
+    </div>
+  </ng-template>

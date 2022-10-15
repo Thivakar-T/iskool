@@ -1,0 +1,39 @@
+// Accordions
+
+.accordion {
+  .card {
+    margin-bottom: 15px;
+    box-shadow: none;
+  }
+
+  .card-header {
+    padding: 5px;
+    border-radius: 7px !important;
+    background-color: white;
+    
+  }
+}
+.btn-link:hover {
+  color: black;
+  text-decoration: none;
+}
+.btn-link{
+  border : none;
+  color: black;
+}
+
+.custom-accordion {
+  .accordion-list {
+    display: flex;
+    background-color: $gray-300;
+    // padding: 12px 20px;
+    color: $body-color;
+    font-weight: $font-weight-semibold;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-body {
+    color: $text-muted;
+  }
+}

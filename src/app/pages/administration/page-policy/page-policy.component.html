@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <app-page-title title="Page Policy"></app-page-title>
+  <form [formGroup]="modulePageForm">
+    <div class="row mt-3">
+      <div class="col-xl-9">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-5">
+                <div class="form-group">
+                  <span class="">
+                    <label class="control-label">Module</label>
+                    <ng-select [items]="moduleArr" id="noOfFreeDays" bindLabel="moduleName" bindValue="id"
+                      formControlName="module" placeholder="Choose" (change)="selectModule($event)"
+                      [ngClass]="{ 'is-invalid': policySubmitted && f.module.errors || f.module.invalid && (f.module.dirty || f.module.touched)}">
+                    </ng-select>
+                    <div
+                      *ngIf="policySubmitted && f.module.errors || f.module.invalid && (f.module.dirty || f.module.touched)"
+                      class="invalid-feedback">
+                      <div *ngIf="f.module.errors.required">Required</div>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-5">
+                <div class="form-group">
+                  <span class="">
+                    <label class="control-label">Page</label>
+                    <ng-select [items]="modulePageArr" id="noOfFreeDays" bindLabel="pageName" bindValue="id"
+                      formControlName="page" placeholder="Choose" (change)="selectPageModule($event)"
+                      [ngClass]="{ 'is-invalid': policySubmitted && f.page.errors || f.page.invalid && (f.page.dirty || f.page.touched)}">
+                    </ng-select>
+                    <div *ngIf="policySubmitted && f.page.errors || f.page.invalid && (f.page.dirty || f.page.touched)"
+                      class="invalid-feedback">
+                      <div *ngIf="f.page.errors.required">Required</div>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-9 ">
+        <div class="card" *ngIf="enableCard">
+          <div class="card-body size">
+            <div formArrayName="pagePolicyList">
+              <div class="d-inline-flex page" *ngFor="let branchList of moduleMasterPageArr.controls;let i = index"
+                [formGroupName]="i">
+                <input class="box  mb-1 mt-2 " type="checkbox" formControlName="isChecked">
+                <input class="box mt-2 " formControlName="pageActionName" type="text" class="form-control style">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 text-right" *ngIf="enableCard">
+          <button type="button" class="btn btn-primary ml-1 text-right" (click)="createPurchaseOrder()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,125 @@
+<div class="container-fluid">
+  <!-- <app-page-title title="Academic Fee Master"></app-page-title> -->
+  <div class="mb-3 pageHeading">
+    <h4 class="">Academic Fee Master</h4>
+  </div>
+  <form [formGroup]="acadamicForm" autocomplete="off">
+    <div class="row mt-3">
+      <div class="col-xl-12">
+        <div class="card-2">
+          <div class="card-body">
+            <div class="row">
+              <!-- <div class="col-sm-3"></div> -->
+              <div class="col-xl-3">
+                <div class="form-group ">
+                  <label>Academic Year</label>
+                  <ng-select [items]="acadamicArray" formControlName="yearId" id="yearId" bindLabel="name"
+                    bindValue="id" placeholder="Choose" (change)="selectModule($event)"
+                    [ngClass]="{ 'is-invalid': acadamicSubmitted && f.yearId.errors || f.yearId.invalid && (f.yearId.dirty || f.yearId.touched)}">
+                  </ng-select>
+                  <div
+                    *ngIf="acadamicSubmitted && f.yearId.errors || f.yearId.invalid && (f.yearId.dirty || f.yearId.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="f.yearId.errors.required">Required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3">
+                <div class="form-group ">
+                  <label>Standard</label>
+                  <ng-select [items]="acadamicArr" formControlName="stdId" id="stdId" bindLabel="name" bindValue="id"
+                    placeholder="Choose" (change)="selectPageModule($event)" [(ngModel)]="acadamicObj.stdId"
+                    [ngClass]="{ 'is-invalid': acadamicSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)}">
+                  </ng-select>
+                  <div
+                    *ngIf="acadamicSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="f.stdId.errors.required">Required</div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-sm-3"></div> -->
+              <div class="mt-1">
+                <button type="submit" class="btn btn-success  btn-md  mt-4" (click)="  search() ">
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row " *ngIf="enableFeeCard">
+      <div class="col-xl-12">
+        <div class="card-2  cardBorder">
+          <label class="card-2-hedaing">Academic Fee List</label>
+          <div class="card-body  margin">
+            <table id="example" class="table table-bordered" style="width:100%">
+              <thead>
+                <tr>
+                  <th width="5%">S.No</th>
+                  <th width="10%">Fee Head</th>
+                  <th width="10%">Total Amount</th>
+                  <th width="10%">From Date</th>
+                  <th width="10%">Due Date</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="academicStandardFeeComponentList">
+                <tr [formGroupName]="j"
+                  *ngFor="let AcademicList of academicStandardFeeComponentListArr.controls; let j = index">
+                  <td><span class="ml-3"> {{j + 1}}</span></td>
+                  <td>
+                    <div class="form-group">
+                      <input class="form-control col-9 noBorder" formControlName="feeName" id="border" placeholder="feeName"
+                        readonly>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input class="form-control col-9 noBorder" name="amount" formControlName="amount" id="border" placeholder="Total Amount" readonly type="number">
+                    </div>
+                  </td>
+                  <td class="">
+                    <div class="row">
+                    <div class="col-xl-12">
+                      <input class="form-control ml-1" id="border" placeholder="yyyy-mm-dd" ngbDatepicker #fromDate="ngbDatepicker"
+                        (click)="fromDate.toggle()" name="fromDate" formControlName="fromDate" 
+                        [ngClass]="{ 'is-invalid': acadamicSubmitted && academicStandardFeeComponentListArr.controls[j].get('fromDate').errors || academicStandardFeeComponentListArr.controls[j].get('fromDate').invalid && (academicStandardFeeComponentListArr.controls[j].get('fromDate').dirty || academicStandardFeeComponentListArr.controls[j].get('fromDate').touched)}">
+                      <div
+                        *ngIf="acadamicSubmitted && academicStandardFeeComponentListArr.controls[j].get('fromDate').errors || academicStandardFeeComponentListArr.controls[j].get('fromDate').invalid && (academicStandardFeeComponentListArr.controls[j].get('fromDate').dirty || academicStandardFeeComponentListArr.controls[j].get('fromDate').touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="academicStandardFeeComponentListArr.controls[j].get('fromDate').errors.required">
+                          Required
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </td>
+                  <td class="">
+                    <div class="row">
+                    <div class="col-xl-12">
+                      <input class="form-control ml-1" id="border" placeholder="yyyy-mm-dd" ngbDatepicker #dueDate="ngbDatepicker"
+                        (click)="dueDate.toggle()" name="dueDate" formControlName="dueDate"
+                        [ngClass]="{ 'is-invalid': acadamicSubmitted && academicStandardFeeComponentListArr.controls[j].get('dueDate').errors || academicStandardFeeComponentListArr.controls[j].get('dueDate').invalid && (academicStandardFeeComponentListArr.controls[j].get('dueDate').dirty || academicStandardFeeComponentListArr.controls[j].get('dueDate').touched)}">
+                      <div
+                        *ngIf="acadamicSubmitted && academicStandardFeeComponentListArr.controls[j].get('dueDate').errors || academicStandardFeeComponentListArr.controls[j].get('dueDate').invalid && (academicStandardFeeComponentListArr.controls[j].get('dueDate').dirty || academicStandardFeeComponentListArr.controls[j].get('dueDate').touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="academicStandardFeeComponentListArr.controls[j].get('dueDate').errors.required">
+                          Required
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mb-4 text-right">
+      <button type="submit" *ngIf="enableFeeCard" class="btn btn-primary btn-md ml-1" (click)=acadamic()>Update</button>
+    </div>
+  </form>
+</div>

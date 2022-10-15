@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="row">
+                <div class="col-xl-6">
+                    <!-- <app-page-title title="HOLIDAY">HOLIDAY</app-page-title> -->
+                    <div class="mb-2 pageHeading">
+                        <h4 class="">  Holiday </h4>
+                      </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="text-right my-auto ">
+                        <button type="button" class="btn btn-success btn-sm mb-2 " routerLink="/common-master/holiday">
+                            <i class="mdi mdi-plus mr-1 mb-3"></i>Add Holiday
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" card-2">
+                <div class="card-body">
+                    <table id="holidaylist" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Academic Year</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let rows of holidayListArr;let i = index">
+                                <td>{{i+1}}</td>                                
+                                <td>{{rows.academicYearName}}</td>
+                                <td><i class="fas fa-edit  text-success "  routerLink="/holiday/{{rows.id}}"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>

@@ -1,0 +1,183 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="row">
+                <div class="col-xl-6">
+                    <!-- <app-page-title title="Vehicle">Vehicle</app-page-title> -->
+                    <div class="mb-3 pageHeading">
+                        <h4 class="">Vehicle</h4>
+                      </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="text-right my-auto ">
+                        <button type="button" class="btn btn-success btn-sm mb-2" (click)="openvehicle(vehicle)">
+                            <i class="mdi mdi-plus mr-1 mb-3"></i>Add Vehicle
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-2">
+                <div class="card-body" >
+                    <table id="vehicle"  class="table table-bordered  mx-auto" style="width:100%">
+                        <thead >
+                            <tr>
+                                <th>S.No</th>
+                                <th>Name</th>
+                                <th>Registration Number</th>
+                                <th>No.Of.Seats</th>
+                                <th class="ml-auto">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let vehicleList of vehicleArr;let i = index">
+                            <tr>
+                                <td>{{i+1}}</td>
+                                <td>{{vehicleList.vehicleName}}</td>
+                                <td>{{vehicleList.vehicleNumber}}</td>
+                                <td>{{vehicleList.numberOfSeats}}</td>
+                                <td>
+                                    <i class="fas fa-edit text-success mr-2"
+                                        (click)="editVehicle(vehicleList, vehicle)"></i>
+                                    <i class="fa fa-trash text-danger ml-auto text-right" aria-hidden="true"
+                                        (click)="openModal(dModal,vehicleList.id)"></i>
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #vehicle let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Vehicle</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" id="batch">
+        <form [formGroup]="vehicleform"  autocomplete="off" (ngSubmit)="addVehicle(modal)">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input class="form-control" id="name" type="text" placeholder="Name"
+                            formControlName="vehicleName" [(ngModel)]="vehicleObj.vehicleName"
+                            [ngClass]="{ 'is-invalid': vehicleSubmitted && b.vehicleName.errors || b.vehicleName.invalid && (b.vehicleName.dirty || b.vehicleName.touched)}">
+                        <div *ngIf="vehicleSubmitted && b.vehicleName.errors || b.vehicleName.invalid && (b.vehicleName.dirty || b.vehicleName.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="b.vehicleName.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col">
+                    <div class="form-group ">
+                        <label for="reg">Registration Number</label>
+                        <input class="form-control" id="reg" type="text" placeholder="Registration Number"
+                            formControlName="vehicleNumber" [(ngModel)]="vehicleObj.vehicleNumber"
+                            [ngClass]="{ 'is-invalid': vehicleSubmitted && b.vehicleNumber.errors || b.vehicleNumber.invalid && (b.vehicleNumber.dirty || b.vehicleNumber.touched)}">
+                        <div *ngIf="vehicleSubmitted && b.vehicleNumber.errors || b.vehicleNumber.invalid && (b.vehicleNumber.dirty || b.vehicleNumber.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="b.vehicleNumber.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="seats">No.Of.Seats</label>
+                        <input class="form-control" id="seats" type="number" placeholder="No.Of.Seats"
+                            formControlName="numberOfSeats" [(ngModel)]="vehicleObj.numberOfSeats"
+                            [ngClass]="{ 'is-invalid': vehicleSubmitted && b.numberOfSeats.errors || b.numberOfSeats.invalid && (b.numberOfSeats.dirty || b.numberOfSeats.touched)}">
+                        <div *ngIf="vehicleSubmitted && b.numberOfSeats.errors || b.numberOfSeats.invalid && (b.numberOfSeats.dirty || b.numberOfSeats.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="b.numberOfSeats.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-2">
+                <label class="card-2-hedaing">Vehicle Documents</label>
+                <perfect-scrollbar  class="" [config]="configData">
+                  <div class="card-body vehicleCard">
+            <div formArrayName="vehicleDocumentList">
+                <div class="row">
+                    <div class="col">
+                        <!-- <h5 class="modal-title">Vehicle Documents</h5> -->
+                    </div>
+                    <div class="col">
+                        <div class="text-right mb-3 ml-3">
+                            <button type="button" class="btn btn-success btn-sm mb-2 " (click)="addDocument()">
+                                <i class="mdi mdi-plus mr-1"></i>Add Document
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <table id="vehicle" class="table">
+                    <tr *ngFor="let productObj of vehicleDocumentArr.controls; let i = index" [formGroupName]="i">
+                        <td>
+                            <div class="col-11 form-group ml-0">
+                                <!-- <label class="col-form-label">Document Name</label> -->
+
+                                <input class="form-control" id="documentName" type="text"
+                                    placeholder="Document Name" formControlName="documentName" >
+                            </div>
+                        </td>
+                        <td>
+                            <div class=" form-group ">                                
+                                <div class="has-float-label mt-2">
+                                    <label class=" col-form-label">File</label>
+                                <input name="file" formControlName="documentUpload" type="file"> 
+                               </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-left">
+                                <i class="fa fa-trash text-danger delIconSize  mt-2 mr-5" (click)="deleteterm(i)"></i>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+  </div>
+            </div>
+            </perfect-scrollbar>
+            </div>
+            <div class="row">
+<div class="col">
+
+</div>
+
+                <div class=" col text-right">
+                    <button type="submit" class="btn btn-sm btn-primary mb-2">{{buttonText}}</button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</ng-template>
+<ng-template #dModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div>
+        <h6 class="ml-3 mt-2">Are you sure want to delete this ?</h6>
+        <div class="text-right mt-2 mr-2">
+            <button type="button" class="btn btn-primary btn-sm ml-2 mb-3" (click)="deleteData(modal)">Yes</button>
+        </div>
+    </div>
+</ng-template>

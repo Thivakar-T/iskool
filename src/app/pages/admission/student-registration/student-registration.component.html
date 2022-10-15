@@ -1,0 +1,1052 @@
+<div class="container-fluid">
+  <!-- <app-page-title title="Student Registration"></app-page-title> -->
+  <div class="mb-1 pageHeading">
+    <div class="row ">
+      <div class="col-6">
+        <h4 class="">Student Registration</h4>
+      </div>
+      <div class="col-6">
+        <div class="text-right">
+          <button type="button" *ngIf="!personalObj.id" class="btn btn-primary btn-md ml-1 text-right"
+            (click)="getAllData()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="personalForm" autocomplete="off">
+    <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom mt-2">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>
+          <p class="font-weight-bold mb-0">Personal Information</p>
+        </a>
+        <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+          <div class="row mt-2">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-xl-4 ">
+                  <div class="card-2 userCard mb-2 pt-2">
+                    <label class="card-2-hedaing">Basic Information</label>
+                    <perfect-scrollbar class="" [config]="configData">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-xl-3"></div>
+                          <div class="col-xl-6 text-center">
+                            <span class="mdi  mdi-account-circle my-auto"></span>
+
+                            <!-- <img [src]="url" height="200" class="circle-img"> <br/> -->
+                          </div>
+                          <div class="col-xl-3"></div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-3"></div>
+                          <div class="col-xl-6">
+                            <!-- <input type='file' class="btn btn-success btn-sm " (change)="onSelectFile($event)"> -->
+                            <label for="file-upload" class="custom-file-upload text-white">
+                              Click to Upload Photo
+                            </label>
+                            <input id="file-upload" type="file" />
+                            <!-- <button type="file" class="btn btn-success btn-sm ">Click to Upload Photo</button> -->
+                          </div>
+                        </div>
+                        <br>
+                        <div class="form-group ">
+                          <span class="">
+                            <label class="mr-1" for="noOfFreeDays">First Name</label>
+                            <input class="form-control" formControlName="firstName" [(ngModel)]="personalObj.firstName"
+                              id="noOfFreeDays" type="text" class="form-control" placeholder="First Name"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.firstName.errors || f.firstName.invalid && (f.firstName.dirty || f.firstName.touched)}">
+                            <div
+                              *ngIf="personalSubmitted && f.firstName.errors || f.firstName.invalid && (f.firstName.dirty || f.firstName.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.firstName.errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="middleName">Middle Name</label>
+                            <input class="form-control" formControlName="middleName"
+                              [(ngModel)]="personalObj.middleName" id="middleName" class="form-control"
+                              placeholder="Middle Name">
+                          </span>
+                        </div>
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="lastName">Last Name</label>
+                            <input class="form-control" id="lastName" class="form-control" placeholder="Last Name"
+                              formControlName="lastName" [(ngModel)]="personalObj.lastName"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.lastName.errors || f.lastName.invalid && (f.lastName.dirty || f.lastName.touched)}">
+                            <div
+                              *ngIf="personalSubmitted && f.lastName.errors || f.lastName.invalid && (f.lastName.dirty || f.lastName.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.lastName.errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="noOfFreeDays">Marital Status</label>
+                            <ng-select [items]="['Unmarried', 'Married']" id="noOfFreeDays" placeholder="Choose"
+                              formControlName="maritalStatus" [(ngModel)]="personalObj.maritalStatus"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.maritalStatus.errors || f.maritalStatus.invalid && (f.maritalStatus.dirty || f.maritalStatus.touched)}"
+                              required>
+                            </ng-select>
+                            <div
+                              *ngIf="personalSubmitted && f.maritalStatus.errors || f.maritalStatus.invalid && (f.maritalStatus.dirty || f.maritalStatus.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.maritalStatus.errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group">
+
+                          <span class="">
+                            <label class="mr-1" for="noOfFreeDays">Gender</label>
+                            <ng-select [items]="['Male', 'Female']" id="noOfFreeDays" placeholder="Choose"
+                              formControlName="gender" [(ngModel)]="personalObj.gender"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.gender.errors || f.gender.invalid && (f.gender.dirty || f.gender.touched)}"
+                              required>
+                            </ng-select>
+                            <div
+                              *ngIf="personalSubmitted && f.gender.errors || f.gender.invalid && (f.gender.dirty || f.gender.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.gender.errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="form-group">
+                              <label class="" for="dateOfBirth">Date of Birth</label>
+                              <input type="text" class="form-control " placeholder="yyyy-mm-dd"
+                                formControlName="dateOfBirth" id="dateOfBirth" name="name" ngbDatepicker
+                                #dateOfBirth="ngbDatepicker" (click)="dateOfBirth.toggle()"
+                                [(ngModel)]="personalObj.dateOfBirth"
+                                [ngClass]="{ 'is-invalid': personalSubmitted && f.dateOfBirth.errors || f.dateOfBirth.invalid && (f.dateOfBirth.dirty || f.dateOfBirth.touched)}">
+                              <div
+                                *ngIf="personalSubmitted && f.dateOfBirth.errors || f.dateOfBirth.invalid && (f.dateOfBirth.dirty || f.dateOfBirth.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.dateOfBirth.errors.required">Required</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="emailId">Email ID</label>
+                            <input class="form-control" id="emailId" class="form-control" placeholder="Email ID"
+                              type="email" formControlName="emailId" [(ngModel)]="personalObj.emailId"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.emailId.errors || f.emailId.invalid && (f.emailId.dirty || f.emailId.touched)}">
+                              <div
+                              *ngIf="personalSubmitted && f.emailId.errors || f.emailId.invalid && (f.emailId.dirty || f.emailId.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.emailId.errors.pattern" class="text-danger">
+                                {{globals.emailErrorPattern}}
+                              </div>
+                            </div>
+                             
+                          </span>
+                        </div>
+
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="mobileNumber">Mobile Number</label>
+                            <input type="text" formControlName="mobileNumber" class="form-control" type="number"
+                              id="mobileNumber" placeholder="Mobile Number" [(ngModel)]="personalObj.mobileNumber"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.mobileNumber.errors || f.mobileNumber.invalid && (f.mobileNumber.dirty || f.mobileNumber.touched)}"
+                              id="mobileNumber" />
+                            <div
+                              *ngIf="personalSubmitted && f.mobileNumber.errors || f.mobileNumber.invalid && (f.mobileNumber.dirty || f.mobileNumber.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.mobileNumber.errors.required">Required</div>
+                              <div
+                                *ngIf="f.mobileNumber.errors.pattern || f.mobileNumber.errors.maxlength || f.mobileNumber.errors.minlength">
+                                Phone number must be at least 10 numbers</div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                    </perfect-scrollbar>
+                  </div>
+                </div>
+                <div class="col-xl-4">
+                  <div class="card-2 userCard mb-2 pt-2">
+                    <label class="card-2-hedaing">Personal Information</label>
+                    <perfect-scrollbar class="" [config]="configData">
+                      <!-- <div class="cardBorder">                    -->
+                      <div class="card-body">
+                        <div class="form-group pt-2 ">
+                          <span class="">
+                            <label class="mr-1" for="birthTable">Birth Place</label>
+                            <input class="form-control" id="birthTable" type="text" class="form-control"
+                              placeholder="Birth Place" formControlName="birthTable"
+                              [(ngModel)]="personalObj.birthTable"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.birthTable.errors || f.birthTable.invalid && (f.birthTable.dirty || f.birthTable.touched)}">
+                            <div
+                              *ngIf="personalSubmitted && f.birthTable.errors || f.birthTable.invalid && (f.birthTable.dirty || f.birthTable.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.birthTable.errors.required">Required</div>
+                            </div>
+
+                          </span>
+                        </div>
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="birthStateId">Birth State</label>
+                            <ng-select [items]="StateArr" bindLabel="name" bindValue="id" id="noOfFreeDays"
+                              placeholder="Choose" formControlName="birthStateId" [(ngModel)]="personalObj.birthStateId"
+                              id="birthStateId"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.birthStateId.errors || f.birthStateId.invalid && (f.birthStateId.dirty || f.birthStateId.touched)}"
+                              required>
+                            </ng-select>
+                            <div
+                              *ngIf="personalSubmitted && f.birthStateId.errors || f.birthStateId.invalid && (f.birthStateId.dirty || f.birthStateId.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.birthStateId.errors.required">Required</div>
+                            </div>
+                          </span>
+
+                        </div>
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="identityMark">Identity Mark</label>
+                            <input class="form-control" id="identityMark" type="text" class="form-control"
+                              placeholder="Identity Mark" formControlName="identityMark"
+                              [(ngModel)]="personalObj.identityMark"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.identityMark.errors || f.identityMark.invalid && (f.identityMark.dirty || f.identityMark.touched)}">
+                            <div
+                              *ngIf="personalSubmitted && f.identityMark.errors || f.identityMark.invalid && (f.identityMark.dirty || f.identityMark.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.identityMark.errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="noOfFreeDays">Domicile Country</label>
+                            <ng-select [items]="countryArr" bindLabel="name" bindValue="id" id="noOfFreeDays"
+                              placeholder="Choose" formControlName="domicileCountryId"
+                              [(ngModel)]="personalObj.domicileCountryId"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.domicileCountryId.errors || f.domicileCountryId.invalid && (f.domicileCountryId.dirty || f.domicileCountryId.touched)}"
+                              required>
+                            </ng-select>
+                            <div
+                              *ngIf="personalSubmitted && f.domicileCountryId.errors || f.domicileCountryId.invalid && (f.domicileCountryId.dirty || f.domicileCountryId.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.domicileCountryId.errors.required">Required</div>
+                            </div>
+                          </span>
+
+                        </div>
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="noOfFreeDays">Domicile State</label>
+                            <ng-select [items]="StateArr" bindLabel="name" bindValue="id" id="noOfFreeDays"
+                              placeholder="Choose" formControlName="domicileStateId"
+                              [(ngModel)]="personalObj.domicileStateId"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.domicileStateId.errors || f.domicileStateId.invalid && (f.domicileStateId.dirty || f.domicileStateId.touched)}"
+                              required>
+                            </ng-select>
+                            <div
+                              *ngIf="personalSubmitted && f.domicileStateId.errors || f.domicileStateId.invalid && (f.domicileStateId.dirty || f.domicileStateId.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.domicileStateId.errors.required">Required</div>
+                            </div>
+                          </span>
+
+                        </div>
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="noOfFreeDays">Mother Tongue</label>
+                            <ng-select [items]="motherTongueArr" bindLabel="name" bindValue="id" id="noOfFreeDays"
+                              placeholder="Choose" formControlName="motherTongueId"
+                              [(ngModel)]="personalObj.motherTongueId"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.motherTongueId.errors || f.motherTongueId.invalid && (f.motherTongueId.dirty || f.motherTongueId.touched)}"
+                              required>
+                            </ng-select>
+                            <div
+                              *ngIf="personalSubmitted && f.motherTongueId.errors || f.motherTongueId.invalid && (f.motherTongueId.dirty || f.motherTongueId.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.motherTongueId.errors.required">Required</div>
+                            </div>
+                          </span>
+
+                        </div>
+
+                        <div class="form-group ">
+                          <span class="">
+                            <label class="mr-1" for="aadharNumber">Aadhar Number</label>
+                            <input class="form-control" type="number" formControlName="aadharNumber" id="aadharNumber"
+                              placeholder="Aadhar Number" [(ngModel)]="personalObj.aadharNumber"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.aadharNumber.errors || f.aadharNumber.invalid && (f.aadharNumber.dirty || f.aadharNumber.touched)}">
+                            <div
+                              *ngIf="personalSubmitted && f.aadharNumber.errors || f.aadharNumber.invalid && (f.aadharNumber.dirty || f.aadharNumber.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.aadharNumber.errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group ">
+                          <span class="">
+                            <label class="mr-1" for="isTransportAvailable">Transport</label>
+                            <ng-select [items]="['YES' , 'NO']" formControlName="isTransportAvailable"
+                              (change)="selectTransport($event)" id="isTransportAvailable" (click)="selectLocation()"
+                              bindLabel="locationName" bindValue="id" placeholder="Choose"
+                              [(ngModel)]="personalObj.isTransportAvailable"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.isTransportAvailable.errors || f.isTransportAvailable.invalid && (f.isTransportAvailable.dirty || f.isTransportAvailable.touched)}">
+                            </ng-select>
+                            <div
+                              *ngIf="personalSubmitted && f.isTransportAvailable.errors || f.isTransportAvailable.invalid && (f.isTransportAvailable.dirty || f.isTransportAvailable.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.isTransportAvailable.errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group " *ngIf="LcationCard">
+                          <label for="locationId">Location</label>
+                          <span class="">
+                            <ng-select [items]="locationArr" formControlName="locationId" id="locationId"
+                              bindLabel="locationName" bindValue="id" placeholder="Choose"
+                              [(ngModel)]="personalObj.locationId"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.locationId.errors || f.locationId.invalid && (f.locationId.dirty || f.locationId.touched)}">
+
+                            </ng-select>
+                            <div
+                              *ngIf="personalSubmitted && f.locationId.errors || f.locationId.invalid && (f.locationId.dirty || f.locationId.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.locationId.errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                    </perfect-scrollbar>
+                  </div>
+                </div>
+                <div class="col-xl-4">
+                  <div class="card-2 userCard mb-2 pt-2">
+                    <label class="card-2-hedaing">Other Information</label>
+                    <perfect-scrollbar class="" [config]="configData">
+                      <div class="card-body ">
+                        <div class="form-group  ">
+                          <span class="">
+                            <label class="mr-1" for="nationality">Nationality</label>
+                            <input class="form-control" formControlName="nationality" bindLabel="name" bindValue="id"
+                              placeholder="Nationality" [(ngModel)]="personalObj.nationality" id="nationality"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.nationality.errors || f.nationality.invalid && (f.nationality.dirty || f.nationality.touched)}">
+                            <div
+                              *ngIf="personalSubmitted && f.nationality.errors || f.nationality.invalid && (f.nationality.dirty || f.nationality.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.nationality.errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="religionId">Religion</label>
+                            <ng-select [items]="religionArr" formControlName="religionId" bindLabel="name"
+                              bindValue="id" placeholder="choose" [(ngModel)]="personalObj.religionId" id="religionId"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.religionId.errors || f.religionId.invalid && (f.religionId.dirty || f.religionId.touched)}">
+                            </ng-select>
+                            <div
+                              *ngIf="personalSubmitted && f.religionId.errors || f.religionId.invalid && (f.religionId.dirty || f.religionId.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.religionId.errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="noOfFreeDays">Caste</label>
+                            <ng-select [items]="casteArr" bindLabel="name" bindValue="id" formControlName="casteId"
+                              placeholder="Choose" [(ngModel)]="personalObj.casteId"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.casteId.errors || f.casteId.invalid && (f.casteId.dirty || f.casteId.touched)}">
+                            </ng-select>
+                            <div
+                              *ngIf="personalSubmitted && f.casteId.errors || f.casteId.invalid && (f.casteId.dirty || f.casteId.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.casteId.errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="noOfFreeDays">Category</label>
+                            <ng-select [items]="catergoryArr" formControlName="categoryId" placeholder="Choose"
+                              bindLabel="name" bindValue="id" [(ngModel)]="personalObj.categoryId"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.categoryId.errors || f.categoryId.invalid && (f.categoryId.dirty || f.categoryId.touched)}">
+                            </ng-select>
+                            <div
+                              *ngIf="personalSubmitted && f.categoryId.errors || f.categoryId.invalid && (f.categoryId.dirty || f.categoryId.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.categoryId.errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <h4 class="cardHead mb-0">Admin Information</h4>
+                        <br>
+                        <div class="form-group">
+                          <span class="">
+                            <label class="mr-1" for="registrationNumber">Registration Number</label>
+                            <input class="form-control" formControlName="registrationNumber" type="number"
+                              id="registrationNumber" class="form-control" placeholder="Registration Number"
+                              [(ngModel)]="personalObj.registrationNumber"
+                              [ngClass]="{ 'is-invalid': personalSubmitted && f.registrationNumber.errors || f.registrationNumber.invalid && (f.registrationNumber.dirty || f.registrationNumber.touched)}">
+                            <div
+                              *ngIf="personalSubmitted && f.registrationNumber.errors || f.registrationNumber.invalid && (f.registrationNumber.dirty || f.registrationNumber.touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="f.registrationNumber.errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                    </perfect-scrollbar>
+
+                  </div>
+                </div>
+              </div>
+              <div class="text-right mt-3">
+                <button type="submit" class="btn btn-primary mb-4" (click)="personalUpdate('PersonalInformation')"
+                  *ngIf="personalObj.id">update</button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>
+          <p class="font-weight-bold mb-0">Address Information</p>
+        </a>
+        <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+          <div class="row mt-2">
+            <div class="col-12">
+              <div class="row ">
+                <div class="col-xl-2"></div>
+                <div class="col-xl-4" formGroupName="permanentObj">
+                  <div class="card-2 userCard mb-2 pt-2">
+                    <label class="card-2-hedaing">Permanent Address</label>
+                    <perfect-scrollbar class="" [config]="configData">
+
+                      <div class="card-body card-max-height">
+                        <div class="form-group pt-3 ">
+                          <label class="" for="angularEditor">Address</label>
+                          <angular-editor id="angularEditor" placeholder=" Address" formControlName="address"
+                            [ngClass]="{ 'is-invalid': addressSubmitted && g.controls['address'].errors || g.controls['address'].invalid&& (g.controls['address'].dirty || g.controls['address'].touched)}">
+                          </angular-editor>
+                          <div
+                            *ngIf="addressSubmitted && g.controls['address'].errors || g.controls['address'].invalid && (g.controls['address'].dirty || g.controls['address'].touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="g.controls['address'].errors.required">Required</div>
+                          </div>
+                        </div>
+                        <div class="form-group pt-1">
+                          <label for="pincode">Pin Code</label>
+                          <input formControlName="pincode" id="pincode" type="number" placeholder="Pin Code"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': addressSubmitted && g.controls['pincode'].errors || g.controls['pincode'].invalid && (g.controls['pincode'].dirty || g.controls['pincode'].touched)}">
+
+                          <div
+                            *ngIf="addressSubmitted && g.controls['pincode'].errors || g.controls['pincode'].invalid && (g.controls['pincode'].dirty || g.controls['pincode'].touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="g.controls['pincode'].errors.required">Required</div>
+                          </div>
+                        </div>
+                        <div class="form-group ">
+                          <span class="">
+                            <label for="id">Country</label>
+                            <ng-select [items]="countryArr" formControlName="countryId" bindLabel="name" bindValue="id"
+                              placeholder="Choose"
+                              [ngClass]="{ 'is-invalid': addressSubmitted && g.controls['countryId'].errors || g.controls['countryId'].invalid && (g.controls['countryId'].dirty || g.controls['countryId'].touched)}">
+                            </ng-select>
+                            <div
+                              *ngIf="addressSubmitted && g.controls['countryId'].errors || g.controls['countryId'].invalid && (g.controls['countryId'].dirty || g.controls['countryId'].touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="g.controls['countryId'].errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group ">
+                          <span class="">
+                            <label for="id">State</label>
+                            <ng-select [items]="StateArr" formControlName="stateId" bindLabel="name" bindValue="id"
+                              placeholder="Choose"
+                              [ngClass]="{ 'is-invalid': addressSubmitted && g.controls['stateId'].errors || g.controls['stateId'].invalid && (g.controls['stateId'].dirty || g.controls['stateId'].touched)}">
+                            </ng-select>
+                            <div
+                              *ngIf="addressSubmitted && g.controls['stateId'].errors || g.controls['stateId'].invalid && (g.controls['stateId'].dirty || g.controls['stateId'].touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="g.controls['stateId'].errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group ">
+                          <span class="">
+                            <label for="id">City</label>
+                            <ng-select [items]="cityArr" formControlName="cityId" bindLabel="name" bindValue="id"
+                              placeholder="Choose"
+                              [ngClass]="{ 'is-invalid': addressSubmitted && g.controls['cityId'].errors || g.controls['cityId'].invalid && (g.controls['cityId'].dirty || g.controls['cityId'].touched)}">
+                            </ng-select>
+                            <div
+                              *ngIf="addressSubmitted && g.controls['cityId'].errors || g.controls['cityId'].invalid && (g.controls['cityId'].dirty || g.controls['cityId'].touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="g.controls['cityId'].errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                    </perfect-scrollbar>
+                  </div>
+                </div>
+                <div class="col-xl-4" formGroupName="localObj">
+                  <div class="card-2 userCard mb-2 pt-2">
+                    <label class="card-2-hedaing">Local Address</label>
+                    <perfect-scrollbar class="" [config]="configData">
+
+                      <div class="card-body pt-3">
+                        <div class="row">
+                          <div class="col-xl-4">
+                          </div>
+                          <div class="col-xl-12">
+                            <div class="text-right ">
+                              <input class="box" type="checkbox" (change)="checkCPPValue($event)"> Same as Permanent
+                              Address
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group  ">
+                          <label for="angularEditor">Address</label>
+                          <angular-editor id="angularEditor" placeholder=" Address" formControlName="address"
+                            [ngClass]="{ 'is-invalid': addressSubmitted && h.controls['address'].errors || h.controls['address'].invalid&& (h.controls['address'].dirty || h.controls['address'].touched)}">
+                          </angular-editor>
+                          <div
+                            *ngIf="addressSubmitted && h.controls['address'].errors || h.controls['address'].invalid && (h.controls['address'].dirty || h.controls['address'].touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="h.controls['address'].errors.required">Required</div>
+                          </div>
+                        </div>
+
+                        <div class="form-group ">
+                          <label for="name">Pin Code</label>
+                          <input formControlName="pincode" id="pincode" type="number" placeholder="Pin Code"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': addressSubmitted && h.controls['pincode'].errors || h.controls['pincode'].invalid && (h.controls['pincode'].dirty || h.controls['pincode'].touched)}">
+
+                          <div
+                            *ngIf="addressSubmitted && h.controls['pincode'].errors || h.controls['pincode'].invalid && (h.controls['pincode'].dirty || h.controls['pincode'].touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="h.controls['pincode'].errors.required">Required</div>
+                          </div>
+                        </div>
+                        <div class="form-group ">
+                          <span class="">
+                            <label for="id">Country</label>
+                            <ng-select [items]="countryArr" formControlName="countryId" bindLabel="name" bindValue="id"
+                              placeholder="Choose"
+                              [ngClass]="{ 'is-invalid': addressSubmitted && h.controls['countryId'].errors || h.controls['countryId'].invalid && (h.controls['countryId'].dirty || h.controls['countryId'].touched)}">
+                            </ng-select>
+                            <div
+                              *ngIf="addressSubmitted && h.controls['countryId'].errors ||h.controls['countryId'].invalid && (h.controls['countryId'].dirty || h.controls['countryId'].touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="h.controls['countryId'].errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group ">
+                          <span class="">
+                            <label for="id">State</label>
+                            <ng-select [items]="StateArr" formControlName="stateId" bindLabel="name" bindValue="id"
+                              placeholder="Choose"
+                              [ngClass]="{ 'is-invalid': addressSubmitted && h.controls['stateId'].errors || h.controls['stateId'].invalid && (h.controls['stateId'].dirty || h.controls['stateId'].touched)}">
+                            </ng-select>
+                            <div
+                              *ngIf="addressSubmitted && h.controls['stateId'].errors ||h.controls['stateId'].invalid && (h.controls['stateId'].dirty || h.controls['stateId'].touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="h.controls['stateId'].errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group ">
+                          <span class="">
+                            <label for="id">City</label>
+                            <ng-select [items]="cityArr" formControlName="cityId" bindLabel="name" bindValue="id"
+                              placeholder="Choose"
+                              [ngClass]="{ 'is-invalid': addressSubmitted && h.controls['cityId'].errors || h.controls['cityId'].invalid && (h.controls['cityId'].dirty || h.controls['cityId'].touched)}">
+                            </ng-select>
+                            <div
+                              *ngIf="addressSubmitted && h.controls['cityId'].errors ||h.controls['cityId'].invalid && (h.controls['cityId'].dirty || h.controls['cityId'].touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="h.controls['cityId'].errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                    </perfect-scrollbar>
+                  </div>
+                  <div class="text-right mt-4">
+                    <button type="submit" class="btn btn-primary mb-4" (click)="personalUpdate('AddressInformation')"
+                      *ngIf="personalObj.id">update</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+
+
+      <!-- changes -->
+
+
+      <li [ngbNavItem]="3">
+        <a ngbNavLink>
+          <p class="font-weight-bold mb-0">Parent Details</p>
+        </a>
+        <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+          <div class="row mt-2">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-xl-4" formGroupName="fatherObj">
+                  <div class="card-2 userCard pt-2">
+                    <label class="card-2-hedaing">Father's Information</label>
+                    <perfect-scrollbar class="" [config]="configData">
+                      <div class="card-body">
+                        <div class="form-group pt-2">
+                          <label class="" for="firstName">First Name</label>
+                          <input id="firstName" type="text" class="form-control" formControlName="firstName"
+                            placeholder="First Name">
+                        </div>
+
+                        <div class="form-group ">
+                          <label class="" for="lastName">Last Name</label>
+                          <input id="lastName" type="text" class="form-control" formControlName="lastName"
+                            placeholder="Last Name">
+                        </div>
+
+                        <div class="form-group ">
+                          <label class="" for="name">Email ID</label>
+                          <input formControlName="emailId" id="emailId" type="text" placeholder="Email ID"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': parentSubmitted && i.controls['emailId'].errors || i.controls['emailId'].invalid && (i.controls['emailId'].dirty || i.controls['emailId'].touched)}">
+                            <div
+                              *ngIf="parentSubmitted && i.controls['emailId'].errors || i.controls['emailId'].invalid && (i.controls['emailId'].dirty || i.controls['emailId'].touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="i.controls['emailId'].errors.pattern" class="text-danger">
+                                {{globals.emailErrorPattern}}
+                              </div>
+                            </div>                        
+                          </div>
+                        <div class="form-group ">
+                          <label class="" for="name">Mobile Number</label>
+                          <input formControlName="mobileNumber" id="mobileNumber" type="text"
+                            placeholder="Mobile Number" class="form-control"
+                            [ngClass]="{ 'is-invalid': parentSubmitted && i.controls['mobileNumber'].errors || i.controls['mobileNumber'].invalid && (i.controls['mobileNumber'].dirty || i.controls['mobileNumber'].touched)}">
+                          <div
+                            *ngIf="parentSubmitted && i.controls['mobileNumber'].errors || i.controls['mobileNumber'].invalid && (i.controls['mobileNumber'].dirty || i.controls['mobileNumber'].touched)"
+                            class="invalid-feedback">
+                            <!-- <div *ngIf="i.controls['mobileNumber'].errors.required">Required</div> -->
+                            <div
+                              *ngIf="i.controls['mobileNumber'].errors.pattern || i.controls['mobileNumber'].errors.maxlength || i.controls['mobileNumber'].errors.minlength">
+                              Phone number must be at least 10 numbers</div>
+                          </div>
+                        </div>
+
+                        <div class="form-group ">
+                          <label class="" for="designation">Designation</label>
+                          <input id="designation" type="text" class="form-control" formControlName="designation"
+                            placeholder="Designation">
+                        </div>
+                        <div class="form-group ">
+                          <label class="" for="productname">Occupation</label>
+                          <ng-select [items]="occupationArr" id="noOfFreeDays" bindLabel="name" bindValue="id"
+                            placeholder="Choose" formControlName="occupationId">
+                          </ng-select>
+                        </div>
+                        <div class="form-group ">
+                          <label class="" for="organizationName">Organization Name</label>
+                          <input id="organizationName" type="text" class="form-control"
+                            formControlName="organizationName" placeholder="Organization Name">
+                        </div>
+                        <div class="form-group ">
+                          <label class="" for="annualIncome">Annual Income</label>
+                          <input id="annualIncome" type="number" class="form-control" formControlName="annualIncome"
+                            placeholder="Annual Income">
+                        </div>
+                      </div>
+                    </perfect-scrollbar>
+                  </div>
+                </div>
+                <div class="col-xl-4" formGroupName="motherObj">
+                  <div class="card-2 userCard mb-2 pt-2">
+                    <label class="card-2-hedaing">Mother's Information</label>
+                    <perfect-scrollbar class="" [config]="configData">
+                      <div class="card-body">
+                        <div class="form-group pt-2 ">
+                          <label for="motherName">First Name</label>
+                          <input id="motherName" type="text" class="form-control" formControlName="firstName"
+                            placeholder="First Name">
+                        </div>
+
+                        <div class="form-group ">
+                          <label for="MotherlastName">Last Name</label>
+                          <input id="MotherlastName" type="text" class="form-control" formControlName="lastName"
+                            placeholder="Last Name">
+                        </div>
+
+                        <div class="form-group ">
+                          <label for="name">Email ID</label>
+                          <input formControlName="emailId" id="emailId" type="text" placeholder="Email ID"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': parentSubmitted && k.controls['emailId'].errors || k.controls['emailId'].invalid && (k.controls['emailId'].dirty || k.controls['emailId'].touched)}">
+                            <div
+                              *ngIf="parentSubmitted && k.controls['emailId'].errors || k.controls['emailId'].invalid && (k.controls['emailId'].dirty || k.controls['emailId'].touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="k.controls['emailId'].errors.pattern" class="text-danger">
+                                {{globals.emailErrorPattern}}
+                              </div>
+                            </div>                       
+                           </div>
+                        <div class="form-group ">
+                          <label for="name">Mobile Number</label>
+                          <input formControlName="mobileNumber" id="mobileNumber" type="text"
+                            placeholder="Mobile Number" class="form-control"
+                            [ngClass]="{ 'is-invalid': parentSubmitted && k.controls['mobileNumber'].errors || k.controls['mobileNumber'].invalid && (k.controls['mobileNumber'].dirty || k.controls['mobileNumber'].touched)}">
+                          <div
+                            *ngIf="parentSubmitted && k.controls['mobileNumber'].errors || k.controls['mobileNumber'].invalid && (k.controls['mobileNumber'].dirty || k.controls['mobileNumber'].touched)"
+                            class="invalid-feedback">
+                            <!-- <div *ngIf="k.controls['mobileNumber'].errors.required">Required</div> -->
+                            <div
+                              *ngIf="k.controls['mobileNumber'].errors.pattern || k.controls['mobileNumber'].errors.maxlength || k.controls['mobileNumber'].errors.minlength">
+                              Phone number must be at least 10 numbers</div>
+                          </div>
+                        </div>
+                        <div class="form-group ">
+                          <label for="designation">Designation</label>
+                          <input id="designation" type="text" class="form-control" formControlName="designation"
+                            placeholder="Designation">
+                        </div>
+                        <div class="form-group ">
+                          <label for="productname">Occupation</label>
+                          <ng-select [items]="occupationArr" id="noOfFreeDays" bindLabel="name" bindValue="id"
+                            placeholder="Choose" formControlName="occupationId">
+                          </ng-select>
+                        </div>
+                        <div class="form-group ">
+                          <label for="organizationName">Organization Name</label>
+                          <input id="organizationName" type="text" class="form-control"
+                            formControlName="organizationName" placeholder="Organization Name">
+                        </div>
+                        <div class="form-group ">
+                          <label for="annualIncome">Annual Income</label>
+                          <input id="annualIncome" type="number" class="form-control" formControlName="annualIncome"
+                            placeholder="Annual Income">
+                        </div>
+                      </div>
+                    </perfect-scrollbar>
+                  </div>
+                </div>
+                <div class="col-xl-4" formGroupName="guardianObj">
+                  <div class="card-2 userCard mb-2 pt-2">
+                    <label class="card-2-hedaing">Local Guardian Information</label>
+                    <perfect-scrollbar class="" [config]="configData">
+                      <div class="card-body">
+                        <div class="form-group pt-2">
+                          <label for="name">First Name</label>
+                          <input formControlName="firstName" id="firstName" type="text" placeholder="First Name"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': parentSubmitted && j.controls['firstName'].errors || j.controls['firstName'].invalid && (j.controls['firstName'].dirty || j.controls['firstName'].touched)}">
+                          <div
+                            *ngIf="parentSubmitted && j.controls['firstName'].errors || j.controls['firstName'].invalid && (j.controls['firstName'].dirty || j.controls['firstName'].touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="j.controls['firstName'].errors.required">Required</div>
+                          </div>
+                        </div>
+
+
+                        <div class="form-group ">
+                          <label for="name">Last Name</label>
+                          <input formControlName="lastName" id="lastName" type="text" placeholder="Last Name"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': parentSubmitted && j.controls['lastName'].errors || j.controls['lastName'].invalid && (j.controls['lastName'].dirty || j.controls['lastName'].touched)}">
+
+                          <div
+                            *ngIf="parentSubmitted && j.controls['lastName'].errors || j.controls['lastName'].invalid && (j.controls['lastName'].dirty || j.controls['lastName'].touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="j.controls['lastName'].errors.required">Required</div>
+                          </div>
+                        </div>
+                        <div class="form-group ">
+                          <label for="name">Email ID</label>
+                          <input formControlName="emailId" id="emailId" type="text" placeholder="Email ID"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': parentSubmitted && j.controls['emailId'].errors || j.controls['emailId'].invalid && (j.controls['emailId'].dirty || j.controls['emailId'].touched)}">
+                            <div
+                              *ngIf="parentSubmitted && j.controls['emailId'].errors || j.controls['emailId'].invalid && (j.controls['emailId'].dirty || j.controls['emailId'].touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="j.controls['emailId'].errors.pattern" class="text-danger">
+                                {{globals.emailErrorPattern}}
+                              </div>
+                            </div>                        
+                          </div>
+                        <div class="form-group ">
+                          <label for="name">Mobile Number</label>
+                          <input formControlName="mobileNumber" id="mobileNumber" type="text"
+                            placeholder="Mobile Number" class="form-control"
+                            [ngClass]="{ 'is-invalid': parentSubmitted && j.controls['mobileNumber'].errors || j.controls['mobileNumber'].invalid && (j.controls['mobileNumber'].dirty || j.controls['mobileNumber'].touched)}">
+                          <div
+                            *ngIf="parentSubmitted && j.controls['mobileNumber'].errors || j.controls['mobileNumber'].invalid && (j.controls['mobileNumber'].dirty || j.controls['mobileNumber'].touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="j.controls['mobileNumber'].errors.required">Required</div>
+                            <div
+                              *ngIf="j.controls['mobileNumber'].errors.pattern || j.controls['mobileNumber'].errors.maxlength || j.controls['mobileNumber'].errors.minlength">
+                              Phone number must be at least 10 numbers</div>
+                          </div>
+                        </div>
+                        <div class="form-group ">
+                          <label for="name">Designation</label>
+                          <input formControlName="designation" id="designation" type="text" placeholder="Designation"
+                            class="form-control">
+                        </div>
+                        <div class="form-group ">
+                          <span class="">
+                            <label for="id">Occupation</label>
+                            <ng-select [items]="occupationArr" formControlName="occupationId" bindLabel="name"
+                              bindValue="id" placeholder="Choose"
+                              [ngClass]="{ 'is-invalid': parentSubmitted && j.controls['occupationId'].errors || j.controls['occupationId'].invalid && (j.controls['occupationId'].dirty || j.controls['occupationId'].touched)}">
+                            </ng-select>
+                            <div
+                              *ngIf="parentSubmitted && j.controls['occupationId'].errors ||j.controls['occupationId'].invalid && (j.controls['occupationId'].dirty || j.controls['occupationId'].touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="j.controls['occupationId'].errors.required">Required</div>
+                            </div>
+                          </span>
+                        </div>
+
+
+                        <div class="form-group ">
+                          <label for="name">Organization Name</label>
+                          <input formControlName="organizationName" id="organizationName" type="text"
+                            placeholder="Organization Name" class="form-control">
+                        </div>
+
+                        <div class="form-group ">
+                          <label for="name">Annual Income</label>
+                          <input formControlName="annualIncome" id="annualIncome" type="number"
+                            placeholder="Annual Income" class="form-control"
+                            [ngClass]="{ 'is-invalid': parentSubmitted && j.controls['annualIncome'].errors || j.controls['annualIncome'].invalid && (j.controls['annualIncome'].dirty || j.controls['annualIncome'].touched)}">
+
+                          <div
+                            *ngIf="parentSubmitted && j.controls['annualIncome'].errors || j.controls['annualIncome'].invalid && (j.controls['annualIncome'].dirty || j.controls['annualIncome'].touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="j.controls['annualIncome'].errors.required">Required</div>
+                          </div>
+                        </div>
+                      </div>
+                    </perfect-scrollbar>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right">
+                <button type="submit" class="btn btn-primary mb-4" (click)="personalUpdate('ParentDetails')"
+                  *ngIf="personalObj.id">update</button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="5">
+        <a ngbNavLink>
+          <p class="font-weight-bold mb-0">Admission Information</p>
+        </a>
+        <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+          <div class="row mt-2">
+            <div class="col-12">
+              <div class="row">
+              <div class="col-xl-4 "></div>
+                <div class="col-xl-4">
+                  <div class="card-2 userCard mb-2 pt-2">
+                      <label class="card-2-hedaing">Admission Information</label>
+                      <perfect-scrollbar class="" [config]="configData">
+                        <div class="card-body">
+                          <div class="form-group ">
+                            <span class="">
+                              <label for="productname">Academic Year</label>
+                              <ng-select [items]="yearArr" id="noOfFreeDays" formControlName="academicYearId"
+                                bindLabel="name" bindValue="id" placeholder="Choose"
+                                [(ngModel)]="personalObj.academicYearId"
+                                [ngClass]="{ 'is-invalid': personalSubmitted && f.academicYearId.errors || f.academicYearId.invalid && (f.academicYearId.dirty || f.academicYearId.touched)}">
+                              </ng-select>
+                              <div
+                                *ngIf="personalSubmitted && f.academicYearId.errors || f.academicYearId.invalid && (f.academicYearId.dirty || f.academicYearId.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.academicYearId.errors.required">Required</div>
+                              </div>
+                            </span>
+                          </div>
+                          <div class="form-group">
+                            <span class="">
+                              <label for="stdId">Standard</label>
+                              <ng-select [items]="stdArr" id="stdId" formControlName="stdId" bindLabel="name"
+                                bindValue="id" placeholder="Choose" [(ngModel)]="personalObj.stdId"
+                                [ngClass]="{ 'is-invalid': personalSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)}">
+                              </ng-select>
+                              <div
+                                *ngIf="personalSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.stdId.errors.required">Required</div>
+                              </div>
+                            </span>
+                          </div>
+                          <div class="form-group">
+                            <span class="">
+                              <label for="productname">Admission Category</label>
+                              <ng-select [items]="admissionCategoryArr" id="noOfFreeDays"
+                                formControlName="admissionCategoryId" bindLabel="name" bindValue="id"
+                                placeholder="Choose" [(ngModel)]="personalObj.admissionCategoryId"
+                                [ngClass]="{ 'is-invalid': personalSubmitted && f.admissionCategoryId.errors || f.admissionCategoryId.invalid && (f.admissionCategoryId.dirty || f.admissionCategoryId.touched)}">
+                              </ng-select>
+                              <div
+                                *ngIf="personalSubmitted && f.admissionCategoryId.errors || f.admissionCategoryId.invalid && (f.admissionCategoryId.dirty || f.admissionCategoryId.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.admissionCategoryId.errors.required">Required</div>
+                              </div>
+                            </span>
+                          </div>
+                          <div class="form-group">
+                            <span class="">
+                              <label for="productname">Session</label>
+                              <ng-select [items]="sessionArr" id="noOfFreeDays" formControlName="sessionId"
+                                bindLabel="longName" bindValue="id" placeholder="Choose"
+                                [(ngModel)]="personalObj.sessionId"
+                                [ngClass]="{ 'is-invalid': personalSubmitted && f.sessionId.errors || f.sessionId.invalid && (f.sessionId.dirty || f.sessionId.touched)}">
+                              </ng-select>
+                              <div
+                                *ngIf="personalSubmitted && f.sessionId.errors || f.sessionId.invalid && (f.sessionId.dirty || f.sessionId.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.sessionId.errors.required">Required</div>
+                              </div>
+                            </span>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="form-group ">
+                                <label for="example-date-input">Date Of Admission</label>
+                                <input class="form-control" placeholder="yyyy-mm-dd" [disabled]="personalObj.id" formControlName="dateOfAdmission"
+                                  ngbDatepicker #dateOfAdmission="ngbDatepicker"
+                                  [(ngModel)]="personalObj.dateOfAdmission" id="example-date-input" (click)="dateOfAdmission.toggle()" 
+                                  [ngClass]="{ 'is-invalid': personalSubmitted && f.dateOfAdmission.errors || f.dateOfAdmission.invalid && (f.dateOfAdmission.dirty || f.dateOfAdmission.touched)}">
+                                <div *ngIf="personalSubmitted && f.dateOfAdmission.errors || f.dateOfAdmission.invalid && (f.dateOfAdmission.dirty || f.dateOfAdmission.touched)"
+                                  class="invalid-feedback">
+                                  <div *ngIf="f.dateOfAdmission.errors.required">Required</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <span class="">
+                              <label for="rollNumber">Roll Number</label>
+                              <input class="form-control" type="number" id="rollNumber" formControlName="rollNumber"
+                                class="form-control" placeholder="Roll Number" [(ngModel)]="personalObj.rollNumber">
+                              <!-- <div
+                            *ngIf="personalSubmitted && f.rollNumber.errors || f.rollNumber.invalid && (f.rollNumber.dirty || f.rollNumber.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="f.rollNumber.errors.required">Required</div>
+                             </div> -->
+                            </span>
+                          </div>
+                        </div>
+                      </perfect-scrollbar>
+                  </div>
+                  <div class="text-right mt-4">
+                    <button type="submit" class="btn btn-primary mb-4" (click)="personalUpdate('AdmissionInformation')"
+                      *ngIf="personalObj.id">update</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+      <!-- <li [ngbNavItem]="6">
+        <a ngbNavLink>
+          <p class="font-weight-bold mb-0">Academic Records</p>
+        </a>
+        <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+          <app-academic-records (academicObj)="academicData($event)"></app-academic-records>
+        </ng-template>
+      </li> -->
+      <li [ngbNavItem]="7">
+        <a ngbNavLink>
+          <p class="font-weight-bold mb-0">Document</p>
+        </a>
+        <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+
+          <div class="card  mt-3">
+            <div class="card-body margin ">
+              <div formArrayName="documentList">
+                <div class="row">
+                  <div class="col-lg-8">
+                    <h5>DOCUMENT LIST</h5>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class=" text-right mb-3 ml-3">
+                      <button type="button" class="btn btn-success btn-sm inner" (click)="addRow()"><i
+                          class="mdi mdi-plus mr-1 mb-3"></i>Add Document List</button>
+                    </div>
+                  </div>
+                </div>
+                <table id="example" class="table">
+                  <thead width="100%">
+                    <tr>
+                      <th>Document Name</th>
+                      <th width="14%">Upload</th>
+                      <th>Upload Date </th>
+                      <th>Status </th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody width="100%">
+                    <tr *ngFor="let documentObj of documentListArr.controls; let i = index" [formGroupName]="i">
+                      <td>
+                        <div class="row">
+                          <div class="col-12">
+                            <input type="text" class="form-control style" formControlName="document"
+                              placeholder="Document Name">
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="row">
+                          <div class="col-12 mt-2">
+                            <div class="has-float-label">
+                              <label class=" col-form-label">File</label>
+                              <input name="file" type="file" class="">
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="row">
+                          <div class="col-12">
+                            <input class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker
+                              #uploadDate="ngbDatepicker" formControlName="uploadDate" (click)="uploadDate.toggle()">
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="badge badge-danger font-size-11 mt-2">Pending</div>
+                      </td>
+                      <td>
+                        <i class="fa fa-trash text-danger delIconSize ml-3 mt-2" (click)="deleteRow(i)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav"></div>
+  </form>
+</div>

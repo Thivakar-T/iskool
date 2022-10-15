@@ -1,0 +1,48 @@
+<div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-6">
+            <!-- <app-page-title title=""></app-page-title> -->
+            <div class="mb-2 pageHeading">
+              <h4 class="">Cancellation List</h4>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="text-right  ">
+              <button type="button" class="btn btn-danger btn-sm mb-2 " routerLink="/admission/admission-cancellation">
+                Cancel Admission 
+              </button>
+            </div>
+          </div>
+        </div>
+
+    <div class=" card-2 cardBorder ">
+      <div class="card-body">
+        <table id="cancellation" class="table table-bordered" style="width:100%">
+          <thead>
+            <tr>
+              <th>S. No</th>
+              <th>Student Name</th>
+              <th>Registration Number</th>
+              <th>Standard</th>
+              <th>Section</th>
+              <th>Admission Date</th>
+              <th>Cancellation Date</th>
+              <th>Authority Person</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor = "let admissionCancellation of admissionCancellationHistoryDTOArr ;let i = index">
+              <td>{{i + 1}}</td>
+                <td >{{admissionCancellation.studentName}}</td>
+                <td>{{admissionCancellation.registrationNumber}}</td>
+                <td>{{admissionCancellation.standardName}}</td>
+                <td>{{admissionCancellation.sectionName}}</td>
+                <td>{{admissionCancellation.admissionDate}}</td>
+                <td>{{admissionCancellation.cancellationDate}}</td>
+                <td>{{admissionCancellation.authorityPerson}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

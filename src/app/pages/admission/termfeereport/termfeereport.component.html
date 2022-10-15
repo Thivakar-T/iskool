@@ -1,0 +1,78 @@
+
+<div class="container-fluid">
+  <div class="col-xl-6">
+<!-- <app-page-title title="Term Fee Report"></app-page-title> -->
+<div class="mb-2 pageHeading">
+  <h4 class="">Term Fee Report</h4>
+</div>
+</div>
+<form [formGroup]="reportform" >
+  <div class="row mt-3">
+    <div class="col-xl-12">
+      <div class="card-2">
+        <div class="card-body">
+          <div class="row">
+            <!-- <div class="col-sm-4">
+            </div> -->
+            <div class="col-xl-3 ">
+              <div class="form-group  pt-2 ">
+                <label >Standard</label>
+                <ng-select [items]="standardArr" formControlName="stdId" id="stdId" bindLabel="name" bindValue="id"
+                  placeholder="Choose" (change)="getSinglereport($event)"
+                  [ngClass]="{ 'is-invalid': reportSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)}">
+                </ng-select>
+                <div *ngIf="reportSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="f.stdId.errors.required">Required</div>
+                </div>
+              </div>
+            </div>
+            <div class="search">
+              <button type="submit" class="btn btn-success  btn-md mb-2" (click)=" search() ">
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-2 cardBorder" *ngIf="enableCard"> 
+  <label class="card-2-hedaing">Term Fee List</label> 
+    <div class="card-body">
+      <br>
+      <table id="example" class="table table-bordered" style="width:100%">
+        <thead>
+          <tr> 
+            <th>S.No</th>
+            <th>Roll.No</th>
+            <th>Name</th>
+            <th>Reg.No</th>
+            <th>Standard</th>
+            <th>Fees</th>
+            <th>Paid</th>
+            <th>Outstanding</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let admission of termObj.responseList; let i = index">
+                <td>{{i+1}}</td>
+               <td>{{admission.rollNumber}}</td>
+                <td>{{admission.stuName}}</td>
+                <td>{{admission.regNo}}</td> 
+                <td>{{admission.stdName}}</td>
+                <td>{{admission.amount}}</td>
+                <td>{{admission.paidAmount}}</td>
+                <td>{{admission.payableAmount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="text-right mb-4"  *ngIf="enableCard">
+    <button type="submit" class="btn btn-success mb-2" id="download" (click)="downloadPDF()">Download</button>
+
+    <!-- <button class="btn btn-md btn-primary mb-2" id="download" (click)="downloadPDF()">Download</button> -->
+  </div>
+  </form>
+</div>

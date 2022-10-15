@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="">
+    <app-page-title title="SEMESTER"></app-page-title>
+  </div>
+  <div class="card cardBorder mt-3 ">
+    <div class="card-body size ">
+      <br>
+      <table id="example" class="table" style="width:100%">
+        <thead>
+          <tr>
+            <th>S.NO</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let sem of semesterArr;let i = index">
+            <td>{{i + 1}}</td>
+
+            <td>{{sem.name}}</td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

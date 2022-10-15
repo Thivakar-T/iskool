@@ -1,0 +1,86 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-6">
+      <!-- <app-page-title title="Occupation"></app-page-title>  -->
+      <div class="mb-2 pageHeading">
+        <h4 class=""> Occupation</h4>
+      </div>
+    </div>
+    <div class="col-xl-6">
+      <div class="text-right my-auto ">
+        <button type="button" (click)="openGST(Occupation)" class="btn btn-success btn-sm mb-2">
+          <i class="mdi mdi-plus mr-1 mb-3"></i>Add Occupation
+        </button>
+      </div>
+    </div>
+  </div>
+    <div class="row">
+      <div class="col-xl-12">
+    
+        <div class=" card-2">
+          <div class="card-body">
+            <table id="occupation" class="table table-bordered" style="width:100%">
+              <thead>
+                <tr>
+                  <th >S.No</th>
+                  <th>Name</th>
+                  <th class="ml-auto">Action</th>
+              </tr>
+              </thead>
+              <tbody >
+                <tr  *ngFor="let OccupationList of OccupationArr;let i = index">
+                  <td>{{i+1}}</td>
+                    <td>{{OccupationList.name}}</td>
+                    <td >
+                        <i class="fas fa-edit  text-success mr-2 " (click)="editOccupation(OccupationList, Occupation)"></i>
+                        <i class="fa fa-trash text-danger ml-auto text-right" aria-hidden="true" (click)="openModal(dModal,OccupationList.id)"></i>
+                      </td>
+                </tr>
+      
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #Occupation  let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title">Occupation</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body" id="myModal">
+          <form [formGroup]="OccupationForm" autocomplete="off" (ngSubmit)="addOccupation(modal)">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input id="name"  type="text" class="form-control" formControlName="name" [(ngModel)]="OccupationObj.name" placeholder="Name"
+              [ngClass]="{ 'is-invalid': OccupationSubmitted && f.name.errors || f.name.invalid && (f.name.dirty || f.name.touched)}" >
+                <div
+                *ngIf="OccupationSubmitted && f.name.errors || f.name.invalid && (f.name.dirty || f.name.touched)"
+                class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">Required</div>
+              </div> 
+              </div>                     
+          <div class="text-right mt-2">
+          <button type="submit" class="btn btn-sm btn-primary mb-2">{{buttonText}}</button>
+        </div>
+      </form>
+      </div>
+    </ng-template>
+    <ng-template #dModal let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div>
+        <h6 class="ml-3 mt-2">Are you sure want to delete this ?</h6>
+        <div class="text-right mt-2 mr-2">
+          <!-- <button type="button" class="btn btn-danger  mb-3" (click)="modal.dismiss('Cross click')">No</button> -->
+          <button type="button" class="btn btn-primary btn-sm ml-2 mb-3" (click)="deleteData(modal)">Yes</button>
+        </div>
+      </div>
+    </ng-template>

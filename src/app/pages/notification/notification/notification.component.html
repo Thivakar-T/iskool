@@ -1,0 +1,217 @@
+<div class="container-fluid">
+    <div class="">
+        <!-- <app-page-title title="Fee"></app-page-title> -->
+        <div class="mb-3 pageHeading">
+            <h4 class="">Notification</h4>
+        </div>
+
+    </div>
+            <form [formGroup]="notificationForm" autocomplete="off">
+                <div class="row">
+                    <div class="col-xl-12">
+                 <div class="card-2  mt-2">
+                    <div class="card-body box ">
+                <div class="row mx-auto">
+                    <div class="col-12">
+                        <div class="form-group ">
+                            <label for="title">Title</label>
+                            <input class="form-control" id="title" formControlName="title" type="text"
+                                class="form-control" placeholder="Title"  [(ngModel)]="notifyObj.title"
+                                [ngClass]="{ 'is-invalid': notificationSubmitted && f.title.errors || f.title.invalid && (f.title.dirty || f.title.touched)}">
+                            <div *ngIf="notificationSubmitted && f.title.errors || f.title.invalid && (f.title.dirty || f.title.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.title.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mx-auto">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="title">Type</label><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group ml-4">
+                                   
+                                        <input type="checkbox" class="form-check-input" value="Email" formControlName="isapplicableforEmail"
+                                        [ngClass]="{ 'is-invalid': notificationSubmitted && f.isapplicableforEmail.errors }" >
+                                         <label class="form-check-label">
+                                        Email
+                                    </label>
+                                    <div *ngIf="notificationSubmitted && f.isapplicableforEmail.errors" class="invalid-feedback">Required</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group ml-4">
+                                        <input type="checkbox" class="form-check-input" value="Sms" formControlName="isapplicableforSms" 
+                                        [ngClass]="{ 'is-invalid': notificationSubmitted && f.isapplicableforSms.errors }">
+                                        <label class="form-check-label">
+                                            Sms
+                                        </label>
+                                        <div *ngIf="notificationSubmitted && f.isapplicableforSms.errors" class="invalid-feedback">Required</div>
+
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group ml-4">
+                                        <input type="checkbox" class="form-check-input" value="Whatsapp" formControlName="isapplicableforWhatsapp" 
+                                        [ngClass]="{ 'is-invalid': notificationSubmitted && f.isapplicableforWhatsapp.errors }">
+                                        <label class="form-check-label">
+                                            Whatsapp
+                                        </label>
+                                        <div *ngIf="notificationSubmitted && f.isapplicableforWhatsapp.errors" class="invalid-feedback">Required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="title">Notify Type</label><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group ml-4">
+                                        <input type="checkbox" class="form-check-input" value="Faculty" formControlName="isapplicableforFaculty"
+                                        [ngClass]="{ 'is-invalid': notificationSubmitted && f.isapplicableforFaculty.errors }">
+                                        <label class="form-check-label">
+                                            Faculty
+                                        </label>
+                                        <div *ngIf="notificationSubmitted && f.isapplicableforFaculty.errors" class="invalid-feedback">Required</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group ml-4">
+                                        <input type="checkbox" class="form-check-input" value="Student" formControlName="isapplicableforStudent" 
+                                        [ngClass]="{ 'is-invalid': notificationSubmitted && f.isapplicableforStudent.errors }">
+                                        <label class="form-check-label">
+                                            Student
+                                        </label>
+                                        <div *ngIf="notificationSubmitted && f.isapplicableforStudent.errors" class="invalid-feedback">Required</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group ml-4">
+                                        <input type="checkbox" class="form-check-input" value="Parent" formControlName="isapplicableforParent" 
+                                        [ngClass]="{ 'is-invalid': notificationSubmitted && f.isapplicableforParent.errors }">
+                                        <label class="form-check-label">
+                                            Parent
+                                        </label>
+                                        <div *ngIf="notificationSubmitted && f.isapplicableforParent.errors" class="invalid-feedback">Required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div  class="col-6">                  
+                        <label for="title">Notify Type</label><br>
+                        <div class="form-group ml-5">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="Faculty" formControlName="isapplicableforFaculty" >Faculty
+                            </label>
+                        </div>
+                        <div class="form-group ml-5">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="Student" formControlName="isapplicableforStudent" >Student
+                            </label>
+                        </div>
+                        <div class="form-group ml-5">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="Parent" formControlName="isapplicableforParent" >Parent
+                            </label>
+                        </div>
+                </div> -->
+            </div>
+
+                <div class="row mx-auto">
+                    <div class="col-6" formArrayName="notificationDtlList">
+                        <div class="form-group"    *ngFor="let notifyObj of notifyDocumentArr.controls; let i = index" [formGroupName]="i">
+                            <label for="message">Standard</label>
+                            <ng-select [items]="standardArr" class="custom" placeholder="Choose" bindLabel="name"
+                            bindValue="id" formControlName="standardId" id="standardId" (change)="select($event)"
+                            [ngClass]="{ 'is-invalid': notificationSubmitted && notifyDocumentArr.controls[i].get('standardId').errors || notifyDocumentArr.controls[i].get('standardId').invalid && (notifyDocumentArr.controls[i].get('standardId').dirty || notifyDocumentArr.controls[i].get('standardId').touched)}">
+                        </ng-select>
+                            <div *ngIf="notificationSubmitted && notifyDocumentArr.controls[i].get('standardId').errors || notifyDocumentArr.controls[i].get('standardId').invalid && (notifyDocumentArr.controls[i].get('standardId').dirty || notifyDocumentArr.controls[i].get('standardId').touched)"
+                                class="invalid-feedback">
+                                <div
+                                    *ngIf="notifyDocumentArr.controls[i].get('standardId').errors.required">
+                                    Required</div>
+                            </div>
+                            <!-- <mat-select  placeholder="Choose" multiple
+                                class="form-control" formControlName="standardId">
+                                <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">All
+                                </mat-option>
+                                <mat-option *ngFor="let filters of standardArr"  >
+                                    {{filters.name}}
+                                </mat-option>
+                            </mat-select> -->
+
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group" for="triggerType">
+                            <label for="triggerType">Trigger Type</label>
+                            <ng-select [items]="['Now','Schedule']" class="custom" placeholder="Choose" bindLabel="name"
+                                bindValue="id" formControlName="triggerType" id="triggerType" (change)="  selectType($event)"
+                                 [ngClass]="{ 'is-invalid': notificationSubmitted && f.triggerType.errors || f.triggerType.invalid && (f.triggerType.dirty || f.triggerType.touched)}">
+                            </ng-select>
+                            <div *ngIf="notificationSubmitted && f.triggerType.errors || f.triggerType.invalid && (f.triggerType.dirty || f.triggerType.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.triggerType.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6" *ngIf="enableTriggerDate">
+                        <div class="form-group ">
+                            <label for="title">Trigger Date</label>
+                            <input class="form-control"  (click)="triggerDate.toggle()" ngbDatepicker #triggerDate="ngbDatepicker"
+                            id="triggerDate" formControlName="triggerDate" class="form-control"  
+                            placeholder="yyyy-mm-dd" 
+                                [ngClass]="{ 'is-invalid': notificationSubmitted && f.triggerDate.errors || f.triggerDate.invalid && (f.triggerDate.dirty || f.triggerDate.touched)}">
+                            <div *ngIf="notificationSubmitted && f.triggerDate.errors || f.triggerDate.invalid && (f.triggerDate.dirty || f.triggerDate.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.triggerDate.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6" *ngIf="enableTriggerDate">
+                        <div class="form-group ">
+                            <label for="title">Trigger Time</label>
+                            <input class="form-control" id="title" formControlName="triggerTime" type="text"
+                                class="form-control" placeholder="Trigger Time"
+                                [ngClass]="{ 'is-invalid': notificationSubmitted && f.triggerTime.errors || f.triggerTime.invalid && (f.triggerTime.dirty || f.triggerTime.touched)}">
+                            <div *ngIf="notificationSubmitted && f.triggerTime.errors || f.triggerTime.invalid && (f.triggerTime.dirty || f.triggerTime.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.triggerTime.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+              
+            </div>
+            <div class="row mx-auto">
+            <div class="col-12">
+                <label for="message">Message</label>
+                <angular-editor  formControlName="message"id="angularEditor" 
+                   placeholder="Message"
+                    [ngClass]="{ 'is-invalid': notificationSubmitted && f.message.errors || f.message.invalid && (f.message.dirty || f.message.touched)}">
+               </angular-editor>
+                <div *ngIf="notificationSubmitted && f.message.errors || f.message.invalid && (f.message.dirty || f.message.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="f.message.errors.required">Required</div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="text-right mt-3">
+        <button type="submit" (click)="submit()" class="btn btn-md btn-primary mb-2">{{buttonText}}</button>
+    </div>
+    </div>
+    </div>
+         </form>
+         </div>
+    

@@ -1,0 +1,107 @@
+<div class="container-fluid">
+    <!-- <app-page-title title="Search Student"></app-page-title> -->
+    <div class="mb-2 pageHeading">
+      <h4 class="">Admission Record</h4>
+    </div>
+  <form [formGroup]="studentform" autocomplete="off">
+    <div class="card-2 mt-3">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-3">
+            <div class="form-group pt-2 ">
+              <span class="">
+                <label for="name">Student Name</label>
+                <input class="form-control" #name type="text" (keyup)="nameonlyshow(name.value)" placeholder="Student Name"
+                  formControlName="name"
+                  [ngClass]="{ 'is-invalid': studentSubmitted && studentform.controls['name'].errors || studentform.controls['name'].invalid && (studentform.controls['name'].dirty || studentform.controls['name'].touched)}">
+                  <div *ngIf="studentSubmitted && studentform.controls['name'].errors || studentform.controls['name'].invalid && (studentform.controls['name'].dirty || studentform.controls['name'].touched)" class="invalid-feedback">
+                  <div *ngIf="studentform.controls['name'].errors.required">Required</div>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="my-auto pt-4">
+            <P>OR</P>
+          </div>
+          <div class="col-xl-3">
+            <div class="form-group  pt-2">
+              <span class="">
+                <label for="number">Roll Number</label>
+                <input class="form-control" #number type="number" (keyup)="rollnoonlyshow(number.value)" placeholder="Roll Number" formControlName="rollNumber"
+                [ngClass]="{ 'is-invalid': studentSubmitted && studentform.controls['rollNumber'].errors || studentform.controls['rollNumber'].invalid && (studentform.controls['rollNumber'].dirty || studentform.controls['rollNumber'].touched)}">
+                  <div *ngIf="studentSubmitted && studentform.controls['rollNumber'].errors || studentform.controls['rollNumber'].invalid && (studentform.controls['rollNumber'].dirty || studentform.controls['rollNumber'].touched)" class="invalid-feedback">
+                    <div *ngIf="studentform.controls['rollNumber'].errors.required">Required</div>
+                  </div>
+              </span>
+            </div>
+          </div>
+          <div class="my-auto pt-4">
+            <P>OR</P>
+          </div>
+          <div class="col-xl-3">
+            <div class="form-group pt-2">
+              <span class="">
+                <label for="standard">Standard</label>
+                <ng-select [items]="standardArr" id="standaerd" bindLabel="name" bindValue="id" (change)="stdonlyshow()" placeholder="Choose"
+                  formControlName="stdId" (change)="selectStandardModule($event)"
+                  [ngClass]="{ 'is-invalid': studentSubmitted && studentform.controls['stdId'].errors || studentform.controls['stdId'].invalid && (studentform.controls['stdId'].dirty || studentform.controls['stdId'].touched)}">
+                </ng-select>
+                <div *ngIf="studentSubmitted && studentform.controls['stdId'].errors || studentform.controls['stdId'].invalid && (studentform.controls['stdId'].dirty || studentform.controls['stdId'].touched)" class="invalid-feedback">
+                  <div *ngIf="studentform.controls['stdId'].errors.required">Required</div>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="mt-1">
+            <div class="text-right mt-4 ">
+              <button type="submit" class="btn btn-success   mt-2 " (click)="updateStudent($event)">
+                Search
+              </button>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="card-2 cardBorder  mt-3 " *ngIf="enableCard">
+      <label class="label-size card-2-hedaing">Student List</label>
+      <div class="card-body">
+
+        <br>
+        <table id="student" class="table table-bordered"  style="width:100%">
+          <thead>
+            <tr>
+              <th >S.No</th>
+              <th>Student Name</th>
+              <th>Registration Number</th>
+              <th>Roll Number</th>
+              <th>Academic Year</th>
+              <th>Standard</th>
+              <th class="text-left">Action</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let search of searchStudentArr; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{search.name}}</td>
+              <td>{{search.regNo}}</td>
+              <td>{{search.rollNumber}}</td>
+              <td>{{search.academicYearName}}</td>
+              <td>{{search.standardName}}</td>
+              <td class="text-left">
+                  <i class="fa fa-eye text-primary mr-2 " aria-hidden="true" routerLink="/admission/student-information/{{search.id}}"></i> 
+                 <i class="fa fa-edit  text-success ml-2" aria-hidden="true" routerLink="/admission/new/{{search.id}}"></i>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </form>
+</div>

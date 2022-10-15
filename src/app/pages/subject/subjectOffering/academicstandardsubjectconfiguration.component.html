@@ -1,0 +1,421 @@
+<div class="container-fluid">
+  <!-- <app-page-title title="Subject Offering"></app-page-title> -->
+  <div class="mb-3 pageHeading">
+    <h4 class="">Subject Offering</h4>
+  </div>
+  <form [formGroup]="subjectOfferForm" autocomplete="off">
+    <div class="row mt-3">
+      <div class="col-xl-12">
+        <div class="card-2">
+          <div class="card-body">
+            <div class="row">
+             <div class="col-xl-3">
+                <div class="form-group">
+                  <span class="">
+                    <label for="yearId">Academic Year</label>
+                    <ng-select [items]="yearArr"  id="yearId" bindLabel="name" bindValue="id" placeholder="Choose"
+                      formControlName="yearId" (change)="getYearId($event)" 
+                      [ngClass]="{ 'is-invalid': searchSubmitted && b.yearId.errors || b.yearId.invalid && (b.yearId.dirty || b.yearId.touched)}"
+                    ></ng-select>
+                    <div
+                    *ngIf="searchSubmitted && b.yearId.errors || b.yearId.invalid && (b.yearId.dirty || b.yearId.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="b.yearId.errors.required">Required</div>
+                  </div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-xl-3">
+                <div class="form-group">
+                  <span class="">
+                    <label for="standardId">Standard</label>
+                    <ng-select [items]="standardArr"  id="standardId" bindLabel="name" bindValue="id" placeholder="Choose"
+                      formControlName="standardId" (change)="getStdId($event)"
+                      [ngClass]="{ 'is-invalid': searchSubmitted && b.standardId.errors || b.standardId.invalid && (b.standardId.dirty || b.standardId.touched)}"
+                      >
+                    </ng-select> 
+                    <div
+                    *ngIf="searchSubmitted && b.standardId.errors || b.standardId.invalid && (b.standardId.dirty || b.standardId.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="b.standardId.errors.required">Required</div>
+                  </div>
+                  </span>
+                </div>
+              </div>
+              <div class="mt-1">
+                <button type="submit" class="btn btn-success  btn-md  mt-4" (click)="searchSubjectOffer()">
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+    <div *ngIf="enableCard">
+      <form [formGroup]="subjectForm" autocomplete="off" >
+      <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom">
+        <li [ngbNavItem]="1" class="m-0 p-0">
+          <a ngbNavLink>
+            <p class="font-weight-bold mb-0 m-0 p-0">SUBJECT</p>
+          </a>
+          <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+            <div class="card-2 extraBottom">
+              <perfect-scrollbar class="" [config]="configData">
+              <div class="card-body subCard">
+                <div formArrayName="subjectOfferDtlList">
+                  <div class=" text-right mb-3 ml-3">
+                    <button type="button" class="btn btn-success btn-sm" (click)="addSubject()">
+                      <i class="mdi mdi-plus mr-1 mb-3"></i>Add Subject
+                    </button>
+                  </div>
+                  <table id="subjectoffering" class="table">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th colspan="2" class="text-center">Practical</th>
+                        <th colspan="2" class="text-center">Theory</th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                      <tr>
+                        <th class="" width="15%"><label for="">Subject</label></th>
+                        <th class="" width="15%"><label for="">Max</label></th>
+                        <th class="" width="15%"><label for="">Min</label></th>
+                        <th class="" width="15%"><label for="">Max</label></th>
+                        <th class="" width="15%"><label for="">Min</label></th>
+                        <th class="" width="15%"><label for="">Total Marks</label></th>
+                        <th class="text-center" width="15%"><label for="">Action</label></th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="noBorder" *ngFor="let subjectObj of subjectArr.controls; let i = index"
+                        [formGroupName]="i">
+                        <td>
+                          <div>
+                            <span class=" ">
+                              <ng-select [items]="subjectArrList" id="standard" bindLabel="name" bindValue="id" (change)="selectSubjectType($event,i,subjectObj)"
+                                placeholder="Choose" formControlName="subjectId"
+                                [ngClass]="{ 'is-invalid': subjectSubmitted && subjectArr.controls[i].get('subjectId').errors || subjectArr.controls[i].get('subjectId').invalid && (subjectArr.controls[i].get('subjectId').dirty || subjectArr.controls[i].get('subjectId').touched)}">
+                              </ng-select>
+                              <div
+                                *ngIf="subjectSubmitted && subjectArr.controls[i].get('subjectId').errors || subjectArr.controls[i].get('subjectId').invalid && (subjectArr.controls[i].get('subjectId').dirty || subjectArr.controls[i].get('subjectId').touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="subjectArr.controls[i].get('subjectId').errors.required">Required
+                                </div>
+                              </div>
+                            </span>
+                          </div>
+                        </td>
+                        <td><input type="number" class="form-control " placeholder="Max" name="Max" formControlName="practicalMax" (keyup)="calculate()" [readonly]="subjectObj.value.subjectType  ==  'Theory'"
+                        > 
+                        <!-- [ngClass]="{ 'is-invalid': subjectSubmitted && subjectArr.controls[i].get('practicalMax').errors || subjectArr.controls[i].get('practicalMax').invalid && (subjectArr.controls[i].get('practicalMax').dirty || subjectArr.controls[i].get('practicalMax').touched)}"
+                           <div
+                            *ngIf="!subjectSubmitted && subjectArr.controls[i].get('practicalMax').errors || subjectArr.controls[i].get('practicalMax').invalid && (subjectArr.controls[i].get('practicalMax').dirty || subjectArr.controls[i].get('practicalMax').touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="subjectArr.controls[i].get('practicalMax').errors.required ">Required
+                            </div>
+                          </div> -->
+                        </td>
+
+                        <!-- <td *ngIf="setBothEnable"><input type="number" class="form-control " placeholder="Max" name="Max"
+                              formControlName="practicalMax" (keyup)="calculate()"></td> -->
+
+                        <td><input type="number" class="form-control " placeholder="Min" name="Min" formControlName="practicalMin" (keyup)="calculate()" [readonly]="subjectObj.value.subjectType  ==  'Theory'"
+                         >
+                         <!-- [ngClass]="{ 'is-invalid': subjectSubmitted && subjectArr.controls[i].get('practicalMin').errors || subjectArr.controls[i].get('practicalMin').invalid && (subjectArr.controls[i].get('practicalMin').dirty || subjectArr.controls[i].get('practicalMin').touched)}"
+                          <div
+                            *ngIf="subjectSubmitted && subjectArr.controls[i].get('practicalMin').errors || subjectArr.controls[i].get('practicalMin').invalid && (subjectArr.controls[i].get('practicalMin').dirty || subjectArr.controls[i].get('practicalMin').touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="subjectArr.controls[i].get('practicalMin').errors.required">Required
+                            </div>
+                            </div> -->
+                          </td>
+
+                        <td><input type="number" class="form-control " placeholder="Max" name="Max"
+                            formControlName="theoryMax" (keyup)="calculate()" [readonly]="subjectObj.value.subjectType  ==  'Practical'"
+                            >
+                            <!-- [ngClass]="{ 'is-invalid': subjectSubmitted && subjectArr.controls[i].get('theoryMax').errors || subjectArr.controls[i].get('theoryMax').invalid && (subjectArr.controls[i].get('theoryMax').dirty || subjectArr.controls[i].get('theoryMax').touched)}"
+                             <div
+                            *ngIf="subjectSubmitted && subjectArr.controls[i].get('theoryMax').errors || subjectArr.controls[i].get('theoryMax').invalid && (subjectArr.controls[i].get('theoryMax').dirty || subjectArr.controls[i].get('theoryMax').touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="subjectArr.controls[i].get('theoryMax').errors.required ">Required
+                            </div>
+                          </div> -->
+                          </td>
+
+                        <td><input type="number" class="form-control " placeholder="Min" name="Min" formControlName="theoryMin" (keyup)="calculate()" [readonly]="subjectObj.value.subjectType  ==  'Practical'"
+                          > 
+                          <!-- [ngClass]="{ 'is-invalid': subjectSubmitted && subjectArr.controls[i].get('theoryMin').errors || subjectArr.controls[i].get('theoryMin').invalid && (subjectArr.controls[i].get('theoryMin').dirty || subjectArr.controls[i].get('theoryMin').touched)}"
+                         <div
+                          *ngIf="subjectSubmitted && subjectArr.controls[i].get('theoryMin').errors || subjectArr.controls[i].get('theoryMin').invalid && (subjectArr.controls[i].get('theoryMin').dirty || subjectArr.controls[i].get('theoryMin').touched)"
+                          class="invalid-feedback">
+                          <div *ngIf="subjectArr.controls[i].get('theoryMin').errors.required">Required
+                          </div>
+                        </div> -->
+                        </td>
+
+                        <td><input readonly class="form-control" placeholder="Total" name="totalMarks"
+                            formControlName="totalMarks" readonly (keyup)="calculate()">
+                          <div
+                            *ngIf="subjectSubmitted && subjectArr.controls[i].get('totalMarks').errors || subjectArr.controls[i].get('totalMarks').invalid && (subjectArr.controls[i].get('totalMarks').dirty || subjectArr.controls[i].get('totalMarks').touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="subjectArr.controls[i].get('totalMarks').errors.required">Required
+                            </div>
+                          </div>
+                        </td>
+                        <td class="text-center"><i class="fa fa-trash text-danger delIconSize ml-2 mt-2" aria-hidden="true"
+                            (click)="deleteterm(i)"></i></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              </perfect-scrollbar>
+            </div>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink>
+            <p class="font-weight-bold mb-0">FACULTY MAPPING</p>
+          </a>
+          <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+            <div class="card-2 extraBottom">
+              <perfect-scrollbar class="" [config]="configData">
+              <div class="card-body userCard">
+                <div formArrayName="facultyMappingList">
+                  <div class=" text-right mb-3 ml-3">
+                    <button type="button" class="btn btn-success btn-sm" (click)="addFaculty()">
+                      <i class="mdi mdi-plus mr-1 mb-3"></i>Add Faculty
+                    </button>
+                  </div>
+                  <table id="subjectoffering" class="table">
+                    <thead>
+                      <tr>
+                        <th class=""><label for="">Subject </label></th>
+                        <th class=""><label for="">Section</label></th>
+                        <th class=""><label for="">Faculty</label></th>
+                        <th class=""><label for="">Class Room</label></th>
+                        <th width="20%" class="text-center"><label for="">Time Slot</label></th>
+                        <th class="text-center"><label for="">Action</label></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let faculty of facultyMappingList().controls; let  empIndex=index"
+                        [formGroupName]="empIndex">
+                        <td class="form">
+                          <ng-select [items]="subjectArrList" id="standardId" bindLabel="name" bindValue="id"
+                            placeholder="Choose" formControlName="subjectId" (change)="selectSubject($event)"
+                            [ngClass]="{ 'is-invalid': subjectSubmitted && facultyMappingList().controls[empIndex].get('subjectId').errors || facultyMappingList().controls[empIndex].get('subjectId').invalid && (facultyMappingList().controls[empIndex].get('subjectId').dirty || facultyMappingList().controls[empIndex].get('subjectId').touched)}">
+                          </ng-select>
+                          <div
+                            *ngIf="subjectSubmitted && facultyMappingList().controls[empIndex].get('subjectId').errors || facultyMappingList().controls[empIndex].get('subjectId').invalid && (facultyMappingList().controls[empIndex].get('subjectId').dirty || facultyMappingList().controls[empIndex].get('subjectId').touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="facultyMappingList().controls[empIndex].get('subjectId').errors.required">
+                              Required</div>
+                          </div>
+                        </td>
+                        <td class="form">
+                          <ng-select [items]="sectionArr" id="standardId" bindLabel="name" bindValue="id"
+                            placeholder="Choose" formControlName="sectionId" (change)="selectSection($event)"
+                            [ngClass]="{ 'is-invalid': subjectSubmitted && facultyMappingList().controls[empIndex].get('sectionId').errors || facultyMappingList().controls[empIndex].get('sectionId').invalid && (facultyMappingList().controls[empIndex].get('sectionId').dirty || facultyMappingList().controls[empIndex].get('sectionId').touched)}">
+                          </ng-select>
+                          <div
+                            *ngIf="subjectSubmitted && facultyMappingList().controls[empIndex].get('sectionId').errors || facultyMappingList().controls[empIndex].get('sectionId').invalid && (facultyMappingList().controls[empIndex].get('sectionId').dirty || facultyMappingList().controls[empIndex].get('sectionId').touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="facultyMappingList().controls[empIndex].get('sectionId').errors.required">
+                              Required</div>
+                          </div>
+                        </td>
+                        <td class="form">
+                          <ng-select [items]="FacultyArr" id="standardId" bindLabel="name" bindValue="id"
+                            placeholder="Choose" formControlName="facultyId" (change)="selectFaculty($event)"
+                            [ngClass]="{ 'is-invalid': subjectSubmitted && facultyMappingList().controls[empIndex].get('facultyId').errors || facultyMappingList().controls[empIndex].get('facultyId').invalid && (facultyMappingList().controls[empIndex].get('facultyId').dirty || facultyMappingList().controls[empIndex].get('facultyId').touched)}">
+                          </ng-select>
+                          <div
+                            *ngIf="subjectSubmitted && facultyMappingList().controls[empIndex].get('facultyId').errors || facultyMappingList().controls[empIndex].get('facultyId').invalid && (facultyMappingList().controls[empIndex].get('facultyId').dirty || facultyMappingList().controls[empIndex].get('facultyId').touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="facultyMappingList().controls[empIndex].get('facultyId').errors.required">
+                              Required</div>
+                          </div>
+                        </td>
+                        <td class="form">
+                          <ng-select [items]="roomArr" id="standardId" bindLabel="name" bindValue="id"
+                            placeholder="Choose" formControlName="roomId" (change)="selectRoom($event)"
+                            [ngClass]="{ 'is-invalid': subjectSubmitted && facultyMappingList().controls[empIndex].get('roomId').errors || facultyMappingList().controls[empIndex].get('roomId').invalid && (facultyMappingList().controls[empIndex].get('roomId').dirty || facultyMappingList().controls[empIndex].get('roomId').touched)}">
+                          </ng-select>
+                          <div
+                            *ngIf="subjectSubmitted && facultyMappingList().controls[empIndex].get('roomId').errors || facultyMappingList().controls[empIndex].get('roomId').invalid && (facultyMappingList().controls[empIndex].get('roomId').dirty || facultyMappingList().controls[empIndex].get('roomId').touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="facultyMappingList().controls[empIndex].get('roomId').errors.required">
+                              Required</div>
+                          </div>
+                        </td>
+                        <td class="text-center mt-2">
+                          <button type="button" class="btn  btn-info btn-sm mt-1"  (click)="addTime(editModal,faculty)">
+                           Add Slot
+                          </button></td>
+                            <td class="text-center">
+                          <i class="fa fa-trash delIconSize text-danger ml-2 mt-2" (click)="deleteFaculty(empIndex)"
+                            aria-hidden="true"></i>
+                        </td>
+                        <ng-template #editModal let-modal>
+                          <div class="modal-header">
+                            <h4 class="modal-title">Time Slot</h4>
+                            <button type="button" class="close" aria-label="Close"
+                              (click)="modal.dismiss('Cross click')">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body" id="editModal">
+
+                            <div class="row mt-3">
+                              <div class="col-3">
+                                <p class="ml-5">Subject</p>
+                              </div>
+                              <div class="col-1">:</div>
+                              <div class="col-2">{{showObj.subjectName}}</div>
+
+                              <div class="col-3">
+                                <p class="ml-5">Section</p>
+                              </div>
+                              <div class="col-1">:</div>
+                              <div class="col-2">{{showObj.sectionName}}</div>
+
+                              <div class="col-3">
+                                <p class="ml-5">Faculty</p>
+                              </div>
+                              <div class="col-1">:</div>
+                              <div class="col-2">{{showObj.facultyName}}</div>
+
+                              <div class="col-3">
+                                <p class="ml-5">Class Room</p>
+                              </div>
+                              <div class="col-1">:</div>
+                              <div class="col-2">{{showObj.roomName}}</div>
+                            </div>
+
+                            <div class="card-2 mx-auto pt-2 mt-2">
+                              <label class="card-2-hedaing">Hours</label>
+                              <perfect-scrollbar [config]="configData">
+                                <div class="card-body timeArr">
+                                <div class="row">
+                                  <div class="col-lg-8">
+                                    <!-- <h6>Hours</h6> -->
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class=" text-right mb-3 ml-3">
+                                      <button type="button" class="btn btn-success btn-sm"
+                                        (click)="addFaucultyTime(empIndex)">
+                                        <i class="mdi mdi-plus mr-1 mb-3"></i>Add
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                                <table id="subjectoffering" class="table">
+                                  <thead>
+                                    <tr>
+                                      <th width="10%">Day</th>
+                                      <th width="10%">Start Time</th>
+                                      <th width="10%">End Time</th>
+                                      <th width="10%" class="text-center">Action</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody formArrayName="facultyMappingDTLList">
+                                    <tr class="noBorder"
+                                      *ngFor="let skill of facultyMappingDTLList(empIndex).controls;let skillIndex=index"
+                                      [formGroupName]="skillIndex">
+                                      <td>
+                                        <ng-select [items]="dayArr" id="standardId" bindLabel="name" bindValue="id"
+                                          placeholder="Choose" formControlName="dayId"
+                                          [ngClass]="{ 'is-invalid': subjectTimeSubmitted && facultyMappingDTLList(empIndex).controls[skillIndex].get('dayId').errors || facultyMappingDTLList(empIndex).controls[skillIndex].get('dayId').invalid && (facultyMappingDTLList(empIndex).controls[skillIndex].get('dayId').dirty || facultyMappingDTLList(empIndex).controls[skillIndex].get('dayId').touched)}">
+                                        </ng-select>
+                                        <div
+                                          *ngIf="subjectTimeSubmitted && facultyMappingDTLList(empIndex).controls[skillIndex].get('dayId').errors || facultyMappingDTLList(empIndex).controls[skillIndex].get('dayId').invalid && (facultyMappingDTLList(empIndex).controls[skillIndex].get('dayId').dirty || facultyMappingDTLList(empIndex).controls[skillIndex].get('dayId').touched)"
+                                          class="invalid-feedback">
+                                          <div
+                                            *ngIf="facultyMappingDTLList(empIndex).controls[skillIndex].get('dayId').errors.required">
+                                            Required</div>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <ng-select [items]="TimeArr" id="standardId" bindLabel="name" bindValue="id" (change)="selectStartTime($event)"
+                                          placeholder="Choose" formControlName="startTime"
+                                          [ngClass]="{ 'is-invalid': subjectTimeSubmitted && facultyMappingDTLList(empIndex).controls[skillIndex].get('startTime').errors || facultyMappingDTLList(empIndex).controls[skillIndex].get('startTime').invalid && (facultyMappingDTLList(empIndex).controls[skillIndex].get('startTime').dirty || facultyMappingDTLList(empIndex).controls[skillIndex].get('startTime').touched)}">
+                                        </ng-select>
+                                        <div
+                                          *ngIf="subjectTimeSubmitted && facultyMappingDTLList(empIndex).controls[skillIndex].get('startTime').errors || facultyMappingDTLList(empIndex).controls[skillIndex].get('startTime').invalid && (facultyMappingDTLList(empIndex).controls[skillIndex].get('startTime').dirty || facultyMappingDTLList(empIndex).controls[skillIndex].get('startTime').touched)"
+                                          class="invalid-feedback">
+                                          <div
+                                            *ngIf="facultyMappingDTLList(empIndex).controls[skillIndex].get('startTime').errors.required">
+                                            Required</div>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <ng-select [items]="TimeArr" id="standardId" bindLabel="name" bindValue="id" (change)="selectEndTime($event)"
+                                          placeholder="Choose" formControlName="endTime"
+                                          [ngClass]="{ 'is-invalid': subjectTimeSubmitted && facultyMappingDTLList(empIndex).controls[skillIndex].get('endTime').errors || facultyMappingDTLList(empIndex).controls[skillIndex].get('endTime').invalid && (facultyMappingDTLList(empIndex).controls[skillIndex].get('endTime').dirty || facultyMappingDTLList(empIndex).controls[skillIndex].get('endTime').touched)}">
+                                        </ng-select>
+                                        <div
+                                          *ngIf="subjectTimeSubmitted && facultyMappingDTLList(empIndex).controls[skillIndex].get('endTime').errors || facultyMappingDTLList(empIndex).controls[skillIndex].get('endTime').invalid && (facultyMappingDTLList(empIndex).controls[skillIndex].get('endTime').dirty || facultyMappingDTLList(empIndex).controls[skillIndex].get('endTime').touched)"
+                                          class="invalid-feedback">
+                                          <div
+                                            *ngIf="facultyMappingDTLList(empIndex).controls[skillIndex].get('endTime').errors.required">
+                                            Required</div>
+                                        </div>
+                                      </td>
+                                      <td class="text-center">
+                                        <i class="fa fa-trash delIconSize text-danger ml-2 mt-2" (click)="deleteTimeRow(empIndex,skillIndex)"
+                                          aria-hidden="true"></i>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                              </div>
+                            </perfect-scrollbar>
+  
+                          </div>
+                          <div class="row">
+                            <div class="col-6">
+
+                            </div>
+                            <div class="col-6">
+                              <div class="text-right">
+                                <button type="submit" class="btn btn-sm btn-primary mb-2 " (click)="submit(modal)"
+                                  aria-label="Close">Update</button>
+                              </div>
+                            </div>
+                          </div>
+                            
+                          </div>
+                        </ng-template>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              </perfect-scrollbar>
+            </div>
+
+
+            <div class="row">
+              <div class="col-sm-6 text-left">
+                <button type="submit" class="btn btn-danger mb-4 btn-md mr-1" aria-label="Close" *ngIf="subjectOfferObj.id"
+                  (click)="copyAcademicYear()">Copy</button></div>
+              <div class="col-sm-6 text-right">
+                <button type="submit" *ngIf="!subjectOfferObj.id" class="btn btn-primary btn-md mb-4"
+                  (click)="createSubjectOffering()" aria-label="Close">Submit</button>
+                <button *ngIf="subjectOfferObj.id" type="submit" class="btn btn-primary btn-md mb-4"
+                  (click)="updateSubjectOffering()" aria-label="Close">Update</button></div>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+    </form>
+      <div [ngbNavOutlet]="nav"></div>
+    </div>
+  
+</div>

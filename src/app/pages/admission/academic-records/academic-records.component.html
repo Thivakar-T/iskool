@@ -1,0 +1,259 @@
+<div class="row mt-4">
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-body size">
+        <div class="row ">
+          <div class="col-xl-6">
+            <app-page-title title="Academic Record List"></app-page-title>
+          </div>
+          <div class="col-xl-6">
+            <div class="text-right  ">
+              <button type="button" class="btn btn-success btn-sm mb-2" (click)="openWarehouse(Warehouse)">
+                <i class="mdi mdi-plus mr-1 mb-4"></i>Add Record
+              </button>
+            </div>
+          </div>
+        </div>
+        <table id="example" class="table" style="width:100%">
+          <thead>
+            <tr>
+              <th>Exam Passed</th>
+              <th>Board/University</th>
+              <th>Institute/School</th>
+              <th>Roll Number </th>
+              <th>Passing Year </th>
+              <th>CGPA/Percentage</th>
+              <th>Action </th>
+              <th> </th>
+          </thead>
+          <tbody *ngIf="academicRecordObj.id">
+            <tr>
+              <td>{{academicRecordObj.stdName}}</td>
+              <td>{{academicRecordObj.boardName}}</td>
+              <td>{{academicRecordObj.schoolName}}</td>
+              <td>{{academicRecordObj.rollNumber}}</td>
+              <td>{{academicRecordObj.academicYearName}}</td>
+              <td>{{academicRecordObj.percentage}}</td>
+              <td class="text-center"><i class="fas fa-edit   text-success mr-2"
+                  (click)="editDegree(academicRecordObj, Warehouse)"></i> </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <ng-template #Warehouse let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Academic Record</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" id="Warehouse">
+      <form [formGroup]="academicForm">
+        <div class="row">
+          <div class="col-xl-3">
+            <div class="form-group">
+              <span class="">
+                <label for="productname">Exam Passed</label>
+                <ng-select [items]="standardArr" id="productname" bindLabel="name" bindValue="id" placeholder="Choose"
+                  formControlName="stdId"
+                  [ngClass]="{ 'is-invalid': academicSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)}">
+                </ng-select>
+                <div
+                  *ngIf="academicSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="f.stdId.errors.required">Required</div>
+                </div>
+              </span>
+            </div>
+            <div class="form-group">
+              <span class="">
+                <label for="schoolName">Institute/School</label>
+                <input class="form-control" id="productname" class="form-control" placeholder="Institute/School"
+                  formControlName="schoolName" id="schoolName"
+                  [ngClass]="{ 'is-invalid': academicSubmitted && f.schoolName.errors || f.schoolName.invalid && (f.schoolName.dirty || f.schoolName.touched)}">
+                <div
+                  *ngIf="academicSubmitted && f.schoolName.errors || f.schoolName.invalid && (f.schoolName.dirty || f.schoolName.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="f.schoolName.errors.required">Required</div>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="col-xl-3">
+            <div class="form-group">
+              <span class="">
+                <label for="productname"> Board/University</label>
+                <ng-select [items]="boardArr" id="productname" bindLabel="name" bindValue="id" placeholder="Choose"
+                  formControlName="boardId"
+                  [ngClass]="{ 'is-invalid': academicSubmitted && f.boardId.errors || f.boardId.invalid && (f.boardId.dirty || f.boardId.touched)}">
+                </ng-select>
+                <div
+                  *ngIf="academicSubmitted && f.boardId.errors || f.boardId.invalid && (f.boardId.dirty || f.boardId.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="f.boardId.errors.required">Required</div>
+                </div>
+              </span>
+            </div>
+            <div class="form-group">
+              <span class="">
+                <label for="productname">Passing Year</label>
+                <ng-select [items]="yearArr" id="productname" placeholder="Choose" formControlName="academicYearId"
+                  bindLabel="name" bindValue="id"
+                  [ngClass]="{ 'is-invalid': academicSubmitted && f.academicYearId.errors || f.academicYearId.invalid && (f.academicYearId.dirty || f.academicYearId.touched)}">
+                </ng-select>
+                <div
+                  *ngIf="academicSubmitted && f.academicYearId.errors || f.academicYearId.invalid && (f.academicYearId.dirty || f.academicYearId.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="f.academicYearId.errors.required">Required</div>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="col-xl-3">
+            <div class="form-group">
+              <span class="">
+                <label for="rollNumber">Roll Number</label>
+                <input class="form-control" type="number" id="rollNumber" class="form-control" placeholder="Roll Number"
+                  formControlName="rollNumber"
+                  [ngClass]="{ 'is-invalid': academicSubmitted && f.rollNumber.errors || f.rollNumber.invalid && (f.rollNumber.dirty || f.rollNumber.touched)}">
+                <div
+                  *ngIf="academicSubmitted && f.rollNumber.errors || f.rollNumber.invalid && (f.rollNumber.dirty || f.rollNumber.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="f.rollNumber.errors.required">Required</div>
+                </div>
+              </span>
+            </div>
+            <div class="form-group">
+              <span class="">
+                <label for="percentage">CGPA/Percentage</label>
+                <input class="form-control" id="percentage" type="number" class="form-control"
+                  placeholder="CGPA/Percentage" formControlName="percentage"
+                  [ngClass]="{ 'is-invalid': academicSubmitted && f.percentage.errors || f.percentage.invalid && (f.percentage.dirty || f.percentage.touched)}">
+                <div
+                  *ngIf="academicSubmitted && f.percentage.errors || f.percentage.invalid && (f.percentage.dirty || f.percentage.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="f.percentage.errors.required">Required</div>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="col-xl-8">
+            <div class="row mb-3">
+              <div class="col-sm-3">Grading Type :</div>
+              <div class="col-sm-9">
+                <div class="form-check-inline">
+                  <label class="form-check-label" for="radio2">
+                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">GPA
+                  </label>
+                </div>
+                <div class="form-check-inline">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2"
+                      checked>Marks
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div formArrayName="acadmicRecordDtlDTOList">
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="15%"><label for="">Subject</label></th>
+                <th width="8%"><label for="">Marks Obtained</label></th>
+                <th width="2%"></th>
+                <th width="10%"><label for="">Total Marks</label></th>
+                <th width="10%"> <button type="button" class="btn btn-success btn-sm ml-5" (click)="addterm()"> <i
+                      class="mdi mdi-plus mr-1 mb-3"></i>Add Subject
+                  </button></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let productObj of feesArr.controls; let i = index" [formGroupName]="i">
+                <td>
+                  <ng-select [items]="subjectarr" bindLabel="name" bindValue="id" placeholder="Choose" name="subjectId"
+                    formControlName="subjectId" [ngClass]="{ 'is-invalid': academicSubmitted && feesArr.controls[i].get('subjectId').errors || feesArr.controls[i].get('subjectId').invalid
+                     && (feesArr.controls[i].get('subjectId').dirty || feesArr.controls[i].get('subjectId').touched)}">
+                  </ng-select>
+                  <div
+                    *ngIf="academicSubmitted && feesArr.controls[i].get('subjectId').errors || feesArr.controls[i].get('subjectId').invalid && (feesArr.controls[i].get('subjectId').dirty || feesArr.controls[i].get('subjectId').touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="feesArr.controls[i].get('subjectId').errors.required">Required</div>
+                  </div>
+                </td>
+                <td><input type="number" name="obtainedMark" class="form-control " placeholder="Obtained"
+                    formControlName="obtainedMark" (keyup)="calculate()"
+                    [ngClass]="{ 'is-invalid': academicSubmitted && feesArr.controls[i].get('obtainedMark').errors || feesArr.controls[i].get('obtainedMark').invalid && (feesArr.controls[i].get('obtainedMark').dirty || feesArr.controls[i].get('obtainedMark').touched)}">
+                  <div
+                    *ngIf="academicSubmitted && feesArr.controls[i].get('obtainedMark').errors || feesArr.controls[i].get('obtainedMark').invalid && (feesArr.controls[i].get('obtainedMark').dirty || feesArr.controls[i].get('obtainedMark').touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="feesArr.controls[i].get('obtainedMark').errors.required">Required</div>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <p class="mt-2"> /</p>
+                </td>
+                <td><input type="number" name="totelMark" class="form-control " placeholder=" Out Of Marks"
+                    formControlName="totelMark" (keyup)="calculate()"
+                    [ngClass]="{ 'is-invalid': academicSubmitted && feesArr.controls[i].get('totelMark').errors || feesArr.controls[i].get('totelMark').invalid && (feesArr.controls[i].get('totelMark').dirty || feesArr.controls[i].get('totelMark').touched)}">
+                  <div
+                    *ngIf="academicSubmitted && feesArr.controls[i].get('totelMark').errors || feesArr.controls[i].get('totelMark').invalid && (feesArr.controls[i].get('totelMark').dirty || feesArr.controls[i].get('totelMark').touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="feesArr.controls[i].get('totelMark').errors.required">Required</div>
+                  </div>
+                </td>
+                <td>
+                  <i class="fa fa-trash text-danger delIconSize ml-3" (click)="deleteterm(i)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-xl-2">
+            <br>
+            <div class="form-group">
+              <p>XEROX OF HSC MARKSHEET</p>
+            </div>
+            <div class="form-group">
+              <p>ORIGINAL CASTE CERTIFICATE</p>
+            </div>
+            <div class="form-group">
+              <p>DOMICILE CERTIFICATE</p>
+            </div>
+          </div>
+          <div class="col-xl-2 mt-2">
+            <div class="form-group mt-3">
+              <div class="badge badge-danger font-size-11 mb-3">Pending</div>
+            </div>
+            <div class="form-group">
+              <div class="badge badge-danger font-size-11 mb-3">Pending</div>
+            </div>
+            <div class="form-group">
+              <div class="badge badge-danger font-size-11 mb-3">Pending</div>
+            </div>
+          </div>
+          <div class="col-xl-3 mt-2">
+            <div class="form-group has-float-label mt-3">
+              <input name="file" type="file" class="">
+              <label class="">File</label>
+            </div>
+            <div class="form-group has-float-label mt-4">
+              <input name="file" type="file" class="">
+              <label class=" col-form-label">File</label>
+            </div>
+            <div class="form-group has-float-label mt-4">
+              <input name="file" type="file" class="">
+              <label class=" col-form-label">File</label>
+            </div>
+          </div>
+        </div>
+        <div class="text-right">
+          <button (click)="dismiss(modal ,'AcademicRecord')" class="btn  btn-primary mb-2">{{buttonText}}</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>

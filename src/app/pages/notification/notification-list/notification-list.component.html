@@ -1,0 +1,190 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="row">
+                <div class="col-xl-6">
+                    <!-- <app-page-title title="Grading List">Grading List</app-page-title> -->
+                    <div class="mb-2 pageHeading">
+                        <h4 class="">Notification List</h4>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="text-right my-auto ">
+                        <button type="button" class="btn btn-success btn-sm mb-2"  routerLink="/notification/notification"  >
+                            <i class="mdi mdi-plus mb-3"></i> Add Notification
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class=" card-2">
+                <div class="card-body">
+                    <table id="notification" class="table table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Title</th>
+                                <th>Created Date</th>
+                                <th>Trigger Date</th>
+                            </tr>
+                        </thead>
+            <tbody> 
+                <tr *ngFor="let notify of notifyArr;let i = index" >
+                  <td>{{i+1}}</td>
+                  <td>{{notify.title}}</td>
+                  <td >{{notify.createDate}}</td>
+                  <td >{{notify.triggerDate}}</td>
+                  <!-- <i class="fas fa-edit  text-success mr-2" (click)="edit(grade.id)"  ></i>
+                  <i class="fa fa-trash text-danger" aria-hidden="true" (click)="openCat(dModal,grade.id)" ></i> -->
+                </tr>
+              </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <ng-template #notification let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title">Notification</h5>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" id="scheme">
+            <form [formGroup]="notificationForm" autocomplete="off">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group ">
+                            <label for="title">Title</label>
+                            <input class="form-control" id="title" formControlName="title" type="text"
+                                class="form-control" placeholder="Title"  [(ngModel)]="notifyObj.title"
+                                [ngClass]="{ 'is-invalid': notificationSubmitted && f.title.errors || f.title.invalid && (f.title.dirty || f.title.touched)}">
+                            <div *ngIf="notificationSubmitted && f.title.errors || f.title.invalid && (f.title.dirty || f.title.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.title.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-2">
+                        <label for="title">Type</label><br>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="Email" formControlName="isapplicableforEmail" >Email
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="Sms" formControlName="isapplicableforSms" >Sms
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="Whatsapp" formControlName="isapplicableforWhatsapp" 
+                                >Whatsapp
+                            </label>
+                        </div>
+
+                    </div>
+                    <div  class="col-lg-4 mt-2">
+                        <label for="title">Notify Type</label><br>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="Faculty" formControlName="isapplicableforFaculty" >Faculty
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="Student" formControlName="isapplicableforStudent" >Student
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="Parent" formControlName="isapplicableforParent" >Parent
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4" formArrayName="notificationDtlList">
+                        <div class="form-group"    *ngFor="let notifyObj of notifyDocumentArr.controls; let i = index" [formGroupName]="i">
+                            <label for="message">Standard</label>
+                            <ng-select [items]="standardArr" class="custom" placeholder="Choose" bindLabel="name"
+                            bindValue="id" formControlName="standardId" id="standardId" (change)="select($event)"
+                            [ngClass]="{ 'is-invalid': notificationSubmitted && notifyDocumentArr.controls[i].get('standardId').errors || notifyDocumentArr.controls[i].get('standardId').invalid && (notifyDocumentArr.controls[i].get('standardId').dirty || notifyDocumentArr.controls[i].get('standardId').touched)}">
+                        </ng-select>
+                            <div *ngIf="notificationSubmitted && notifyDocumentArr.controls[i].get('standardId').errors || notifyDocumentArr.controls[i].get('standardId').invalid && (notifyDocumentArr.controls[i].get('standardId').dirty || notifyDocumentArr.controls[i].get('standardId').touched)"
+                                class="invalid-feedback">
+                                <div
+                                    *ngIf="notifyDocumentArr.controls[i].get('standardId').errors.required">
+                                    Required</div>
+                            </div>
+                             <mat-select  placeholder="Choose" multiple
+                                class="form-control" formControlName="standardId">
+                                <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">All
+                                </mat-option>
+                                <mat-option *ngFor="let filters of standardArr"  >
+                                    {{filters.name}}
+                                </mat-option>
+                            </mat-select> 
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group" for="triggerType">
+                            <label for="triggerType">Trigger Type</label>
+                            <ng-select [items]="['Now','Schedule']" class="custom" placeholder="Choose" bindLabel="name"
+                                bindValue="id" formControlName="triggerType" id="triggerType" (change)="  selectType($event)"
+                                 [ngClass]="{ 'is-invalid': notificationSubmitted && f.triggerType.errors || f.triggerType.invalid && (f.triggerType.dirty || f.triggerType.touched)}">
+                            </ng-select>
+                            <div *ngIf="notificationSubmitted && f.triggerType.errors || f.triggerType.invalid && (f.triggerType.dirty || f.triggerType.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.triggerType.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" *ngIf="enableTriggerDate">
+                        <div class="form-group ">
+                            <label for="title">Trigger Date</label>
+                            <input class="form-control"  (click)="triggerDate.toggle()" ngbDatepicker #triggerDate="ngbDatepicker"
+                            id="triggerDate" formControlName="triggerDate" class="form-control"  
+                            placeholder="yyyy-mm-dd" 
+                                [ngClass]="{ 'is-invalid': notificationSubmitted && f.triggerDate.errors || f.triggerDate.invalid && (f.triggerDate.dirty || f.triggerDate.touched)}">
+                            <div *ngIf="notificationSubmitted && f.triggerDate.errors || f.triggerDate.invalid && (f.triggerDate.dirty || f.triggerDate.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.triggerDate.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" *ngIf="enableTriggerDate">
+                        <div class="form-group ">
+                            <label for="title">Trigger Time</label>
+                            <input class="form-control" id="title" formControlName="triggerTime" type="text"
+                                class="form-control" placeholder="Trigger Time"
+                                [ngClass]="{ 'is-invalid': notificationSubmitted && f.triggerTime.errors || f.triggerTime.invalid && (f.triggerTime.dirty || f.triggerTime.touched)}">
+                            <div *ngIf="notificationSubmitted && f.triggerTime.errors || f.triggerTime.invalid && (f.triggerTime.dirty || f.triggerTime.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.triggerTime.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-lg-4">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" formControlName="message" type="text" class="form-control"
+                        id="message" placeholder="Message"
+                        [ngClass]="{ 'is-invalid': notificationSubmitted && f.message.errors || f.message.invalid && (f.message.dirty || f.message.touched)}">
+                   </textarea>
+                    <div *ngIf="notificationSubmitted && f.message.errors || f.message.invalid && (f.message.dirty || f.message.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="f.message.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right mt-3">
+                <button type="submit" (click)="submit(modal)" class="btn btn-md btn-primary mb-2">{{buttonText}}</button>
+            </div>
+          </form> 
+            </div>
+            </ng-template> -->
+            </div>
+        
+      

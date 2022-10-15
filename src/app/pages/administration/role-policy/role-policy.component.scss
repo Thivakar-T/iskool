@@ -1,0 +1,66 @@
+.val {
+  border: none;
+}
+
+.style {
+  border: none
+}
+
+.card-min-height {
+  max-height: 400px !important;
+}
+
+// .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+//     display: flex;
+//     flex-grow: 1;
+//     margin-right: 46px;
+// } 
+
+// .card {
+//     width: 500px;
+
+// }
+
+
+// .panel {
+//   width:100%;
+
+// }
+// .mat-expansion-panel-header {
+//   overflow: hidden;
+//   white-space: nowrap;
+//   text-overflow: ellipsis;
+//   width: 100%;
+// }
+//   .mat-form-field + .mat-form-field {
+//     margin-left: 8px;
+//   }
+// .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+
+//     width: 98%;
+// }
+
+//     .mat-expansion-panel-header
+//  {
+
+//     width: 420px !important;
+// }
+.mat-expansion-panel-header-title,
+.mat-expansion-panel-header-description {
+  width: 195px !important;
+  display: flex;
+  flex-grow: 1;
+  margin-right: 46px;
+}
+
+.up {
+  margin-left: 32px;
+}
+.secondCard{
+  min-height: 100px !important;
+  max-height: 380px !important;
+}
+.container{
+  margin-left: 0px !important;
+  padding-left: 0px !important;
+}

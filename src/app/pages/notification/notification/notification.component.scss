@@ -1,0 +1,23 @@
+.mat-select-panel {
+    /* min-width: 112px; */
+    //  max-width: 280px; 
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: 156px  !important;
+    min-width: 50% !important;
+    border-radius: 4px;
+}
+.mat-select-value {
+    /* display: table-cell; */
+    max-width: 0 !important;
+     width: 50% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+.mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate {
+    background-color:#4046ff !important;
+} 
+  

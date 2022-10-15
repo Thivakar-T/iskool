@@ -1,0 +1,213 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-6">
+            <!-- <app-page-title title="drivers"></app-page-title> -->
+            <div class="mb-3 pageHeading">
+                <h4 class="">Drivers</h4>
+              </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="text-right my-auto ">
+                <button type="button" (click)="openGST(driver)" class="btn btn-success btn-sm mb-2 ">
+                    <i class="mdi mdi-plus  mb-3"></i>Add Driver
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-2">
+        <div class="card-body">
+            <table  id="driver" class="table table-bordered mx-auto " style="width:100%">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Licence Number</th>
+                        <th>Address</th>
+                        <th class="ml-auto">Action</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let driverList of driverArr;let i = index">
+                    <tr>
+                        <td>{{i+1}}</td>
+                        <td>{{driverList.name}}</td>
+                        <td>{{driverList.age}}</td>
+                        <td>{{driverList.licenseNumber}}</td>
+                        <td>{{driverList.address}}</td>
+                        <td>
+                            <i class="fas fa-edit  text-success mr-2 " (click)="editdriver(driverList, driver)"></i>
+                            <i class="fa fa-trash text-danger ml-auto text-right" aria-hidden="true"
+                                (click)="openModal(dModal,driverList.id)"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <ng-template #driver let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title">Driver</h5>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" id="scheme">
+            <form [formGroup]="driverForm" autocomplete="off" (ngSubmit)="adddriver(modal)">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group ">
+                            <label for="productname">Name</label>
+                            <input class="form-control" [(ngModel)]="driverObj.name" id="productname"
+                                formControlName="name" type="text" class="form-control" placeholder="Name"
+                                [ngClass]="{ 'is-invalid': driverSubmitted && f.name.errors || f.name.invalid && (f.name.dirty || f.name.touched)}">
+                            <div *ngIf="driverSubmitted && f.name.errors || f.name.invalid && (f.name.dirty || f.name.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.name.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group ">
+                            <label for="productmobileNumber">Mobile Number</label>
+                            <input class="form-control" [(ngModel)]="driverObj.phoneNumber" id="productmobileNumber"
+                                formControlName="phoneNumber" type="text" class="form-control"
+                                placeholder="Mobile Number"
+                                [ngClass]="{ 'is-invalid': driverSubmitted && f.phoneNumber.errors || f.phoneNumber.invalid && (f.phoneNumber.dirty || f.phoneNumber.touched)}">
+                            <div *ngIf="driverSubmitted && f.phoneNumber.errors || f.phoneNumber.invalid && (f.phoneNumber.dirty || f.phoneNumber.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.phoneNumber.errors.required">Required</div>
+                                <div
+                                *ngIf="f.phoneNumber.errors.pattern || f.phoneNumber.errors.maxlength || f.phoneNumber.errors.minlength">
+                                Phone number must be at least 10 numbers</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group ">
+                            <label for="productExperience">Experience</label>
+                            <input class="form-control" [(ngModel)]="driverObj.experience" id="productExperience"
+                                formControlName="experience" type="number" class="form-control" placeholder="Experience"
+                                [ngClass]="{ 'is-invalid': driverSubmitted && f.experience.errors || f.experience.invalid && (f.experience.dirty || f.experience.touched)}">
+                            <div *ngIf="driverSubmitted && f.experience.errors || f.experience.invalid && (f.experience.dirty || f.experience.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.experience.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="textarea" class="mb-1">Address</label>
+                        <div class="form-group  ">
+                         <textarea  id="textarea" class="form-control" placeholder=" Address" formControlName="address" [(ngModel)]="driverObj.address"
+                         [ngClass]="{ 'is-invalid': driverSubmitted && f.address.errors || f.address.invalid && (f.address.dirty || f.address.touched)}">
+                         </textarea>
+                            <!-- <angular-editor id="angularEditor" placeholder=" Address" formControlName="address" [(ngModel)]="driverObj.address"
+                                [ngClass]="{ 'is-invalid': driverSubmitted && f.address.errors || f.address.invalid && (f.address.dirty || f.address.touched)}">
+                            </angular-editor> -->
+                            <div *ngIf="driverSubmitted && f.address.errors || f.address.invalid && (f.address.dirty || f.address.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.address.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-lg-6">
+                        <div class="form-group ">
+                            <label for="productAge">Age</label>
+                            <input class="form-control" [(ngModel)]="driverObj.age" id="productAge"
+                                formControlName="age" type="number" class="form-control" placeholder="Age"
+                                [ngClass]="{ 'is-invalid': driverSubmitted && f.age.errors || f.age.invalid && (f.age.dirty || f.age.touched)}">
+                            <div *ngIf="driverSubmitted && f.age.errors || f.age.invalid && (f.age.dirty || f.age.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.age.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group ">
+                            <label for="productlicenseNumber">Licence Number</label>
+                            <input class="form-control" [(ngModel)]="driverObj.licenseNumber" id="productlicenseNumber"
+                                formControlName="licenseNumber" type="text" class="form-control"
+                                placeholder="Licence Number"
+                                [ngClass]="{ 'is-invalid': driverSubmitted && f.licenseNumber.errors || f.licenseNumber.invalid && (f.licenseNumber.dirty || f.licenseNumber.touched)}">
+                            <div *ngIf="driverSubmitted && f.licenseNumber.errors || f.licenseNumber.invalid && (f.licenseNumber.dirty || f.licenseNumber.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="f.licenseNumber.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-2">
+                    <label class="card-2-hedaing">Driver Documents</label>
+                    <perfect-scrollbar  class="" [config]="configData">
+                      <div class="card-body driverCard">
+                <div formArrayName="driverDocumentList">
+                    <div class="row">
+                        <div class="col">
+                            <!-- <h5 class="modal-title">Driver Documents</h5> -->
+                        </div>
+                        <div class="col">
+                            <div class="text-right mb-3 ml-3">
+                                <button type="button" class="btn btn-success btn-sm mb-2 " (click)="addDocument()">
+                                    <i class="mdi mdi-plus mr-1"></i>Add Document
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+    
+    
+                    <table id="driver" class="table">
+                        <tr *ngFor="let productObj of driverDocumentArr.controls; let i = index" [formGroupName]="i">
+                            <td>
+                                <div class="col-11 form-group ">
+                                    <!-- <label class="col-form-label">Document Name</label> -->
+    
+                                    <input class="form-control" id="documentName" type="text"
+                                        placeholder="Document Name" formControlName="documentName" >
+                                </div>
+                            </td>
+                            <td>
+                                <div class=" form-group ">
+                                    <div class="has-float-label mt-2">
+                                        <label class=" col-form-label">File</label>
+                                    <input name="file" formControlName="documentUpload" type="file">                                   
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-left">
+                                    <i class="fa fa-trash text-danger delIconSize  mt-2 mr-5" (click)="deleteterm(i)"></i>
+    
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+     </div>
+                </div>
+                </perfect-scrollbar>
+                </div>
+
+                <div class="text-right">
+                    <button type="submit" class="btn btn-sm btn-primary mb-2">{{buttonText}}</button>
+                </div>
+            </form>
+        </div>
+    </ng-template>
+    <ng-template #dModal let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title">Confirm Delete</h5>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div>
+            <h6 class="ml-3 mt-2">Are you sure want to delete this ?</h6>
+            <div class="text-right mt-2 mr-2">
+                <!-- <button type="button" class="btn btn-danger  mb-3" (click)="modal.dismiss('Cross click')">No</button> -->
+                <button type="button" class="btn btn-primary btn-sm ml-2 mb-3" (click)="deleteData(modal)">Yes</button>
+            </div>
+        </div>
+    </ng-template>
+</div>

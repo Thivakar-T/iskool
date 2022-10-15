@@ -1,0 +1,19 @@
+
+element.style {
+  border: none;
+}
+
+.table td {
+  border-top: none; 
+}
+.max-height{
+  height: 350px !important;
+}
+#border{
+  border: 0;
+  -webkit-appearance: none;
+}
+body[data-layout=horizontal] .page-content {
+  margin-top: 30px;
+  padding: calc(10px + 15px) calc(15px / 2) 60px calc(15px / 2);
+}

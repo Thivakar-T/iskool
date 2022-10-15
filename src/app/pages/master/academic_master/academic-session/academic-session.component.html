@@ -1,0 +1,177 @@
+<div class="container-fluid">
+    <div class="mb-2">
+        <app-page-title title="Academic Session">Academic Session</app-page-title>
+    </div>
+    <form [formGroup]="academicSessionForm" autocomplete="off" (ngSubmit)="submit()">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card height">
+                    <div class="card-body">
+                        <div class="row my-auto ">
+                            <div class="col-xl-4 col-sm-6 ">
+                                <div class="form-group ">
+                                    <label for="yearId">Academic Year</label>
+                                    <ng-select class="custom" [items]="yearArray" placeholder="Choose"
+                                        formControlName="academicYearId" bindLabel="name" bindValue="id"
+                                        [(ngModel)]="academicSessionObj.academicYearId"
+                                        [ngClass]="{ 'is-invalid': academicSessionSubmitted && f.academicYearId.errors || f.academicYearId.invalid && (f.academicYearId.dirty || f.academicYearId.touched)}">
+                                    </ng-select>
+                                    <div *ngIf="academicSessionSubmitted && f.academicYearId.errors || f.academicYearId.invalid && (f.academicYearId.dirty || f.academicYearId.touched)"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.academicYearId.errors.required">Required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="form-group">
+                                    <span class="">
+                                        <label for="name">From Date</label>
+                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                            formControlName="startDate" name="name" ngbDatepicker
+                                            #startDate="ngbDatepicker" (click)="startDate.toggle()"
+                                            [(ngModel)]="academicSessionObj.startDate"
+                                            [ngClass]="{ 'is-invalid': academicSessionSubmitted && f.startDate.errors || f.startDate.invalid && (f.startDate.dirty || f.startDate.touched)}">
+                                        <div *ngIf="academicSessionSubmitted && f.startDate.errors || f.startDate.invalid && (f.startDate.dirty || f.startDate.touched)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.startDate.errors.required">Required</div>
+                                        </div>
+                                    </span>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="form-group">
+                                    <span class="">
+                                        <label for="name"> To Date </label>
+                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                            formControlName="endDate" name="name" ngbDatepicker #endDate="ngbDatepicker"
+                                            (click)="endDate.toggle()" [(ngModel)]="academicSessionObj.endDate"
+                                            [ngClass]="{ 'is-invalid': academicSessionSubmitted && f.endDate.errors || f.endDate.invalid && (f.endDate.dirty || f.endDate.touched)}">
+                                        <div *ngIf="academicSessionSubmitted && f.endDate.errors || f.endDate.invalid && (f.endDate.dirty || f.endDate.touched)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.endDate.errors.required">Required</div>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div formArrayName="academicSessionDtlDTO">
+            <div class="card  mt-3">
+                <div class="card-body margin ">
+                    <div class="row">
+                        <div class="col-lg-8">
+                        </div>
+                        <div class="col-lg-4">
+                            <div class=" text-right mb-3 ml-3">
+                                <button type="button" class="btn btn-success btn-sm mb-2 " (click)="addterm()">
+                                    <i class="mdi mdi-plus mr-1"></i>Add Session
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="acadamicsession" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Short Name</th>
+                                <th>From Date</th>
+                                <th>To Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let productObj of academicSessionArr.controls; let i = index"
+                                [formGroupName]="i">
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Name" name="name"
+                                            formControlName="name"
+                                            [ngClass]="{ 'is-invalid': academicSessionSubmitted && academicSessionArr.controls[i].get('name').errors || academicSessionArr.controls[i].get('name').invalid && (academicSessionArr.controls[i].get('name').dirty || academicSessionArr.controls[i].get('name').touched)}">
+                                        <!-- <label for="">Name</label> -->
+                                        <div *ngIf="academicSessionSubmitted && academicSessionArr.controls[i].get('name').errors || academicSessionArr.controls[i].get('name').invalid && (academicSessionArr.controls[i].get('name').dirty || academicSessionArr.controls[i].get('name').touched)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="academicSessionArr.controls[i].get('name').errors.required">
+                                                Required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+
+                                        <input type="text" class="form-control" placeholder="Short Name" name="name"
+                                            formControlName="shortName"
+                                            [ngClass]="{ 'is-invalid': academicSessionSubmitted && academicSessionArr.controls[i].get('shortName').errors || academicSessionArr.controls[i].get('shortName').invalid && (academicSessionArr.controls[i].get('shortName').dirty || academicSessionArr.controls[i].get('shortName').touched)}">
+                                        <!-- <label for="">Short Name</label> -->
+                                        <div *ngIf="academicSessionSubmitted && academicSessionArr.controls[i].get('shortName').errors || academicSessionArr.controls[i].get('shortName').invalid && (academicSessionArr.controls[i].get('shortName').dirty || academicSessionArr.controls[i].get('shortName').touched)"
+                                            class="invalid-feedback">
+                                            <div
+                                                *ngIf="academicSessionArr.controls[i].get('shortName').errors.required">
+                                                Required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <span class="">
+                                                <input type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                                    formControlName="startDate" name="name" ngbDatepicker
+                                                    #startDate="ngbDatepicker" (click)="startDate.toggle()"
+                                                    [ngClass]="{ 'is-invalid': academicSessionSubmitted && academicSessionArr.controls[i].get('startDate').errors || academicSessionArr.controls[i].get('startDate').invalid && (academicSessionArr.controls[i].get('startDate').dirty || academicSessionArr.controls[i].get('startDate').touched)}">
+                                                <!-- <label for="name">From Date</label> -->
+                                                <div *ngIf="academicSessionSubmitted && academicSessionArr.controls[i].get('startDate').errors || academicSessionArr.controls[i].get('startDate').invalid && (academicSessionArr.controls[i].get('startDate').dirty || academicSessionArr.controls[i].get('startDate').touched)"
+                                                    class="invalid-feedback">
+                                                    <div
+                                                        *ngIf="academicSessionArr.controls[i].get('startDate').errors.required">
+                                                        Required
+                                                    </div>
+                                                </div>
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <span class="">
+                                                <input type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                                    formControlName="endDate" name="name" ngbDatepicker
+                                                    #endDate="ngbDatepicker" (click)="endDate.toggle()"
+                                                    [ngClass]="{ 'is-invalid': academicSessionSubmitted && academicSessionArr.controls[i].get('endDate').errors || academicSessionArr.controls[i].get('endDate').invalid && (academicSessionArr.controls[i].get('endDate').dirty || academicSessionArr.controls[i].get('endDate').touched)}">
+                                                <!-- <label for="name"> To Date </label> -->
+                                                <div *ngIf="academicSessionSubmitted && academicSessionArr.controls[i].get('endDate').errors || academicSessionArr.controls[i].get('endDate').invalid && (academicSessionArr.controls[i].get('endDate').dirty || academicSessionArr.controls[i].get('endDate').touched)"
+                                                    class="invalid-feedback">
+                                                    <div
+                                                        *ngIf="academicSessionArr.controls[i].get('endDate').errors.required">
+                                                        Required
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </td>
+                                <td><i class="fa fa-trash text-danger delIconSize ml-3 mt-2 "
+                                        (click)="deleteterm(i)"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="text-right mt-2">
+            <button type="submit" class="btn btn-sm btn-primary pl-3 pr-3 pt-2 pb-2" *ngIf="!academicSessionObj.id">Submit</button>
+            <button type="submit" class="btn btn-sm btn-primary pl-3 pr-3 pt-2 pb-2" *ngIf="academicSessionObj.id">Update</button>
+        </div>
+    </form>
+
+</div>

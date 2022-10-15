@@ -1,0 +1,24 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { NgbCollapseModule, NgbDatepickerModule, NgbTimepickerModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { ClickOutsideModule } from 'ng-click-outside';
+import { RouterModule, Routes } from '@angular/router';
+import { PagetitleComponent } from './pagetitle/pagetitle.component';
+
+@NgModule({
+  declarations: [PagetitleComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ClickOutsideModule,
+    NgbCollapseModule,
+    NgbDatepickerModule,
+    NgbTimepickerModule,
+    NgbDropdownModule,
+    RouterModule
+  ],
+  exports: [PagetitleComponent,  RouterModule]
+})
+export class UIModule { }

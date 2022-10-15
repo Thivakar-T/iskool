@@ -1,0 +1,50 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-6">
+      <div class="mb-2 pageHeading">
+        <h4 class="">Users</h4>
+      </div>
+    </div>
+    <div class="col-xl-6">
+      <div class="text-right my-auto mb-4">
+        <button type="button" class="btn btn-success btn-sm mb-2 "
+          routerLink="/administration/user/new">
+          <i class="mdi mdi-plus mr-1"></i> Add User
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-2">
+    <div class="card-body">
+      <table id="userlist" class="table table-bordered" style="width:100%">
+        <thead>
+          <tr>
+            <th>S. No</th>
+            <th>First Name</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>User Type</th>
+            <th>User Name</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let associate of useArr ;let i = index">
+            <td>{{i+1}}</td>
+              <td >{{associate.firstName}}</td>
+              <td>{{associate.department}}</td>
+              <td>{{associate.designation}}</td>
+              <td>{{associate.userType}}</td>
+              <td>{{associate.userName}}</td>
+              <!-- <td>{{associate.email}}</td> -->
+              <td>{{associate.status}}</td>
+              <td>
+              <i class="fas fa-edit  text-success mr-2" routerLink="/administration/user/new/{{associate.id}}"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

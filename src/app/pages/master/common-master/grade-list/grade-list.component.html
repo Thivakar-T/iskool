@@ -1,0 +1,60 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="row">
+          <div class="col-xl-6">
+            <!-- <app-page-title title="Grading List">Grading List</app-page-title> -->
+            <div class="mb-2 pageHeading">
+              <h4 class="">  Grading List</h4>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="text-right my-auto ">
+              <button type="button"  class="btn btn-success btn-sm mb-2" routerLink="/common-master/grading">
+                <i class="mdi mdi-plus mr-1 mb-3"></i> Add Grade
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class=" card-2">
+          <div class="card-body">
+            <table id="grade" class="table table-bordered" style="width:100%">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Scheme Name</th>
+                  <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody> 
+                <tr *ngFor="let grade of gradelistArr;let i = index" >
+                  <td>{{i+1}}</td>
+                  <td>{{grade.schemeName}}</td>
+                  <td>
+                  <i class="fas fa-edit  text-success mr-2" (click)="edit(grade.id)"  ></i>
+                  <i class="fa fa-trash text-danger" aria-hidden="true" (click)="openCat(dModal,grade.id)" ></i>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  
+<ng-template #dModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Confirm Delete</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div>
+    <h6 class="ml-3 mt-2">Are you sure want to delete this ?</h6>
+    <div class="text-right mt-2 mr-2">
+      <button type="submit" class="btn btn-sm btn-primary mb-2 " aria-label="Close"
+      (click)="deletedata(modal)">Yes</button>
+    </div>
+  </div>
+</ng-template>

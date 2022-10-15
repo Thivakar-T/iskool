@@ -1,0 +1,191 @@
+<div class="container-fluid">
+  <div class="mb-3">
+    <!-- <div class="mb-2"> -->
+    <!-- <app-page-title title=""></app-page-title> -->
+    <div class="mb-2 pageHeading">
+      <h4 class="">Manage Exam Time Table</h4>
+    </div>
+  </div>
+  <form [formGroup]="markEntryForm" autocomplete="off">
+    <!-- <div class="row ">
+        <div class="col-lg-12"> -->
+          <div class="card-2 height">
+            <div class="card-body ">
+              <div class="row  ">
+                <div class="col-xl-3 ">
+                  <div class="form-group pt-2 ">
+                    <label for="yearId">Academic year</label>
+                    <ng-select [items]="academicArr" class="custom" placeholder="Choose" bindLabel="name" bindValue="id"
+                    [(ngModel)]="Obj.academicYearId" formControlName="academicYearId" id="academicYearId" (change)="selectYear($event)" 
+                    [ngClass]="{ 'is-invalid': examTimeSubmitted && b.academicYearId.errors || b.academicYearId.invalid && (b.academicYearId.dirty || b.academicYearId.touched)}">
+                    </ng-select>
+                    <div
+                      *ngIf="examTimeSubmitted && b.academicYearId.errors || b.academicYearId.invalid && (b.academicYearId.dirty || b.academicYearId.touched)"
+                      class="invalid-feedback">
+                      <div *ngIf="b.academicYearId.errors.required">Required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3  ">
+                  <div class="form-group pt-2">
+                    <label for="standard">Standard</label>
+                    <ng-select [items]="standardArr" class="custom" placeholder="Choose" bindLabel="name" bindValue="id"
+                    [(ngModel)]="Obj.stdId" formControlName="stdId" id="stdId" (change)="selectStandard($event)"
+                    [ngClass]="{ 'is-invalid': examTimeSubmitted && b.stdId.errors || b.stdId.invalid && (b.stdId.dirty || b.stdId.touched)}">
+                    </ng-select>
+                    <div
+                      *ngIf="examTimeSubmitted && b.stdId.errors || b.stdId.invalid && (b.stdId.dirty || b.stdId.touched)"
+                      class="invalid-feedback">
+                      <div *ngIf="b.stdId.errors.required">Required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 ">
+                    <div class="form-group pt-2">
+                      <label for="exam">Exam</label>
+                      <ng-select [items]="examArr" class="custom" placeholder="Choose" bindLabel="examName" bindValue="id"
+                      [(ngModel)]="Obj.examId" formControlName="examId" id="exam" (change)="selectExam($event)"
+                      [ngClass]="{ 'is-invalid': examTimeSubmitted && b.examId.errors || b.examId.invalid && (b.examId.dirty || b.examId.touched)}">
+                    </ng-select>
+                      <div
+                      *ngIf="examTimeSubmitted && b.examId.errors || b.examId.invalid && (b.examId.dirty || b.examId.touched)"
+                      class="invalid-feedback">
+                      <div *ngIf="b.examId.errors.required">Required</div>
+                    </div>
+                    </div>
+                  </div>
+                <div class="mt-1">
+                  <div class="text-right mt-3 ">
+                    <button type="submit" class="btn btn-success  btn-md mt-3" (click)="search()">
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+</div>
+
+    <!-- </div>
+      </div> -->
+    <div *ngIf="enableMarkCard">
+      <div class="card-2  mt-3 " id="activeNavId">
+        <label class="card-2-hedaing">Exam Timetable List</label> 
+        <!-- <perfect-scrollbar class="" [config]="configData"> -->
+          <div class="card-body manegeCard" formArrayName="examTimeTableDtlDTO">
+            <table id="example" class="table" style="width:100%">
+              <thead>
+                <tr>
+                  <th width="5%" class="text-center">S.No</th>
+                  <th width="10%">Subject</th>
+                  <th width="10%">Exam Date</th>
+                  <th width="10%">Exam Start Time</th>
+                  <!-- <th width="4%">Exam Time</th> -->
+                  <th width="10%">Exam End Time</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let rollObj of timeTableArr.controls; let i = index" [formGroupName]="i">
+                <tr>
+                  <td class="text-center">
+                    <div class="mt-2 v35r44rdx">
+                     {{i + 1}}
+                     </div>
+                    </td>
+                  <!-- <td class="form"><input class="form-control" id="name" type="text" placeholder="Roll Number"
+                    formControlName="regNo" readonly>
+                </td> -->
+                  <td> 
+                    <div class="col-12">
+                      <div class="form-group ">
+                        <input class="form-control noBorder" 
+                          id="subjectName" formControlName="subjectName" bindLabel="subjectName" bindValue="subjectId" placeholder="Subject Name" readonly>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="col-12">
+                      <div class="form-group ">
+                        <input class="form-control" ngbDatepicker #examDate="ngbDatepicker"
+                                  (click)="examDate.toggle()" id="examDate" formControlName="examDate"
+                                   placeholder="Exam Date"
+                                  [ngClass]="{ 'is-invalid': submitted && timeTableArr.controls[i].get('examDate').errors || timeTableArr.controls[i].get('examDate').invalid && (timeTableArr.controls[i].get('examDate').dirty || timeTableArr.controls[i].get('examDate').touched)}">
+                                  <div
+                                  *ngIf="submitted && timeTableArr.controls[i].get('examDate').errors || timeTableArr.controls[i].get('examDate').invalid && (timeTableArr.controls[i].get('examDate').dirty || timeTableArr.controls[i].get('examDate').touched)"
+                                  class="invalid-feedback">
+                                  <div *ngIf="timeTableArr.controls[i].get('examDate').errors.required">
+                                    Required</div>
+                                </div>
+                        <!-- <input class="form-control" ngbDatepicker #examDate="ngbDatepicker" (click)="examDate.toggle()"
+                          id="examDate" formControlName="examDate" class="form-control" placeholder="Exam Date"> -->
+                      </div>
+                    </div>
+                  </td>
+                  <td >
+                    <div class="col-12">
+                      <div class="form-group ">
+                        <ng-select [items]="TimeArr" bindLabel="name" bindValue="id"
+                        placeholder="Choose" formControlName="startTime"
+                        [ngClass]="{ 'is-invalid': submitted && timeTableArr.controls[i].get('startTime').errors || timeTableArr.controls[i].get('startTime').invalid && (timeTableArr.controls[i].get('startTime').dirty || timeTableArr.controls[i].get('startTime').touched)}">
+                      </ng-select>
+                        <!-- <input class="form-control" 
+                        id="startTime" formControlName="startTime" placeholder="Start Time"
+                        [ngClass]="{ 'is-invalid': examTimeSubmitted && timeTableArr.controls[i].get('startTime').errors || timeTableArr.controls[i].get('startTime').invalid && (timeTableArr.controls[i].get('startTime').dirty || timeTableArr.controls[i].get('startTime').touched)}">  -->
+                        <div
+                        *ngIf="submitted && timeTableArr.controls[i].get('startTime').errors || timeTableArr.controls[i].get('startTime').invalid && (timeTableArr.controls[i].get('startTime').dirty || timeTableArr.controls[i].get('startTime').touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="timeTableArr.controls[i].get('startTime').errors.required">
+                          Required</div>
+                      </div>
+                        <!-- <ng-select id="startTime" bindLabel="name" bindValue="id" placeholder="Choose"
+                        formControlName="startTime"> 
+                        </ng-select>-->
+                      </div>
+                    </div>
+                  </td>
+                  <!-- <td>
+                    <div class="col-12">
+                    <div class="form-group has-float-label">
+                      <h6 class=" mt-2 text-center" for="standard">To</h6>
+                    </div>
+                    </div>
+                  </td> -->
+                  <td>
+                    <div class="col-12">
+                    <div class="form-group">
+                      <ng-select [items]="TimeArr" bindLabel="name" bindValue="id"
+                      placeholder="Choose" formControlName="endTime"
+                      [ngClass]="{ 'is-invalid': submitted && timeTableArr.controls[i].get('endTime').errors || timeTableArr.controls[i].get('endTime').invalid && (timeTableArr.controls[i].get('endTime').dirty || timeTableArr.controls[i].get('endTime').touched)}">
+                    </ng-select>
+                      <!-- <input class="form-control" 
+                       formControlName="endTime"  placeholder="End Time"
+                       [ngClass]="{ 'is-invalid': examTimeSubmitted && timeTableArr.controls[i].get('endTime').errors || timeTableArr.controls[i].get('endTime').invalid && (timeTableArr.controls[i].get('endTime').dirty || timeTableArr.controls[i].get('endTime').touched)}">  -->
+                        <div
+                       *ngIf="submitted && timeTableArr.controls[i].get('endTime').errors || timeTableArr.controls[i].get('endTime').invalid && (timeTableArr.controls[i].get('endTime').dirty || timeTableArr.controls[i].get('endTime').touched)"
+                       class="invalid-feedback">
+                       <div *ngIf="timeTableArr.controls[i].get('endTime').errors.required">
+                         Required</div>
+                     </div>
+                      </div>
+                      </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        <!-- </perfect-scrollbar> -->
+      </div>
+    </div>
+    <div class=" row" >
+      <div class="text-left col-xl-4" *ngIf="!enableDownload">
+        <!-- <button type="submit" class="btn btn-success mb-2" (click)="downloadPDF()"><i class="bx bx-download mr-1"></i>Download</button> -->
+      </div>
+      <div class="text-left col-xl-4" *ngIf="enableDownload">
+        <button type="submit" class="btn btn-success  mb-4" (click)="downloadPDF()">Download</button>
+      </div>
+      <div class="text-right col-xl-8 " *ngIf="enableMarkCard">
+        <button type="submit" class="btn btn-primary btn-md mb-4" *ngIf="!examTimeTableObj.id" (click)="updateExamTimeTable()">Submit</button>
+        <button *ngIf="examTimeTableObj.id" type="submit" class="btn btn-primary btn-md mb-2"
+                  (click)="updateExamTimeTable()" aria-label="Close">Update</button>
+      </div>
+    </div>
+  </form>
+</div>

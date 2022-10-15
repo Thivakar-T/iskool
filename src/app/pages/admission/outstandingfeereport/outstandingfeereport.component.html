@@ -1,0 +1,93 @@
+<div class="container-fluid">
+    <div class="col-xl-6">
+      <!-- <app-page-title title="Outstanding Fee Report"></app-page-title> -->
+      <div class="mb-2 pageHeading">
+        <h4 class="">Outstanding Fee Report</h4>
+      </div>
+    </div>
+    <form [formGroup]="reportform" autocomplete="off">
+    <div class="card-2  mt-3">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-3">
+            <div class="form-group">
+                <label>Academic Year</label>
+                <ng-select [items]="acadamicArr"  bindLabel="name" bindValue="id" placeholder="Choose" (change)="selectAcadamicYear($event)"  formControlName="academicYearId" [ngClass]="{ 'is-invalid': reportSubmitted && f.academicYearId.errors || f.academicYearId.invalid && (f.academicYearId.dirty || f.academicYearId.touched)}">
+                </ng-select>
+                <div
+                *ngIf="reportSubmitted && f.academicYearId.errors || f.academicYearId.invalid && (f.academicYearId.dirty || f.academicYearId.touched)"
+                class="invalid-feedback">
+                <div *ngIf="f.academicYearId.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3">
+            <div class="form-group">
+                <label >Standard</label>
+                <ng-select [items]="standardArr" bindLabel="name" bindValue="id" placeholder="Choose" (change)="selectstdId($event)"  formControlName="stdId"[ngClass]="{ 'is-invalid': reportSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)}">
+                </ng-select>
+                <div
+                *ngIf="reportSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)"
+                class="invalid-feedback">
+                <div *ngIf="f.stdId.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3">
+            <div class="form-group">
+                <label >Section</label>
+                <ng-select [items]="sectionArr"  bindLabel="name" bindValue="id" placeholder="Choose" (change)="selectsectionId($event)"  formControlName="sectionId"[ngClass]="{ 'is-invalid': reportSubmitted && f.sectionId.errors || f.sectionId.invalid && (f.sectionId.dirty || f.sectionId.touched)}">
+                </ng-select>
+                <div
+                *ngIf="reportSubmitted && f.sectionId.errors || f.sectionId.invalid && (f.sectionId.dirty || f.sectionId.touched)"
+                class="invalid-feedback">
+                <div *ngIf="f.sectionId.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-1">
+          <div class="text-right mt-4">
+            <button type="submit"  class="btn btn-success  btn-md my-auto "(click)="updatereport($event)">
+              Report
+            </button>
+          </div>
+          </div>
+        </div>
+          <div class="row">
+        </div>
+     </div>
+    </div>
+    <div class="card-2 cardBorder " *ngIf="enableCard"> 
+      <label class="card-2-hedaing">Outstanding Fee List</label> 
+      <div class="card-body">
+        <br>
+        <table id="outstanding" class="table table-bordered" style="width:100%">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Registration.No</th>
+              <th>Roll.No</th>
+              <th>Name</th>
+              <th>Standard</th>
+              <th>Fees</th>
+              <th>Paid</th>
+              <th>Outstanding</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor = "let admission of obj.responseList; let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{admission.regNo}}</td> 
+                  <td>{{admission.rollNumber}}</td> 
+                  <td>{{admission.stuName}}</td>
+                  <td>{{admission.stdName}}</td>
+                  <td>{{admission.amount}}</td>
+                  <td>{{admission.paidAmount}}</td>
+                  <td>{{admission.payableAmount}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </form>
+  </div> 

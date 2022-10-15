@@ -1,0 +1,88 @@
+
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="row">
+          <div class="col-xl-6">
+            <!-- <app-page-title title="Country"></app-page-title>  -->
+            <div class="mb-2 pageHeading">
+              <h4 class=""> Country</h4>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="text-right my-auto ">
+              <button type="button" (click)="openModal(myModal)" class="btn btn-success btn-sm mb-2">
+                <i class="mdi mdi-plus mr-1 mb-3"></i>Add Country
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-2">
+          <div class="card-body">
+            <table id="country" class="table table-bordered" style="width:100%" >
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Name</th>
+                  <th>Short Name</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody> 
+                <tr *ngFor="let countryData of countryArr;let i = index"  >
+                  <td>{{i+1}}</td>
+                  <td>{{countryData.name}}</td>
+                  <td>{{countryData.shortName}}</td>
+                  <td>
+                  <i class="fas fa-edit  text-success mr-2" (click)="editcountry(countryData, myModal)"></i>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #myModal  let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title">Country</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body" id="myModal">
+          <form [formGroup]="countryForm" autocomplete="off"  (ngSubmit)="addcountry(modal)">
+              <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group ">
+                      <label for="name">Name</label>
+                        <input id="name"  type="text" class="form-control" formControlName="name" [(ngModel)]="countryObj.name" placeholder="Name"
+                        [ngClass]="{ 'is-invalid': countrySubmitted && f.name.errors || f.name.invalid && (f.name.dirty || f.name.touched)}" >
+                          <div
+                          *ngIf="countrySubmitted && f.name.errors || f.name.invalid && (f.name.dirty || f.name.touched)"
+                          class="invalid-feedback">
+                          <div *ngIf="f.name.errors.required">Required</div>
+                        </div> 
+                        </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group ">
+                      <label for="shortName">Short Name</label>
+                        <input id="shortName"  type="text" class="form-control" formControlName="shortName" [(ngModel)]="countryObj.shortName" placeholder="Short Name"
+                        [ngClass]="{ 'is-invalid': countrySubmitted && f.shortName.errors || f.shortName.invalid && (f.shortName.dirty || f.shortName.touched)}" >
+                          <div
+                          *ngIf="countrySubmitted && f.shortName.errors || f.shortName.invalid && (f.shortName.dirty || f.shortName.touched)"
+                          class="invalid-feedback">
+                          <div *ngIf="f.shortName.errors.required">Required</div>
+                        </div> 
+                        </div>     
+                </div>
+              </div>
+          <div class="text-right mt-2">
+          <button type="submit" class="btn btn-sm btn-primary mb-2">{{buttonText}}</button>
+        </div>
+      </form>
+      </div>
+    </ng-template>
+   

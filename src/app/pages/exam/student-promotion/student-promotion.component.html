@@ -1,0 +1,157 @@
+<div class="container-fluid">
+    <div class="mb-3">
+        <!-- <div class="mb-2"> -->
+        <!-- <app-page-title title=""></app-page-title> -->
+        <div class="mb-2 pageHeading">
+            <h4 class="">Student Promotion</h4>
+        </div>
+    </div>
+    <form [formGroup]="studentPromotionForm" autocomplete="off">
+        <!-- <div class="row ">
+          <div class="col-lg-12"> -->
+        <div class="card-2 height">
+            <div class="card-body ">
+                <div class="row  ">
+                    <div class="col-xl-3 ">
+                        <div class="form-group pt-2 ">
+                            <label for="yearId">Academic year</label>
+                            <ng-select [items]="academicArr" class="custom" placeholder="Choose" bindLabel="name"
+                                bindValue="id" [(ngModel)]="Obj.academicYearId" formControlName="academicYearId"
+                                id="academicYearId" (change)="selectYear($event)"
+                                [ngClass]="{ 'is-invalid': studentPromotionSubmitted && b.academicYearId.errors || b.academicYearId.invalid && (b.academicYearId.dirty || b.academicYearId.touched)}">
+                            </ng-select>
+                            <div *ngIf="studentPromotionSubmitted && b.academicYearId.errors || b.academicYearId.invalid && (b.academicYearId.dirty || b.academicYearId.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="b.academicYearId.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 ">
+                        <div class="form-group pt-2">
+                            <label for="standard">Standard</label>
+                            <ng-select [items]="standardArr" class="custom" placeholder="Choose" bindLabel="name"
+                                bindValue="id" [(ngModel)]="Obj.stdId" formControlName="stdId" id="stdId"
+                                (change)="selectStandard($event)"
+                                [ngClass]="{ 'is-invalid': studentPromotionSubmitted && b.stdId.errors || b.stdId.invalid && (b.stdId.dirty || b.stdId.touched)}">
+                            </ng-select>
+                            <div *ngIf="studentPromotionSubmitted && b.stdId.errors || b.stdId.invalid && (b.stdId.dirty || b.stdId.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="b.stdId.errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="text-right mt-3 ">
+                            <button type="submit" class="btn btn-success btn-md mt-3" (click)="search()">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-2" *ngIf="enablePromotionCard">
+            <div class="row mt-1 pb-2">
+                <label class="card-2-hedaing">Student List To Promote</label>
+                <div class="col-4 text-right">
+                </div>
+                <div class="col-2 text-right mt-3">
+                    <label class="mt-3 mr-2">Promote To :</label>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="standard">Standard</label>
+                        <ng-select [items]="standardArr" class="custom" placeholder="Choose" bindLabel="name"
+                            bindValue="id" formControlName="newStdId" id="stdId"
+                            [ngClass]="{ 'is-invalid': promotionSubmitted && b.newStdId.errors || b.newStdId.invalid && (b.newStdId.dirty || b.newStdId.touched)}">
+                        </ng-select>
+                        <div *ngIf="promotionSubmitted && b.newStdId.errors || b.newStdId.invalid && (b.newStdId.dirty || b.newStdId.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="b.newStdId.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 ">
+                    <div class="form-group mr-3">
+                        <label for="yearId">Academic year</label>
+                        <ng-select [items]="academicArr" class="custom" placeholder="Choose" bindLabel="name"
+                            bindValue="id" formControlName="newAcademicYearId" id="academicYearId"
+                            [ngClass]="{ 'is-invalid': promotionSubmitted && b.newAcademicYearId.errors || b.newAcademicYearId.invalid && (b.newAcademicYearId.dirty || b.newAcademicYearId.touched)}">
+                        </ng-select>
+                        <div *ngIf="promotionSubmitted && b.newAcademicYearId.errors || b.newAcademicYearId.invalid && (b.newAcademicYearId.dirty || b.newAcademicYearId.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="b.newAcademicYearId.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <perfect-scrollbar class="" [config]="configData">
+                <div class="card-body PromoCard">
+                    <div formArrayName="studentPromotionDtlDtoList">
+                        <table id="studentpromotion" class="table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" width="10%">Select</th>
+                                    <th width="15%">Roll Number</th>
+                                    <th width="18%">Name</th>
+                                    <th width="10%">Standard</th>
+                                    <th width="4%">Section</th>
+                                    <th width="17%" class="text-center">Marks</th>
+                                    <th width="15%">Result</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let rollObj of promotionArr.controls; let i = index" [formGroupName]="i">
+                                <tr class="noBorder">
+
+                                    <td>
+                                        <div class="mt-1">
+                                            <input class="box ml-5 mt-2" id="selet" type="checkbox"
+                                                formControlName="isChecked" (change)="checkEvent($event)">
+                                        </div>
+                                    </td>
+                                    <td class="form"><input class="form-control noBorderInput" id="rollNumber"
+                                            type="text" placeholder="Roll Number" formControlName="rollNumber" readonly>
+                                    </td>
+                                    <td class="form"><input class="form-control noBorderInput" id="name" type="text"
+                                            placeholder="Student Name" formControlName="studentName" readonly></td>
+                                    <td class="form"><input class="form-control noBorderInput" id="standardName"
+                                            type="text" placeholder="Standard Name" formControlName="standardName"
+                                            readonly></td>
+                                    <td class="form"><input class="form-control noBorderInput" id="sectionName"
+                                            type="text" placeholder="Section Name" formControlName="sectionName"
+                                            readonly></td>
+                                    <td class="form">
+                                        <div class="row display">
+                                            <div class="col-6">
+
+                                                <input class="form-control noBorderInput ml-5" id="practicalMark"
+                                                    type="text" formControlName="optainedMark" readonly>
+                                            </div>
+                                            <div class="col-1 mt-2">/</div>
+                                            <div class="col-5"><input class="form-control noBorderInput mr-5"
+                                                    id="theoryMark" type="text" formControlName="totalMark" readonly>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+                                    <td class="form"><input class="form-control noBorderInput" id="result" type="text"
+                                            placeholder="Result" formControlName="result" readonly></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </perfect-scrollbar>
+        </div>
+        <div class="row" *ngIf="enablePromotionCard">
+            <div class="text-left col-xl-4">
+            </div>
+            <div class="text-right col-xl-8 mb-1">
+                <button type="submit" class="btn btn-primary mb-4" (click)="submit()">Promote</button>
+            </div>
+        </div>
+    </form>
+</div>

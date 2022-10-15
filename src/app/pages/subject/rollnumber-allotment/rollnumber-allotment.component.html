@@ -1,0 +1,160 @@
+<div class="container-fluid">
+  <div class="mb-3">
+    <!-- <app-page-title title="Section Roll Number Allotment"></app-page-title> -->
+    <div class="mb-2 ml-1 pageHeading">
+      <h4 class="">Section Roll Number Allotment</h4>
+    </div>
+  </div>
+  <div class="col-12">
+    <form [formGroup]="rollForm" autocomplete="off">
+      <div class="row">
+        <div class="col-xl-6 ">
+          <div class="card-2 ">
+            <label class="card-2-hedaing">Filter</label>
+            <div class="card-body card-max-height ">
+              <div class="form-group pt-2">
+                <label class="control-label">Academic Year</label>
+                <ng-select [items]="yearArr" id="academicyearId" bindLabel="name" bindValue="id"
+                  (change)="select($event)" placeholder="Choose" formControlName="academicyearId"
+                  [ngClass]="{ 'is-invalid': feeSubmitted && f.academicyearId.errors || f.academicyearId.invalid && (f.academicyearId.dirty || f.academicyearId.touched)}">
+                </ng-select>
+                <div
+                  *ngIf="feeSubmitted && f.academicyearId.errors || f.academicyearId.invalid && (f.academicyearId.dirty || f.academicyearId.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="f.academicyearId.errors.required">Required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label"> Standard</label>
+                <ng-select [items]="stdArr" id="standardId" bindLabel="name" bindValue="id"
+                  (change)="selectModule($event)" placeholder="Choose" formControlName="standardId"
+                  [ngClass]="{ 'is-invalid': feeSubmitted && f.standardId.errors || f.standardId.invalid && (f.standardId.dirty || f.standardId.touched)}">
+                </ng-select>
+                <div
+                  *ngIf="feeSubmitted && f.standardId.errors || f.standardId.invalid && (f.standardId.dirty || f.standardId.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="f.standardId.errors.required">Required</div>
+                </div>
+              </div>
+              <div class="form-group ">
+                <label class="control-label"> Section</label>
+                <ng-select [items]="secArr" id="sectionId" bindLabel="name" bindValue="id" (change)="getCountry($event)"
+                  placeholder="Choose" formControlName="sectionId"
+                  [ngClass]="{ 'is-invalid': feeSubmitted && f.sectionId.errors || f.sectionId.invalid && (f.sectionId.dirty || f.sectionId.touched)}">
+                </ng-select>
+                <div
+                  *ngIf="feeSubmitted && f.sectionId.errors || f.sectionId.invalid && (f.sectionId.dirty || f.sectionId.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="f.sectionId.errors.required">Required</div>
+                </div>
+              </div>
+              <div class="mb-2 text-right">
+                <button type="submit" class="btn btn-success ml-1 text-right" (click)="search()">Search</button>
+                <button type="reset" (click)="reset()" class="btn btn-danger ml-1 text-right">Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 ">
+          <div class="card-2">
+            <label class="card-2-hedaing">Criteria</label>
+            <div class="card-body card-max-height ">
+              <div class="form-group ">
+                <div class="form-group pt-2">
+                  <label class="control-label"> Sort Type</label>
+                  <ng-select [items]="acsendingArr" id="sortType" bindLabel="disp" bindValue="val"
+                    (change)="selectModule($event)" placeholder="Choose" formControlName="sortType"
+                    [ngClass]="{ 'is-invalid': applySubmitted && f.sortType.errors || f.sortType.invalid && (f.sortType.dirty || f.sortType.touched)}">
+                  </ng-select>
+                  <div
+                    *ngIf="applySubmitted && f.sortType.errors || f.sortType.invalid && (f.sortType.dirty || f.sortType.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="f.sortType.errors.required">Required</div>
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label class="control-label">Prefix</label>
+                  <input class="form-control" placeholder="Prefix" name="value" formControlName="prefix"
+                    [ngClass]="{ 'is-invalid': applySubmitted && f.prefix.errors || f.prefix.invalid && (f.prefix.dirty || f.prefix.touched)}">
+                  <div
+                    *ngIf="applySubmitted && f.prefix.errors || f.prefix.invalid && (f.prefix.dirty || f.prefix.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="f.prefix.errors.required">Required</div>
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label class="control-label">Index</label>
+                  <input type="number" class="form-control" placeholder="Index" name="number" formControlName="index"
+                    [ngClass]="{ 'is-invalid': applySubmitted && f.index.errors || f.index.invalid && (f.index.dirty || f.index.touched)}">
+                  <div *ngIf="applySubmitted && f.index.errors || f.index.invalid && (f.index.dirty || f.index.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="f.index.errors.required">Required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-2 text-right">
+                <button type="button" class="btn btn-primary ml-1 text-right" (click)="apply()">Apply</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-12 " *ngIf="enableFeeCard">
+          <div class="card-2 cardBorder">
+            <label class="label-size card-2-hedaing  ml-1">Criteria</label>
+            <div class="container ">
+              <div formArrayName="responseList">
+                <perfect-scrollbar class="" [config]="configData">
+                  <div class="card-body RollCard mt-5">
+                    <table id="roll" class="table table-bordered" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th width="5%">S.No</th>
+                          <th width="10%">Registration.No</th>
+                          <th width="15%">Student Name</th>
+                          <th width="12%">Roll Number</th>
+                          <th width="10%">New Roll Number</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let rollObj of rollArr.controls; let i = index" [formGroupName]="i">
+                        <tr>
+                          <td>{{i+1}}</td>
+                          <td>
+                            <div class=" form-group has-float-label">
+                              <input class=" form-control style" id="border" type="text" class="form-control"
+                                placeholder="Number" formControlName="regNo" readonly>
+                            </div>
+                          </td>
+                          <td>
+                            <div class=" form-group has-float-label">
+                              <input class=" form-control style" id="border" type="text" class="form-control"
+                                placeholder="Name" formControlName="stuName" readonly>
+                            </div>
+                          </td>
+                          <td>
+                            <div class=" form-group has-float-label">
+                              <input class=" form-control style" id="border" type="text" class="form-control"
+                                placeholder="Number" formControlName="oldRollNumber" readonly>
+                            </div>
+                          </td>
+                          <td>
+                            <div class=" form-group">
+                              <input class="form-control" id="newRollNumber" type="text" class="form-control"
+                                placeholder="Number" formControlName="newRollNumber">
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </perfect-scrollbar>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-4 text-right" *ngIf="enableFeeCard">
+        <button type="submit" (click)="submit()" class="btn btn-primary btn-md ml-1 text-right">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

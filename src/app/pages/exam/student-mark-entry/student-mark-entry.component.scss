@@ -1,0 +1,14 @@
+.display{
+    display: inline-flex;
+}
+#border{
+        border: 0;
+        -webkit-appearance: none;
+    }
+    tr .noPadding{
+        padding-left: 0px !important;
+    }
+    .markcard{
+        min-height: fit-content !important;
+        max-height: 48vh !important;
+    }

@@ -1,0 +1,177 @@
+<div class="container-fluid">
+  <div class="mb-3">
+    <!-- <app-page-title title="Section Allotment"></app-page-title> -->
+    <div class="mb-2 pageHeading">
+      <h4 class="">Section Allotment</h4>
+    </div>
+  </div>
+
+  <form [formGroup]="sectionAllotForm" autocomplete="off">
+
+    <div class="row ">
+      <div class="col-xl-12">
+        <div class="card-2 height mt-2">
+          <div class="card-body ">
+            <div class="row  ">
+              <div class="col-xl-3  ">
+                <div class="form-group  ">
+                  <label for="yearId">Academic year</label>
+                  <ng-select [items]="academicArr" class="custom" placeholder="Choose" bindLabel="name" bindValue="id"
+                    formControlName="academicYear" id="academicYear" [ngClass]="{ 'is-invalid': sectionAllotment && b.academicYear.errors || b.academicYear.invalid
+                                    && (b.academicYear.dirty || b.academicYear.touched)}"
+                    (change)="selectYear($event)">
+                  </ng-select>
+                  <div
+                    *ngIf="sectionAllotment && b.academicYear.errors || b.academicYear.invalid && (b.academicYear.dirty || b.academicYear.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="b.academicYear.errors.required">Required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3  ">
+                <div class="form-group ">
+                  <label for="standard">Standard</label>
+                  <ng-select [items]="standardArr" class="custom" placeholder="Choose" bindLabel="name" bindValue="id"
+                    formControlName="standard" id="standard" [ngClass]="{ 'is-invalid': sectionAllotment && b.standard.errors || b.standard.invalid
+                                    && (b.standard.dirty || b.standard.touched)}" (change)="selectStandard($event)">
+                  </ng-select>
+                  <div
+                    *ngIf="sectionAllotment && b.standard.errors || b.standard.invalid && (b.standard.dirty || b.standard.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="b.standard.errors.required">Required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-1">
+                <div class="text-right mt-2">
+                  <button type="submit" class="btn btn-success  btn-md mt-3" (click)="openSection(section)">
+                    Search
+                  </button>
+
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="card cardBorder pt-2" id="activeNavId" *ngIf="enableCard">
+      <perfect-scrollbar class="" [config]="configData">
+        <div class="card-body SectionCard" formArrayName="responseList">
+          <br>
+          <table id="sectionallotment" class="table table-bordered" style="width:100%">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Registration Number</th>
+                <th>Student Name</th>
+                <th>Section</th>
+
+              </tr>
+            </thead>
+            <tbody *ngFor="let rollObj of rollArr.controls; let i = index" [formGroupName]="i">
+              <tr class="form">
+                <td> {{i + 1}}</td>
+                <td class="form"><input class="form-control noBorder" id="name" type="text" placeholder="Roll Number"
+                    formControlName="regNo" readonly>
+                </td>
+                <td class="form"> <input class="form-control noBorder" id="name" type="text" placeholder="Name"
+                    formControlName="name" readonly>
+                </td>
+                <td class="form">
+                  <div class="form-group has-float-label ">
+                    <ng-select [items]="sectionArr" id="sectionId" bindLabel="name" bindValue="id" placeholder="Choose"
+                      formControlName="sectionId">
+                    </ng-select>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </perfect-scrollbar>
+    </div>
+
+    <div class="text-right mt-4" *ngIf="enableCard">
+      <button type="submit" class="btn btn-md btn-primary mb-4 " (click)="allowNow()">Allot Now</button>
+    </div>
+  </form>
+</div>
+
+
+
+<ng-template #section let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Allotment</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" id="section">
+    <form [formGroup]="sectionForm" autocomplete="off">
+      <div class="form-group ">
+        <div class="row">
+          <div class="col-4">
+            <p>Total Number Of Students</p>
+          </div>
+          <div class="col-1">
+            <p>:</p>
+          </div>
+          <div class="col-5">
+            <p>{{sectionObj.totalStudent}}</p>
+          </div>
+          <div class="col-2">
+          </div>
+
+          <div class="col-4">
+            <p>Maximum Students Per Section</p>
+          </div>
+          <div class="col-1">
+            <p>:</p>
+          </div>
+          <div class="col-7">
+            <input id="maxStudent" type="text" (keyup)="calculate()" class="form-control" formControlName="maxStudent"
+              placeholder="Maximum Student" [(ngModel)]="sectionObj.maxStudent" [ngClass]="{ 'is-invalid': sectionSubmitted && f.maxStudent.errors || f.maxStudent.invalid
+                    && (f.maxStudent.dirty || f.maxStudent.touched)}">
+            <div
+              *ngIf="sectionSubmitted && f.maxStudent.errors || f.maxStudent.invalid && (f.maxStudent.dirty || f.maxStudent.touched)"
+              class="invalid-feedback">
+              <div *ngIf="f.maxStudent.errors.required">Required</div>
+            </div>
+          </div>
+
+
+          <div class="col-4">
+            <p>Sort Type</p>
+          </div>
+          <div class="col-1">
+            <p>:</p>
+          </div>
+          <div class="col-7">
+            <ng-select [items]="acsendingArr" class="custom" bindLabel="disp" bindValue="val" placeholder="Choose"
+              formControlName="sortType" [(ngModel)]="sectionObj.sortType" id="sortType" [ngClass]="{ 'is-invalid': sectionSubmitted && f.sortType.errors || f.sortType.invalid
+                    && (f.sortType.dirty || f.sortType.touched)}">
+            </ng-select>
+            <div
+              *ngIf="sectionSubmitted && f.sortType.errors || f.sortType.invalid && (f.sortType.dirty || f.sortType.touched)"
+              class="invalid-feedback">
+              <div *ngIf="f.sortType.errors.required">Required</div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="text-right mt-2">
+        <button type="submit" class="btn btn-sm btn-primary mb-2" (click)="submit(modal)">Submit</button>
+      </div>
+    </form>
+  </div>
+</ng-template>

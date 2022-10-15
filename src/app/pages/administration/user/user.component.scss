@@ -1,0 +1,92 @@
+.nav-tabs{
+    border-bottom: 1px solid lightgrey;
+}
+.main-card{
+  height: 300px !important;
+}
+
+.multiCard{
+  min-height: 150px !important;
+}
+.multiCardBody{
+  padding-bottom: 0px !important;
+  // min-height: 140px !important;
+  // max-height: 370px !important;
+}
+
+.addCard{
+    width: 450px !important;
+    margin-left: 10px !important;
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+  border: 1px solid #d7d7d7;
+  border-radius: 2px;
+  }
+  .cardHt{
+    max-width: 100% !important;
+    // overflow-x: auto;
+  }
+  
+  .card-min-height-tab1{
+    height: 482px !important
+  }
+
+.card-min-height-tab2{
+  height: 482px !important
+}
+
+.card-min-height-tab3{
+  height: 482px !important
+}
+
+  .secondCard{
+    min-height: 100px !important;
+    max-height: 380px !important;
+  }
+  .tab{
+    margin-bottom: -23px;
+    margin-top: -10px;
+  }
+
+  .over{
+    top: 108px;
+    height: 471px;
+  }
+  .size1{
+margin-right: 147px;
+  }
+  .size2{
+    margin-right: 133px;
+  }
+  .size3{
+    margin-right: 88px;
+
+  }
+  .size4{
+    margin-left: 19px;
+  }
+  .size5{
+    margin-left: 16px;
+  }
+  .size8{
+  margin-left: -8px;
+  }
+  .size6{
+  margin-left: 10px;
+  }
+  .wid{
+    margin-left: -6px;
+    width: 304px;
+  }
+  .userCard{
+    height: 59.2vh !important;
+
+  }
+  tr td {
+   padding-left: 0px !important;
+   margin-left: 0px !important;
+  }
+
+ngb-datepicker{
+  position: relative;
+}
+ 

@@ -1,0 +1,972 @@
+<div class="container-fluid">
+    <!-- <app-page-title title="Student Information"></app-page-title> -->
+    <div class="mb-2 pageHeading">
+        <h4 class="">Student Information</h4>
+    </div>
+    <div class="row ">
+        <div class="col-1 ">
+            <span class="mdi  mdi-account-circle my-auto">{{informationObj.photo}}
+            </span>
+        </div>
+        <div class="float-left col pl-2">
+            <h4 class="float-left mt-5">{{informationObj.name}}</h4>
+        </div>
+        <div class="col mt-5 ">
+            <!-- <button type="submit" class="btn btn-success  btn-sm my-auto float-right">
+                Download
+            </button> -->
+
+        </div>
+    </div>
+    <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom mt-2">
+        <li [ngbNavItem]="1">
+            <a ngbNavLink>
+                <p class="font-weight-bold mb-0">Personal Information</p>
+            </a>
+            <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+                <!-- <app-personal-information></app-personal-information> -->
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="card-2 cardBorder l mt-3 col">
+                            <label class="card-2-hedaing">Basic Information</label>
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Name</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.firstName}}
+                                        {{informationObj.lastName}}
+                                        
+                                    </div>
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Marital Status</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-3 text-left">
+                                        {{informationObj.maritalStatus}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Gender </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-3 text-left">
+                                        {{informationObj.gender}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Date Of Birth </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-3 text-left">
+                                        {{informationObj.dateOfBirth}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Email Id</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-7 text-left">
+                                        {{informationObj.emailId}}
+                                    </div>
+                                    <!-- <div class="col-1"></div> -->
+
+                                    <div class="col-4 text-left">
+                                        <p class="ml-2 ">Mobile Number </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.mobileNumber}}
+                                    </div>
+                                    <div class="col-3"></div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="card-2 cardBorder  mt-3 col">
+                            <label class="card-2-hedaing">Other Information</label>
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Nationality</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.nationality}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Religion </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.religionName}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Caste </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4 text-left">
+                                        {{informationObj.casteName}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Category</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.categoryName}}
+                                    </div>
+                                    <div class="col-3"></div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col">
+
+                        <div class="card-2 cardBorder  mt-3 col">
+                            <label class="card-2-hedaing">Personal Information</label>
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Birth Place</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.birthTable}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Birth State </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.birthStateName}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4 text-left">
+                                        <p class="ml-2 ">Identity Mark </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4 text-left">
+                                        {{informationObj.identityMark}}
+                                    </div>
+                                    <div class="col-3"></div>
+                                    <div class="col-4 text-left">
+                                        <p class="ml-2 ">Domicile Country </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.domicileCountryName}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4 text-left">
+                                        <p class="ml-2 ">Domicile State </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.domicileStateName}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4 text-left">
+                                        <p class="ml-2 ">Mother Tongue </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.motherTongueName}}
+                                    </div>
+                                    <!-- <div class="col-3"></div> -->
+
+                                    <!-- <div class="col-4 text-left">
+                                        <p class="ml-2 ">Pan Number </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.panNumber}}
+                                    </div> -->
+                                    <div class="col-3"></div>
+
+                                    <!-- <div class="col-4 text-left">
+                                        <p class="ml-2 ">Aadhar Number </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.aadharNumber}}
+                                    </div>
+                                    <div class="col-3"></div>
+                                    <div class="col-3"></div> -->
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-2 cardBorder  mt-4 col" style="height: 11.40rem;">
+                            <label class="card-2-hedaing">Admin Information</label>
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Registration Number</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.registrationNumber}}
+                                    </div>
+                                    <div class="col-3"></div>
+                                    <!-- <div class="col-4">
+                                        <p class="ml-2 ">University Number </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.gender}}
+                                    </div>
+                                    <div class="col-3"></div> -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+            <a ngbNavLink>
+                <p class="font-weight-bold mb-0">Address Information</p>
+            </a>
+            <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+                <!-- <app-address></app-address> -->
+                <div class="card-deck">
+                    <div class="col-6">
+                        <div class="card-2 cardBorder mt-4">
+                            <label class="card-2-hedaing">Permanent Address</label>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Address</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{permanentAddressObj.address}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Pin code </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{permanentAddressObj.pincode}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4">
+                                        <p class="ml-2 ">City </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4 text-left">
+                                        {{permanentAddressObj.cityName}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4">
+                                        <p class="ml-2 ">State</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{permanentAddressObj.stateName}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4 text-left">
+                                        <p class="ml-2 ">Country </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4">
+                                        {{permanentAddressObj.countryName}}
+                                    </div>
+                                    <div class="col-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="card-2 cardBorder mt-4 ">
+                            <label class="card-2-hedaing">Local Address</label>
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Address</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{localAddressObj.address}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Pin code </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{localAddressObj.pincode}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4">
+                                        <p class="ml-2 ">City </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4 text-left">
+                                        {{localAddressObj.cityName}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4">
+                                        <p class="ml-2 ">State</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{localAddressObj.stateName}}
+                                    </div>
+                                    <div class="col-3"></div>
+
+                                    <div class="col-4 text-left">
+                                        <p class="ml-2 ">Country </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4">
+                                        {{localAddressObj.countryName}}
+                                    </div>
+                                    <div class="col-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
+            <a ngbNavLink>
+                <p class="font-weight-bold mb-0">Parent Details</p>
+            </a>
+            <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+                <div class="card-deck">
+                    <div class="col-4">
+                        <div class="card-2 cardBorder mt-4 ">
+                            <label class="card-2-hedaing">Father Information</label>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <p class=" ">First Name</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 m-n3">
+                                        {{fatherObj.firstName}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <div class="col-5">
+                                        <p class="">Last Name </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4  m-n3">
+                                        {{fatherObj.lastName}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <div class="col-5">
+                                        <p class=" ">Email Id </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-6 ml-n3">
+                                        {{fatherObj.emailId}}
+                                    </div>
+
+                                    <div class="col-5">
+                                        <p class=" ">Mobile Number</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4  m-n3">
+                                        {{fatherObj.mobileNumber}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <div class="col-5 text-left">
+                                        <p class=" ">Desingnation </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4  m-n3">
+                                        {{fatherObj.designation}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+
+                                    <div class="col-5">
+                                        <p class=" ">Occupation</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4  m-n3">
+                                        {{fatherObj.occupationName}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <div class="col-5 ">
+                                        <p class=" ">Organization Name </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4  m-n3">
+                                        {{fatherObj.organizationName}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+
+                                    <div class="col-5 text-left">
+                                        <p class=" ">Annual Income </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4  m-n3">
+                                        {{fatherObj.annualIncome}}
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card-2 cardBorder mt-4">
+                            <label class="card-2-hedaing">Mother Information</label>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <p class=" ">First Name</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 m-n3">
+                                        {{motherrObj.firstName}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <div class="col-5">
+                                        <p class=" ">Last Name </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4  m-n3">
+                                        {{motherrObj.lastName}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <div class="col-5">
+                                        <p class="">Email Id </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-6  m-n3">
+                                        {{motherrObj.emailId}}
+                                    </div>
+
+                                    <div class="col-5">
+                                        <p class=" ">Mobile Number</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4  m-n3">
+                                        {{motherrObj.mobileNumber}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <div class="col-5 ">
+                                        <p class="">Desingnation </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4  m-n3">
+                                        {{motherrObj.designation}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+
+                                    <div class="col-5">
+                                        <p class="">Occupation</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4  m-n3">
+                                        {{motherrObj.occupationName}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <div class="col-5 ">
+                                        <p class="">Organization Name </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4  m-n3">
+                                        {{motherrObj.organizationName}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+
+                                    <div class="col-5 text-left">
+                                        <p class=" ">Annual Income </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4  m-n3">
+                                        {{motherrObj.annualIncome}}
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="card-2 cardBorder mt-4">
+                            <label class="card-2-hedaing">Local Gaurdian Information</label>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <p class=" ">First Name</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 ml-n3">
+                                        {{localGuardianObj.firstName}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <div class="col-5">
+                                        <p class="">Last Name </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 ml-n3">
+                                        {{localGuardianObj.lastName}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <div class="col-5">
+                                        <p class="">Email Id </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-6 ml-n3">
+                                        {{localGuardianObj.emailId}}
+                                    </div>
+
+                                    <div class="col-5">
+                                        <p class="">Mobile Number</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 ml-n3">
+                                        {{localGuardianObj.mobileNumber}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <div class="col-5 ">
+                                        <p class="">Desingnation </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4 ml-n3">
+                                        {{localGuardianObj.designation}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+
+                                    <div class="col-5">
+                                        <p class=" ">Occupation</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 ml-n3">
+                                        {{localGuardianObj.occupationName}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <div class="col-5 ">
+                                        <p class=" ">Organization Name </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4 ml-n3">
+                                        {{localGuardianObj.organizationName}}
+                                    </div>
+                                    <div class="col-2"></div>
+
+
+                                    <div class="col-5 text-left">
+                                        <p class="">Annual Income </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+
+                                    <div class="col-4 ml-n3">
+                                        {{localGuardianObj.annualIncome}}
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="5">
+            <a ngbNavLink>
+                <p class="font-weight-bold mb-0">Admission Information</p>
+            </a>
+            <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+                <div class="card-deck">
+                    <div class="col-6">
+                        <div class="card-2 cardBorder mt-4">
+                            <label class="card-2-hedaing">Admission Information</label>
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Date Of Admission</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.dateOfAdmission}}
+                                    </div>
+                                    <div class="col-3"></div>
+    
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Admission Year </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.academicYearName}}
+                                    </div>
+                                    <div class="col-3"></div>
+    
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Admission Category </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+    
+                                    <div class="col-4 text-left">
+                                        {{informationObj.admissionCategoryName}}
+                                    </div>
+                                    <div class="col-3"></div>
+    
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Roll Number</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.rollNumber}}
+                                    </div>
+                                    <div class="col-3"></div>
+    
+                                    <div class="col-4">
+                                        <p class="ml-2 ">Standard</p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        {{informationObj.stdName}}
+                                    </div>
+                                    <div class="col-3"></div>
+    
+                                    <div class="col-4 text-left">
+                                        <p class="ml-2 ">Session </p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p class="">:</p>
+                                    </div>
+    
+                                    <div class="col-4">
+                                        {{informationObj.sessionName}}
+                                    </div>
+                                    <div class="col-3"></div>
+    
+    
+    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class=" col-3"></div>
+
+
+                </div>
+
+
+            </ng-template>
+        </li>
+        <!-- <li [ngbNavItem]="6">
+            <a ngbNavLink>
+                <p class="font-weight-bold mb-0">Academic Records</p>
+            </a>
+            <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+                <div class="card-deck">
+                    <div class="col-3"></div>
+
+                    <div class="card-2 cardBorder mt-4 col-6">
+                        <label class="card-2-hedaing">Acadamic Records</label>
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-4">
+                                    <p class="ml-2 ">Board/University </p>
+                                </div>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-4 text-left">
+                                    {{informationObj.academicRecord.boardName}}
+                                </div>
+                                <div class="col-3"></div>
+
+                                <div class="col-4">
+                                    <p class="ml-2 ">Institute/School </p>
+                                </div>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+
+                                <div class="col-4 text-left">
+                                    {{informationObj.academicRecord.schoolName}}
+                                </div>
+                                <div class="col-3"></div>
+
+                                <div class="col-4">
+                                    <p class="ml-2 ">Roll Number</p>
+                                </div>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-4 text-left">
+                                    {{informationObj.academicRecord.rollNumber}}
+                                </div>
+                                <div class="col-3"></div>
+
+                                <div class="col-4 text-left">
+                                    <p class="ml-2 ">Passing Year </p>
+                                </div>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+
+                                <div class="col-4">
+                                    {{informationObj.dateOfAdmission}}
+                                </div>
+                                <div class="col-3"></div>
+
+                                <div class="col-4 text-left">
+                                    <p class="ml-2 ">CGPA/Percentage </p>
+                                </div>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+
+                                <div class="col-4">
+                                    {{informationObj.academicRecord.percentage}}
+                                </div>
+                                <div class="col-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-3"></div>
+                </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="7">
+            <a ngbNavLink>
+                <p class="font-weight-bold mb-0">Document</p>
+            </a>
+            <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+
+
+                <div class="card-2 cardBorder mt-4 col ">
+                    <label class="card-2-hedaing">Document List</label>
+                    <div class="card-body ">
+                        <table class="table table-borderless">
+
+                            <thead>
+                                <tr>
+                                    <th width="20%">Document</th>
+                                    <th width="5%">Upload</th>
+                                    <th width="10%">Upload Date </th>
+                                    <th width="10%">status </th>
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+                                <tr>
+                                    <td class="">Certificate</td>
+                                    <td>
+
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <div class="badge badge-danger font-size-11 mb-3">Pending</div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                </div>
+
+
+
+
+            </ng-template>
+        </li> -->
+    </ul>
+    <div [ngbNavOutlet]="nav"></div>
+</div>

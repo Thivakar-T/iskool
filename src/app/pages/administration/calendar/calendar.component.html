@@ -1,0 +1,50 @@
+<div class="calendar-container" *ngIf="events">
+  <app-page-title title="Calender"></app-page-title>
+  <div class="row">
+    <div class="col-md-4 text-right"></div>
+    <div class="col-md-4 text-right"></div>
+    <div class="col-md-4 text-right">
+      <div class="row text-right">
+        <div class="col-6 col-md-12 col-xl-6 text-right"></div>
+        <div class="col-6 col-md-12 col-xl-6 text-right">
+          <div class="btn-group m-1" role="group">
+            <button type="button" class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+              [daysInWeek]="viewDays" [excludeDays]="excludeDays" [disabled]="prevBtnDisabled"
+              (viewDateChange)="dateOrViewChanged()">
+              <span class="valign-center">
+                <i title="Precedente" class="fas fa-arrow-left md-18"></i>
+              </span>
+            </button>
+            <button type="button" class="btn btn-light" mwlCalendarToday [(viewDate)]="viewDate"
+              (viewDateChange)="dateOrViewChanged()">
+              <span class="valign-center">
+                <i title="Oggi" class="material-icons md-18">today</i>
+              </span>
+            </button>
+            <button type="button" class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+              [daysInWeek]="viewDays" [excludeDays]="excludeDays" [disabled]="nextBtnDisabled"
+              (viewDateChange)="dateOrViewChanged()">
+              <span class="valign-center">
+                <i title="Successivo" class="fas fa-arrow-right md-18"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div [ngSwitch]="view">
+    <calendar-scheduler-view *ngSwitchCase="CalendarView.Week" [viewDays]="viewDays" [viewDate]="viewDate"
+      [events]="events" [locale]="locale" [responsive]="false" [weekStartsOn]="weekStartsOn" [excludeDays]="excludeDays"
+      [startsWithToday]="startsWithToday" [hourSegments]="hourSegments" [dayStartHour]="dayStartHour"
+      [dayEndHour]="dayEndHour" [dayModifier]="dayModifier" [hourModifier]="hourModifier"
+      [segmentModifier]="segmentModifier" [eventModifier]="eventModifier" [showEventActions]="true"
+      [showSegmentHour]="true" [zoomEventOnHover]="true" (viewDaysChanged)="viewDaysChanged($event)"
+      (dayHeaderClicked)="dayHeaderClicked($event.day)" (hourClicked)="hourClicked($event.hour)"
+      (segmentClicked)="segmentClicked('Clicked', $event.segment)"
+      (eventClicked)="eventClicked('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
+      [refresh]="refresh">
+    </calendar-scheduler-view>
+  </div>
+</div>

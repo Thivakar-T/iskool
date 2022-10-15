@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row">
+        <div class="col-xl-6">
+          <app-page-title title="Role"></app-page-title>
+        </div>
+        <div class="col-xl-6">
+          <div class="text-right my-auto ">
+            <button type="button" class="btn btn-success btn-sm mb-2 " (click)="openRole(role)">
+              <i class="mdi mdi-plus mr-1 mb-3"></i>Add Role
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <table id="example" class="table  " style="width:100%">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th> Role Name</th>
+                <th>Action </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let rolepolicy of rolepolicyArr;let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{rolepolicy.roleName}} </td>
+                <td class="">
+                  <i class="fas fa-edit  text-success mr-2"
+                  (click)="editRole(rolepolicy,role)" ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <ng-template #role let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Role</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" id="role">
+      <form [formGroup]="roleForm"  autocomplete="off" (ngSubmit)="submit(modal)">
+        <div class="row">
+          <div class="col-sm-12">
+            <label for="">Role Name</label>
+            <div class="form-group " formGroupName="roleDto">
+              <input formControlName="roleName" id="roleName" type="text" placeholder="Role Name"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': roleSubmitted && g.controls['roleName'].errors || g.controls['roleName'].invalid && (g.controls['roleName'].dirty || g.controls['roleName'].touched)}">
+              <div
+                *ngIf="roleSubmitted && g.controls['roleName'].errors || g.controls['roleName'].invalid && (g.controls['roleName'].dirty || g.controls['roleName'].touched)"
+                class="invalid-feedback">
+                <div *ngIf="g.controls['roleName'].errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-right">
+          <button type="submit" class="btn btn-sm btn-primary mb-2">{{buttonText}}</button>
+      </div>
+      </form>
+    </div>
+</ng-template>

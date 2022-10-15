@@ -1,0 +1,109 @@
+
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="row">
+          <div class="col-xl-6">
+            <!-- <app-page-title title="Exam"></app-page-title>  -->
+            <div class="mb-2 pageHeading">
+              <h4 class="">Exam</h4>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="text-right my-auto ">
+              <button type="button" (click)="openModal(myModal)" class="btn btn-success btn-sm mb-2">
+                <i class="mdi mdi-plus mr-1 mb-3"></i>Add Exam
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-2">
+          <div class="card-body">
+            <table id="exam" class="table table-bordered" style="width:100%">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Name</th>
+                  <th>Short Name</th>
+                  <th class="ml-auto">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of detail; let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{item.examName}}</td>
+                  <td>{{item.shortName}}</td>
+                  <td>
+                    <i class="fas fa-edit text-success mr-2"  (click)="editExam(item, myModal)"></i>
+                    <i class="fa fa-trash text-danger ml-auto text-right" aria-hidden="true"
+                    (click)="openmodal(dModal, item.id)" ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #myModal  let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title">Exam</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body" id="myModal">
+          <form [formGroup]="examForm" autocomplete="off" (ngSubmit)="addExam(modal)" >
+            <div class="form-group ">
+              <label for="name">Name</label>
+              <input id="name"  type="text" class="form-control" formControlName="examName" [(ngModel)]="examObj.examName" placeholder="Name"
+              [ngClass]="{ 'is-invalid': termSubmitted && f.examName.errors || f.examName.invalid && (f.examName.dirty || f.examName.touched)}" >
+                <div
+                *ngIf="termSubmitted && f.examName.errors || f.examName.invalid && (f.examName.dirty || f.examName.touched)"
+                class="invalid-feedback">
+                <div *ngIf="f.examName.errors.required">Required</div>
+              </div> 
+              </div> 
+              <div class="form-group ">
+                <label for="name"> Short Name</label>
+                <input id="short"  type="text" class="form-control" formControlName="shortName" [(ngModel)]="examObj.shortName" placeholder="Short Name"
+                [ngClass]="{ 'is-invalid': termSubmitted && f.shortName.errors || f.shortName.invalid && (f.shortName.dirty || f.shortName.touched)}" >
+                  <div
+                  *ngIf="termSubmitted && f.shortName.errors || f.shortName.invalid && (f.shortName.dirty || f.shortName.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="f.shortName.errors.required">Required</div>
+                </div> 
+                </div> 
+              <div class="form-group ">
+                <label for="name">Description</label>
+                <textarea id="description"  type="text" class="form-control" formControlName="description" [(ngModel)]="examObj.description" placeholder="Description"
+                [ngClass]="{ 'is-invalid': termSubmitted && f.description.errors || f.description.invalid && (f.description.dirty || f.description.touched)}" >
+                </textarea>
+                <div
+                  *ngIf="termSubmitted && f.description.errors || f.description.invalid && (f.description.dirty || f.description.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="f.description.errors.required">Required</div>
+                </div> 
+                </div>      
+                           
+          <div class="text-right mt-2">
+          <button type="submit" class="btn btn-sm btn-primary mb-2">{{buttonText}}</button>
+        </div>
+      </form>
+      </div>
+    </ng-template>
+    <ng-template #dModal  let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div>
+          <h6 class="ml-3 mt-2">Are you sure want to delete this ?</h6>
+          <div class="text-right mt-2 mr-2 ">
+            <button type="button" class="btn btn-primary btn-sm ml-2 mb-3" (click)="deleteData(modal)">Yes</button> 
+      </div>
+      </div>
+    </ng-template>

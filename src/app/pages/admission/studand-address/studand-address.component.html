@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <!-- <app-page-title title="STUDENT ADDRESS REPORT"></app-page-title> -->
+    <div class="mb-2 pageHeading">
+        <h4 class="">Student Address Report</h4>
+      </div>
+    
+    <form [formGroup]="AddressReport">
+        <div class="row mt-3">
+            <div class="col-xl-12">
+                <div class=" card-2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group ">
+                                    <label>Standard</label>
+                                    <ng-select [items]="standardArr" formControlName="stdId" id="stdId" bindLabel="name"
+                                        bindValue="id" placeholder="Choose" (change)="getSinglereport($event)"
+                                        [ngClass]="{ 'is-invalid':  reportRollSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)}">
+                                    </ng-select>
+                                    <div *ngIf=" reportRollSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.stdId.errors.required">Required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="" >
+                                    <div class=" mt-4 ">
+                                        <button type="submit" class="btn btn-success mt-1 pt-2 pb-2 mr-2" id="download" (click)="downloadPDF()">Download</button>
+                                        <!-- <button type="reset" class="btn btn-primary mt-1 pt-2 pb-2 mr-2" id="download" (click)="downloadPDF()">Download</button> -->
+                                        <button type="reset" (click)="reset()" class="btn btn-danger  mt-1 pt-2 pb-2">Reset</button>
+                                        
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        

@@ -1,0 +1,363 @@
+<div class="container-fluid">
+  <div class="mb-3 pageHeading">
+    <h4 class="">Fee Collection</h4>
+    <!-- <app-page-title title="Fee Collection"></app-page-title> -->
+  </div>
+  <form [formGroup]="feeCollectionForm" autocomplete="off">
+    <div class="row mb-0">
+      <div class="col-lg-12">
+        <div class="card-2 height">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-xl-4 col-sm-6">
+                <div class="form-group">
+                  <label for="Registration">Registration No</label>
+                  <input id="name" type="number" class="form-control" formControlName="registrationNo"
+                    [(ngModel)]="feeObj.registrationNo" placeholder="Registration No" (change)="selectRegisterNo($event)"
+                    [ngClass]="{ 'is-invalid': regNoSubmitted && f.registrationNo.errors || f.registrationNo.invalid && (f.registrationNo.dirty || f.registrationNo.touched)}">
+                    <div *ngIf="regNoSubmitted && f.registrationNo.errors || f.registrationNo.invalid && (f.registrationNo.dirty || f.registrationNo.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="f.registrationNo.errors.required">Required</div>
+                </div>
+                </div>
+              </div>
+              <div class="mt-1">
+                <div class="text-right mt-2">
+                  <button type="submit" class="btn btn-success  btn-md mt-3" (click)="search()">
+                    Search
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="enableCard">
+      <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom mt-0">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>
+            <p class="font-weight-bold mb-0">Fee Details</p>
+          </a>
+          <ng-template ngbNavContent class="tabs-sections__section tab-js">
+            <div class="row mt-1" formArrayName="feeDtlList">
+              <div class="col-12" *ngFor="let fee of feeDtlList().controls; let empIndex=index"
+                [formGroupName]="empIndex">
+                <div class="row">
+                  <div class="col-xl-4 ">
+                    <perfect-scrollbar class="card-2 max-height cardBorder mt-1" [config]="configData">
+                        <div class="card-body card-min-height">
+                          <table class="table">
+                            <tbody formArrayName="feeList">
+                              <tr *ngFor="let skill of feeList(empIndex).controls;let skillIndex=index"
+                                [formGroupName]="skillIndex">
+                                <td colspan="2"><input class="form-control" id="ddno" type="text" class="form-control"
+                                  readonly formControlName="feename">
+                                </td>
+                                <td><input class="form-control" id="ddno" type="text" class="form-control"
+                                  readonly formControlName="amount">
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <table class="table table-bordered">
+                            <tr>
+                              <td><input class="form-control" id="border" type="text"
+                                 readonly formControlName="academicStdFeeComponetName">
+                              </td>
+                              <td><input class="form-control" id="border" type="text" readonly formControlName="amount">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td><input id="border" class="form-control" placeholder="Paid" value="Paid"
+                                  formControlName="paid">
+                              </td>
+                              <td><input class="form-control" id="border" readonly formControlName="paidAmount">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td><input class="form-control" id="border" placeholder="Amount to Paid"
+                                  value="Amount to Paid" formControlName="amountToPaid">
+                              </td>
+                              <td><input id="border" class="form-control" type="text" readonly formControlName="payableAmount">
+                              </td>
+                            </tr>
+                          </table>
+                          <table class="table">
+                            <tr>
+                              <td></td>
+                              <td class="text-right"><button type="button" class="btn btn-primary btn-sm ml-1"
+                                  (click)="payCheck(empIndex)">Pay</button>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                    </perfect-scrollbar>
+                  </div>
+                  <div class="col-xl-4" *ngIf="fee.value.enableFeeCard">
+                    <perfect-scrollbar class="card-2 max-height cardBorder" [config]="configData">
+                      <div class="card-body card-min-height">
+                        <div class="form-group ">
+                          <span>
+                            <label for="ReceiptNo">Counter No</label>
+                            <ng-select [items]="counterArr" id="counterId"
+                              bindLabel="name" bindValue="id" placeholder="Choose" formControlName="counterId"
+                              [ngClass]="{ 'is-invalid': feeSubmitted && feeDtlList().controls[empIndex].get('counterId').errors || feeDtlList().controls[empIndex].get('counterId').invalid && (feeDtlList().controls[empIndex].get('counterId').dirty || feeDtlList().controls[empIndex].get('counterId').touched)}">
+                            </ng-select>
+                            <div
+                              *ngIf="feeSubmitted && feeDtlList().controls[empIndex].get('counterId').errors || feeDtlList().controls[empIndex].get('counterId').invalid && (feeDtlList().controls[empIndex].get('counterId').dirty || feeDtlList().controls[empIndex].get('counterId').touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="feeDtlList().controls[empIndex].get('counterId').errors.required">
+                                Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group">
+                          <span>
+                            <label for="ReceiptNo">Receipt No</label>
+                            <input class="form-control"  id="receiptNo"
+                              type="number" class="form-control" formControlName="receiptNo" placeholder="Receipt No"
+                              [ngClass]="{ 'is-invalid': feeSubmitted && feeDtlList().controls[empIndex].get('receiptNo').errors || feeDtlList().controls[empIndex].get('receiptNo').invalid && (feeDtlList().controls[empIndex].get('receiptNo').dirty || feeDtlList().controls[empIndex].get('receiptNo').touched)}">
+
+
+                            <div
+                              *ngIf="feeSubmitted && feeDtlList().controls[empIndex].get('receiptNo').errors || feeDtlList().controls[empIndex].get('receiptNo').invalid && (feeDtlList().controls[empIndex].get('receiptNo').dirty || feeDtlList().controls[empIndex].get('receiptNo').touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="feeDtlList().controls[empIndex].get('receiptNo').errors.required">
+                                Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <!-- <div class="col-12"> -->
+                          <div class="form-group">
+                            <span>
+                              <label for="receiptDate">Receipt Date</label>
+                              <input class="form-control" ngbDatepicker #receiptDate="ngbDatepicker"  placeholder="yyyy-mm-dd"
+                                (click)="receiptDate.toggle()" name="receiptDate" class="form-control" formControlName="receiptDate"                               
+                                [ngClass]="{ 'is-invalid': feeSubmitted && feeDtlList().controls[empIndex].get('receiptDate').errors || feeDtlList().controls[empIndex].get('receiptDate').invalid && (feeDtlList().controls[empIndex].get('receiptDate').dirty || feeDtlList().controls[empIndex].get('receiptDate').touched)}">
+
+                              <div
+                                *ngIf="feeSubmitted && feeDtlList().controls[empIndex].get('receiptDate').errors || feeDtlList().controls[empIndex].get('receiptDate').invalid && (feeDtlList().controls[empIndex].get('receiptDate').dirty || feeDtlList().controls[empIndex].get('receiptDate').touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="feeDtlList().controls[empIndex].get('receiptDate').errors.required">
+                                  Required</div>
+                              </div>
+                            </span>
+                          </div>
+                        <!-- </div> -->
+                        <div class="form-group">
+                          <span>
+                            <label for="payingAmount">Receipt Amount</label>
+                            <input class="form-control" (keyup)="calculate()" id="payingAmount"
+                              type="number" class="form-control"
+                              formControlName="payingAmount" placeholder="Receipt Amount"
+                              [ngClass]="{ 'is-invalid': feeSubmitted && feeDtlList().controls[empIndex].get('payingAmount').errors || feeDtlList().controls[empIndex].get('payingAmount').invalid && (feeDtlList().controls[empIndex].get('payingAmount').dirty || feeDtlList().controls[empIndex].get('payingAmount').touched)}">
+
+
+                            <div
+                              *ngIf="feeSubmitted && feeDtlList().controls[empIndex].get('payingAmount').errors || feeDtlList().controls[empIndex].get('payingAmount').invalid && (feeDtlList().controls[empIndex].get('payingAmount').dirty || feeDtlList().controls[empIndex].get('payingAmount').touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="feeDtlList().controls[empIndex].get('payingAmount').errors.required">
+                                Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="form-group ">
+                          <span>
+                            <label for="ReceiptNo">Payment Mode </label>
+                            <ng-select [items]="paymentArr" 
+                              (change)="selectInput($event)" id="standardId" bindLabel="disp" bindValue="val"
+                              placeholder="Choose" formControlName="paymentMode"
+                              [ngClass]="{ 'is-invalid': feeSubmitted && feeDtlList().controls[empIndex].get('paymentMode').errors || feeDtlList().controls[empIndex].get('paymentMode').invalid && (feeDtlList().controls[empIndex].get('paymentMode').dirty || feeDtlList().controls[empIndex].get('paymentMode').touched)}">
+                            </ng-select>
+
+
+                            <div
+                              *ngIf="feeSubmitted && feeDtlList().controls[empIndex].get('paymentMode').errors || feeDtlList().controls[empIndex].get('paymentMode').invalid && (feeDtlList().controls[empIndex].get('paymentMode').dirty || feeDtlList().controls[empIndex].get('paymentMode').touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="feeDtlList().controls[empIndex].get('paymentMode').errors.required">
+                                Required</div>
+                            </div>
+                          </span>
+                        </div>
+
+                        <div class="form-group" *ngIf="showOnlyForDD">
+                          <span>
+                            <label for="ddno">DD No</label>
+                            <input class="form-control" id="ddno" type="number" 
+                              class="form-control" formControlName="ddno" placeholder="DD No"
+                              [ngClass]="{ 'is-invalid': feeSubmitted && feeDtlList().controls[empIndex].get('ddno').errors || feeDtlList().controls[empIndex].get('ddno').invalid && (feeDtlList().controls[empIndex].get('ddno').dirty || feeDtlList().controls[empIndex].get('ddno').touched)}">
+
+
+                            <div
+                              *ngIf="feeSubmitted && feeDtlList().controls[empIndex].get('ddno').errors || feeDtlList().controls[empIndex].get('ddno').invalid && (feeDtlList().controls[empIndex].get('ddno').dirty || feeDtlList().controls[empIndex].get('ddno').touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="feeDtlList().controls[empIndex].get('ddno').errors.required">
+                                Required</div>
+                            </div>
+                          </span>
+                        </div>
+
+                        <div class="form-group" *ngIf="showOnlyChallan"> <label for="challenNo">Challen No</label>
+                          <input class="form-control" id="challenNo" type="number" 
+                            class="form-control" formControlName="challenNo" placeholder="Challen No"
+                            [ngClass]="{ 'is-invalid': feeSubmitted && feeDtlList().controls[empIndex].get('challenNo').errors || feeDtlList().controls[empIndex].get('challenNo').invalid && (feeDtlList().controls[empIndex].get('challenNo').dirty || feeDtlList().controls[empIndex].get('challenNo').touched)}">
+
+
+                          <div
+                            *ngIf="feeSubmitted && feeDtlList().controls[empIndex].get('challenNo').errors || feeDtlList().controls[empIndex].get('challenNo').invalid && (feeDtlList().controls[empIndex].get('challenNo').dirty || feeDtlList().controls[empIndex].get('challenNo').touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="feeDtlList().controls[empIndex].get('challenNo').errors.required">
+                              Required</div>
+                          </div>
+                        </div>
+
+                        <div class="form-group" *ngIf="showOnlyChallan">
+                          <span>
+                            <label for="bankName">Bank Name</label>
+                            <input class="form-control" id="bankName"  type="text"
+                              class="form-control" formControlName="bankName" placeholder="Bank Name"
+                              [ngClass]="{ 'is-invalid': feeSubmitted && feeDtlList().controls[empIndex].get('bankName').errors || feeDtlList().controls[empIndex].get('bankName').invalid && (feeDtlList().controls[empIndex].get('bankName').dirty || feeDtlList().controls[empIndex].get('bankName').touched)}">
+
+
+                            <div
+                              *ngIf="feeSubmitted && feeDtlList().controls[empIndex].get('bankName').errors || feeDtlList().controls[empIndex].get('bankName').invalid && (feeDtlList().controls[empIndex].get('bankName').dirty || feeDtlList().controls[empIndex].get('bankName').touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="feeDtlList().controls[empIndex].get('bankName').errors.required">
+                                Required</div>
+                            </div>
+                          </span>
+                        </div>
+
+                        <div class="form-group" *ngIf="showOnlyChallan">
+                          <span>
+                            <label for="branchName">Branch Name </label>
+                            <input class="form-control" id="branchName" 
+                              type="text" class="form-control" formControlName="branchName" placeholder="Branch Name"
+                              [ngClass]="{ 'is-invalid': feeSubmitted && feeDtlList().controls[empIndex].get('branchName').errors || feeDtlList().controls[empIndex].get('branchName').invalid && (feeDtlList().controls[empIndex].get('branchName').dirty || feeDtlList().controls[empIndex].get('branchName').touched)}">
+                            <div
+                              *ngIf="feeSubmitted && feeDtlList().controls[empIndex].get('branchName').errors || feeDtlList().controls[empIndex].get('branchName').invalid && (feeDtlList().controls[empIndex].get('branchName').dirty || feeDtlList().controls[empIndex].get('branchName').touched)"
+                              class="invalid-feedback">
+                              <div *ngIf="feeDtlList().controls[empIndex].get('branchName').errors.required">
+                                Required</div>
+                            </div>
+                          </span>
+                        </div>
+                        <div class="mb-2 text-right">
+                          <button type="submit" class="btn btn-primary btn-sm ml-1 text-right" (click)="feePay(empIndex)">Submit</button>
+                        </div>
+                      </div>
+                    </perfect-scrollbar>
+
+                  </div>
+                  <div class="col-xl-2"></div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink>
+            <p class="font-weight-bold mb-0">Student Information</p>
+          </a>
+          <ng-template ngbNavContent class="tabs-sections__section tab-js">
+            <div class="row mt-1">
+              <div class="col-12">
+                <div class="row">
+                  <!-- <div class="col-xl-3"></div> -->
+                  <div class="col-xl-6 ">
+                    <div class="card-2 cardBorder mt-1">
+                      <div class="card-body card-min-height ">
+                        <div class="row">
+                          <div class="col-4">
+                            <p class="ml-2 ">Student Name</p>
+                          </div>
+                          <div class="col-1">
+                            <p class="">:</p>
+                          </div>
+                          <div class="col-4 text-left">
+                            {{feeCollectionObj.stuName}}
+                          </div>
+                          <div class="col-3"></div>
+
+                          <div class="col-4">
+                            <p class="ml-2 ">Date of Admission </p>
+                          </div>
+                          <div class="col-1">
+                            <p class="">:</p>
+                          </div>
+                          <div class="col-4 text-left">
+                            {{feeCollectionObj.dateOfAdmission}}
+                          </div>
+                          <div class="col-3"></div>
+
+                          <div class="col-4">
+                            <p class="ml-2 ">Standard </p>
+                          </div>
+                          <div class="col-1">
+                            <p class="">:</p>
+                          </div>
+
+                          <div class="col-4 text-left">
+                            {{feeCollectionObj.stdName}}
+                          </div>
+                          <div class="col-3"></div>
+
+                          <div class="col-4">
+                            <p class="ml-2 ">Mobile Number</p>
+                          </div>
+                          <div class="col-1">
+                            <p class="">:</p>
+                          </div>
+                          <div class="col-4 text-left">
+                            {{feeCollectionObj.mobileNo}}
+                          </div>
+                          <div class="col-3"></div>
+
+                          <div class="col-4 text-left">
+                            <p class="ml-2 ">Registration Number </p>
+                          </div>
+                          <div class="col-1">
+                            <p class="">:</p>
+                          </div>
+
+                          <div class="col-4">
+                            {{ feeCollectionObj.regNo}}
+                          </div>
+                          <div class="col-3"></div>
+                          <div class="col-4">
+                            <p class="ml-2 ">Sex</p>
+                          </div>
+                          <div class="col-1">
+                            <p class="">:</p>
+                          </div>
+                          <div class="col-4 text-left">
+                            {{ feeCollectionObj.sex}}
+                          </div>
+                          <div class="col-3"></div>
+
+                          <div class="col-4 text-left">
+                            <p class="ml-2 ">Section </p>
+                          </div>
+                          <div class="col-1">
+                            <p class="">:</p>
+                          </div>
+
+                          <div class="col-4">
+                            {{feeCollectionObj.sectionName}}
+                          </div>
+                          <div class="col-3"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav"></div>
+    </div>
+  </form>
+</div>

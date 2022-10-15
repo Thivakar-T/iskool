@@ -1,0 +1,171 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-6">
+      <!-- <app-page-title title="Subject"></app-page-title> -->
+      <div class="mb-2 pageHeading">
+        <h4 class="">Subject</h4>
+      </div>
+    </div>
+    <div class="col-xl-6">
+      <div class="text-right my-auto mb-4">
+        <button type="button" class="btn btn-success btn-sm mb-2" (click)="openSubject(subject)">
+          <i class="mdi mdi-plus"></i> Add Subject
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-2">
+    <div class="card-body ">
+      <table id="subject" class="table table-bordered" style="width:100%">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Short Name</th>
+            <th class="ml-auto">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of detail; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.shortName}}</td>
+            <td>
+              <i class="fas fa-edit text-success mr-2" (click)="editBatch(item, subject)"></i>
+              <i class="fa fa-trash text-danger ml-auto text-right" aria-hidden="true"
+                (click)="openModal(dModal, item.id)"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<ng-template #subject let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Subject</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" id="subject">
+    <form [formGroup]="subjectForm" autocomplete="off" (ngSubmit)="addVehicle(modal)">
+      <div class="">
+        <div class="row">
+          <!-- <div class="col-6 ">
+            <div class="form-group ">
+              <label for="Board Type" >Category</label>
+              <ng-select [items]="categoryArr" formControlName="categoryId" id="name" bindLabel="name" bindValue="id"
+                placeholder="Choose" [(ngModel)]="subjectObj.categoryId"
+                [ngClass]="{ 'is-invalid': subjectSubmitted && f.categoryId.errors || f.categoryId.invalid && (f.categoryId.dirty || f.categoryId.touched)}">
+              </ng-select>
+              <div
+                *ngIf="subjectSubmitted && f.categoryId.errors || f.categoryId.invalid && (f.categoryId.dirty || f.categoryId.touched)"
+                class="invalid-feedback">
+                <div *ngIf="f.categoryId.errors.required">Required</div>
+              </div>
+            </div>
+          </div> -->
+          <div class="col-6 ">
+            <div class="form-group ">
+              <label for="Board Type">Department</label>
+              <ng-select [items]="departmentArr" formControlName="departmentId" id="name" bindLabel="name"
+                bindValue="id" placeholder="Choose" [(ngModel)]="subjectObj.departmentId"
+                [ngClass]="{ 'is-invalid': subjectSubmitted && f.departmentId.errors || f.departmentId.invalid && (f.departmentId.dirty || f.departmentId.touched)}">
+              </ng-select>
+              <div
+                *ngIf="subjectSubmitted && f.departmentId.errors || f.departmentId.invalid && (f.departmentId.dirty || f.departmentId.touched)"
+                class="invalid-feedback">
+                <div *ngIf="f.departmentId.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 ">
+            <div class="form-group ">
+              <label for="Board Type">Scheme</label>
+              <ng-select [items]="schemeArr" formControlName="gradingSchemeId" id="gradingSchemeId"
+                bindLabel="schemeName" bindValue="id" placeholder="Choose" [(ngModel)]="subjectObj.gradingSchemeId"
+                [ngClass]="{ 'is-invalid': subjectSubmitted && f.gradingSchemeId.errors || f.gradingSchemeId.invalid && (f.gradingSchemeId.dirty || f.gradingSchemeId.touched)}">
+              </ng-select>
+              <div
+                *ngIf="subjectSubmitted && f.gradingSchemeId.errors || f.gradingSchemeId.invalid && (f.gradingSchemeId.dirty || f.gradingSchemeId.touched)"
+                class="invalid-feedback">
+                <div *ngIf="f.gradingSchemeId.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 ">
+            <div class="form-group ">
+              <label for="Board Type" >Subject Type</label>
+              <ng-select [items]="['Theory', 'Practical', 'Theory_and_Practical']" formControlName="subjectType"
+                id="subjectType" bindLabel="boardType" bindValue="boardType" placeholder="Choose"
+                [(ngModel)]="subjectObj.subjectType"
+                [ngClass]="{ 'is-invalid': subjectSubmitted && f.subjectType.errors || f.subjectType.invalid && (f.subjectType.dirty || f.subjectType.touched)}">
+              </ng-select>
+              <div
+                *ngIf="subjectSubmitted && f.subjectType.errors || f.subjectType.invalid && (f.subjectType.dirty || f.subjectType.touched)"
+                class="invalid-feedback">
+                <div *ngIf="f.subjectType.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group ">
+              <label for="name">Name</label>
+              <input id="name" type="text" class="form-control" formControlName="name" [(ngModel)]="subjectObj.name"
+                placeholder="Name"
+                [ngClass]="{ 'is-invalid': subjectSubmitted && f.name.errors || f.name.invalid && (f.name.dirty || f.name.touched)}">
+              <div *ngIf="subjectSubmitted && f.name.errors || f.name.invalid && (f.name.dirty || f.name.touched)"
+                class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="shortName">Short Name</label>
+              <input id="shortName" type="text" class="form-control" formControlName="shortName"
+                [(ngModel)]="subjectObj.shortName" placeholder="Short Name"
+                [ngClass]="{ 'is-invalid': subjectSubmitted && f.shortName.errors || f.shortName.invalid && (f.shortName.dirty || f.shortName.touched)}">
+              <div
+                *ngIf="subjectSubmitted && f.shortName.errors || f.shortName.invalid && (f.shortName.dirty || f.shortName.touched)"
+                class="invalid-feedback">
+                <div *ngIf="f.shortName.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+        <div class="col-6">
+          <div class="form-group ">
+            <label for="code">Code</label>
+            <input id="code" type="text" class="form-control" formControlName="code" [(ngModel)]="subjectObj.code"
+              placeholder="Code"
+              [ngClass]="{ 'is-invalid': subjectSubmitted && f.code.errors || f.code.invalid && (f.code.dirty || f.code.touched)}">
+            <div *ngIf="subjectSubmitted && f.code.errors || f.code.invalid && (f.code.dirty || f.code.touched)"
+              class="invalid-feedback">
+              <div *ngIf="f.code.errors.required">Required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="text-right">
+          <button type="submit" class="btn btn-sm btn-primary">{{buttonText}}</button>
+        </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #dModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Confirm Delete</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div>
+    <h6 class="ml-3 mt-2">Are you sure want to delete this ?</h6>
+    <div class="text-right mt-2 mr-2">
+      <button type="button" class="btn btn-primary btn-sm ml-2 mb-3" (click)="deleteData(modal)">Yes</button>
+    </div>
+  </div>
+</ng-template>

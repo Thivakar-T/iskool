@@ -1,0 +1,360 @@
+<div class="container-fluid">
+    <div class="mb-3">
+        <!-- <app-page-title title="Route"></app-page-title> -->
+        <div class="mb-2 pageHeading">
+            <h4 class="">Route</h4>
+        </div>
+    </div>
+    <form [formGroup]="routeForm" autocomplete="off">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card-2 height">
+                    <div class="card-body">
+                        <div class="row my-auto ">
+                            <div class="col-xl-3 col-sm-6 ">
+                                <div class="form-group  ">
+                                    <label for="routeName">Route Name</label>
+                                    <input class="form-control" id="routeName" [(ngModel)]="routeObj.routeName"
+                                        formControlName="routeName" type="text" class="form-control"
+                                        placeholder="Route Name"
+                                        [ngClass]="{ 'is-invalid': routeSubmitted && f.routeName.errors || f.routeName.invalid && (f.routeName.dirty || f.routeName.touched)}">
+                                    <div *ngIf="routeSubmitted && f.routeName.errors || f.routeName.invalid && (f.routeName.dirty || f.routeName.touched)"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.routeName.errors.required">Required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-sm-6 ">
+                                <div class="form-group">
+                                    <label for="originName">Origin Location</label>
+                                    <ng-select [items]="routArr" formControlName="originLocationId" id="originName"
+                                        (change)="selectOriginLocation($event)" bindLabel="locationName" bindValue="id"
+                                        placeholder="Choose" [(ngModel)]="routeObj.originLocationId"
+                                        [ngClass]="{ 'is-invalid': routeSubmitted && f.originLocationId.errors || f.originLocationId.invalid && (f.originLocationId.dirty || f.originLocationId.touched)}">
+                                    </ng-select>
+                                    <div *ngIf="routeSubmitted && f.originLocationId.errors || f.originLocationId.invalid && (f.originLocationId.dirty || f.originLocationId.touched)"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.originLocationId.errors.required">Required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 ">
+                                <div class="form-group ">
+                                    <label for="destinationName">Destination Location</label>
+                                    <ng-select [items]="routArr" [(ngModel)]="routeObj.destinationLocationId "
+                                        formControlName="destinationLocationId" type="text" placeholder="Choose"
+                                        (change)="selectDestinationLocation($event)" bindLabel="locationName"
+                                        bindValue="id" id="destinationName"
+                                        [ngClass]="{ 'is-invalid': routeSubmitted && f.destinationLocationId.errors || f.destinationLocationId.invalid && (f.destinationLocationId.dirty || f.destinationLocationId.touched)}">
+                                    </ng-select>
+                                    <div *ngIf="routeSubmitted && f.destinationLocationId.errors || f.destinationLocationId.invalid && (f.destinationLocationId.dirty || f.destinationLocationId.touched)"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.destinationLocationId.errors.required">Required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 ">
+                                <div class="form-group ">
+                                    <!-- <input class="form-control" [(ngModel)]="routeObj.description "
+                                        formControlName="description" type="text" class="form-control" id="descriptionName"
+                                        placeholder="Description"
+                                        [ngClass]="{ 'is-invalid': routeSubmitted && f.description.errors || f.description.invalid && (f.description.dirty || f.description.touched)}"> -->
+                                    <label for="descriptionName">Description</label>
+                                    <textarea class="form-control" [(ngModel)]="routeObj.description "
+                                        formControlName="description" type="text" class="form-control"
+                                        id="descriptionName" placeholder="Description"
+                                        [ngClass]="{ 'is-invalid': routeSubmitted && f.description.errors || f.description.invalid && (f.description.dirty || f.description.touched)}">
+                                        </textarea>
+                                    <div *ngIf="routeSubmitted && f.description.errors || f.description.invalid && (f.description.dirty || f.description.touched)"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.description.errors.required">Required</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink>
+                    <p class="font-weight-bold mb-0">STOPS</p>
+                </a>
+                <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+                    <div formArrayName="transportRouteDtlList">
+                        <div class="card-2  mt-3">
+                            <perfect-scrollbar class="cardHt" [config]="configData">
+                                <div class="card-body rowBody ">
+                                    <div  *ngIf="showSubmitButton" class="row">
+                                        <div class="col-lg-8">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class=" text-right mb-3 ml-3">
+                                                <!-- <input type="button" class="btn btn-success btn-sm inner" value="Add Route"
+                                                (click)="addterm()" /> -->
+                                                <button type="button" class="btn btn-success btn-sm"
+                                                    (click)="addterm()">
+                                                    <i class="mdi mdi-plus mr-1 mb-3"></i>Add Stop
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="routelist" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th width="10%">Sequence</th>
+                                                <th width="15%">Name</th>
+                                                <th width="25%">Travel Mins From Origin</th>
+                                                <th width="10%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let productObj of routeArr.controls; let i = index"
+                                                [formGroupName]="i">
+                                                <td>
+                                                    <div>
+                                                        <input type="number" class="form-control" placeholder="Sequence"
+                                                            name="name" formControlName="sequence"
+                                                            [ngClass]="{ 'is-invalid': routeSubmitted && routeArr.controls[i].get('sequence').errors || routeArr.controls[i].get('sequence').invalid && (routeArr.controls[i].get('sequence').dirty || routeArr.controls[i].get('sequence').touched)}">
+                                                        <!-- <label for="sequence">Sequence</label> -->
+                                                        <div *ngIf="routeSubmitted && routeArr.controls[i].get('sequence').errors || routeArr.controls[i].get('sequence').invalid && (routeArr.controls[i].get('sequence').dirty || routeArr.controls[i].get('sequence').touched)"
+                                                            class="invalid-feedback">
+                                                            <div
+                                                                *ngIf="routeArr.controls[i].get('sequence').errors.required">
+                                                                Required
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <ng-select [items]="routArr" placeholder="Choose" name="name"
+                                                            formControlName="stopLocationId" bindLabel="locationName"
+                                                            bindValue="id"
+                                                            [ngClass]="{ 'is-invalid': routeSubmitted && routeArr.controls[i].get('stopLocationId').errors || routeArr.controls[i].get('stopLocationId').invalid && (routeArr.controls[i].get('stopLocationId').dirty || routeArr.controls[i].get('stopLocationId').touched)}">
+                                                        </ng-select>
+                                                        <!-- <label for="name">Name</label> -->
+                                                        <div *ngIf="routeSubmitted && routeArr.controls[i].get('stopLocationId').errors || routeArr.controls[i].get('stopLocationId').invalid && (routeArr.controls[i].get('stopLocationId').dirty || routeArr.controls[i].get('stopLocationId').touched)"
+                                                            class="invalid-feedback">
+                                                            <div
+                                                                *ngIf="routeArr.controls[i].get('stopLocationId').errors.required">
+                                                                Required</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="number" class="form-control"
+                                                            placeholder="Travel Mins From Origin" id="mins"
+                                                            name="travel" formControlName="mins"
+                                                            [ngClass]="{ 'is-invalid': routeSubmitted && routeArr.controls[i].get('mins').errors || routeArr.controls[i].get('mins').invalid && (routeArr.controls[i].get('mins').dirty || routeArr.controls[i].get('mins').touched)}">
+                                                        <!-- <label for="travel">Travel</label> -->
+                                                        <div *ngIf="routeSubmitted && routeArr.controls[i].get('mins').errors || routeArr.controls[i].get('mins').invalid && (routeArr.controls[i].get('mins').dirty || routeArr.controls[i].get('mins').touched)"
+                                                            class="invalid-feedback">
+                                                            <div
+                                                                *ngIf="routeArr.controls[i].get('mins').errors.required">
+                                                                Required
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <i class="fa fa-trash text-danger delIconSize ml-3 pt-2"
+                                                        (click)="deleteterm(i)"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </perfect-scrollbar>
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink>
+                    <p class="font-weight-bold mb-0">VEHICLE MAPPING & SCHEDULE</p>
+                </a>
+                <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+                    <div formArrayName="vehicleAndScheduleDTOList">
+                        <div class="card-2  mt-3">
+                            <perfect-scrollbar class="cardHt" [config]="configData">
+                                <div class="card-body rowBody ">
+                                    <div *ngIf="showSubmitButton" class="row">
+                                        <div class="col-lg-8">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class=" text-right mb-3 ml-3">
+                                                <!-- <input type="button" class="btn btn-success btn-sm inner" value="Add Route"
+                                                (click)="addterm()" /> -->
+                                                <button type="button" class="btn btn-success btn-sm"
+                                                    (click)="addschedule()">
+                                                    <i class="mdi mdi-plus mr-1 mb-3"></i>Add Schedule
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="routelist" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th width="10%">Vehicle</th>
+                                                <th width="10%">Towards Time</th>
+                                                <th width="10%">Onwards Time</th>
+                                                <th class="text-center" width="10%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let productObj of scheduleArr.controls; let i = index"
+                                                [formGroupName]="i">
+
+                                                <td>
+                                                    <div>
+                                                        <ng-select [items]="vehicleArray" placeholder="Choose"
+                                                            name="name" formControlName="vehicleId"
+                                                            bindLabel="vehicleName" bindValue="id"
+                                                            [ngClass]="{ 'is-invalid': routeSubmitted && scheduleArr.controls[i].get('vehicleId').errors || scheduleArr.controls[i].get('vehicleId').invalid && (scheduleArr.controls[i].get('vehicleId').dirty || scheduleArr.controls[i].get('vehicleId').touched)}">
+                                                        </ng-select>
+                                                        <!-- <label for="vehicleId">vehicleId</label> -->
+                                                        <div *ngIf="routeSubmitted && scheduleArr.controls[i].get('vehicleId').errors || scheduleArr.controls[i].get('vehicleId').invalid && (scheduleArr.controls[i].get('vehicleId').dirty || scheduleArr.controls[i].get('vehicleId').touched)"
+                                                            class="invalid-feedback">
+                                                            <div
+                                                                *ngIf="scheduleArr.controls[i].get('vehicleId').errors.required">
+                                                                Required</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <ng-select [items]="TimeArr" id="onwardsStartingTime"
+                                                            bindLabel="name" bindValue="id" placeholder="Choose"
+                                                            formControlName="towardsStartingTime"
+                                                            [ngClass]="{ 'is-invalid': routeSubmitted && scheduleArr.controls[i].get('onwardsStartingTime').errors || scheduleArr.controls[i].get('onwardsStartingTime').invalid && (scheduleArr.controls[i].get('onwardsStartingTime').dirty || scheduleArr.controls[i].get('onwardsStartingTime').touched)}">
+                                                        </ng-select>
+                                                        <!-- <input class="form-control"   placeholder="Choose" name="name"
+                                                        formControlName="onwardsStartingTime" 
+                                                        [ngClass]="{ 'is-invalid': routeSubmitted && scheduleArr.controls[i].get('onwardsStartingTime').errors || scheduleArr.controls[i].get('onwardsStartingTime').invalid && (scheduleArr.controls[i].get('onwardsStartingTime').dirty || scheduleArr.controls[i].get('onwardsStartingTime').touched)}"> -->
+
+                                                        <!-- <label for="onwardsStartingTime">onwardsStartingTime</label> -->
+                                                        <div *ngIf="routeSubmitted && scheduleArr.controls[i].get('onwardsStartingTime').errors || scheduleArr.controls[i].get('onwardsStartingTime').invalid && (scheduleArr.controls[i].get('onwardsStartingTime').dirty || scheduleArr.controls[i].get('onwardsStartingTime').touched)"
+                                                            class="invalid-feedback">
+                                                            <div
+                                                                *ngIf="scheduleArr.controls[i].get('onwardsStartingTime').errors.required">
+                                                                Required</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <ng-select [items]="TimeArr" id="towardsStartingTime"
+                                                            bindLabel="name" bindValue="id" placeholder="Choose"
+                                                            formControlName="onwardsStartingTime"
+                                                            [ngClass]="{ 'is-invalid': routeSubmitted && scheduleArr.controls[i].get('towardsStartingTime').errors || scheduleArr.controls[i].get('towardsStartingTime').invalid && (scheduleArr.controls[i].get('towardsStartingTime').dirty || scheduleArr.controls[i].get('towardsStartingTime').touched)}">
+                                                        </ng-select>
+                                                        <!-- <input class="form-control"   placeholder="Choose" name="name"
+                                                        formControlName="towardsStartingTime" 
+                                                        [ngClass]="{ 'is-invalid': routeSubmitted && scheduleArr.controls[i].get('towardsStartingTime').errors || scheduleArr.controls[i].get('towardsStartingTime').invalid && (scheduleArr.controls[i].get('towardsStartingTime').dirty || scheduleArr.controls[i].get('towardsStartingTime').touched)}"> -->
+
+                                                        <!-- <label for="towardsStartingTime">towardsStartingTime</label> -->
+                                                        <div *ngIf="routeSubmitted && scheduleArr.controls[i].get('towardsStartingTime').errors || scheduleArr.controls[i].get('towardsStartingTime').invalid && (scheduleArr.controls[i].get('towardsStartingTime').dirty || scheduleArr.controls[i].get('towardsStartingTime').touched)"
+                                                            class="invalid-feedback">
+                                                            <div
+                                                                *ngIf="scheduleArr.controls[i].get('towardsStartingTime').errors.required">
+                                                                Required</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <i class="fa fa-trash text-danger delIconSize ml-2 pt-2"
+                                                        (click)="deleteschedule(i)"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </perfect-scrollbar>
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="4">
+                <a ngbNavLink>
+                    <p class="font-weight-bold mb-0">DRIVERS</p>
+                </a>
+                <ng-template ngbNavContent class="tabs-sections__section  tab-js">
+                    <div formArrayName="transportRouteDriverList">
+                        <div class="card-2  mt-3">
+                            <perfect-scrollbar class="cardHt" [config]="configData">
+                                <div class="card-body rowBody ">
+                                    <div *ngIf="showSubmitButton" class="row">
+                                        <div class="col-lg-8">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class=" text-right mb-3 ml-3">
+                                                <!-- <input type="button" class="btn btn-success btn-sm inner" value="Add Route"
+                                                (click)="addterm()" /> -->
+                                                <button  type="button" class="btn btn-success btn-sm"
+                                                    (click)="adddriver()">
+                                                    <i class="mdi mdi-plus mr-1 mb-3"></i>Add Driver
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="routelist" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th width="10%">Drivers</th>
+                                                <th class="text-center" width="40%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let productObj of driverArr.controls; let i = index"
+                                                [formGroupName]="i">
+
+                                                <td>
+                                                    <div>
+                                                        <ng-select [items]="driverArray" placeholder="Choose" name="id"
+                                                            formControlName="id" bindLabel="name" bindValue="id"
+                                                            [ngClass]="{ 'is-invalid': routeSubmitted && driverArr.controls[i].get('id').errors || driverArr.controls[i].get('id').invalid && (driverArr.controls[i].get('id').dirty || driverArr.controls[i].get('id').touched)}">
+                                                        </ng-select>
+                                                        <!-- <label for="id">id</label> -->
+                                                        <div *ngIf="routeSubmitted && driverArr.controls[i].get('id').errors || driverArr.controls[i].get('id').invalid && (driverArr.controls[i].get('id').dirty || driverArr.controls[i].get('id').touched)"
+                                                            class="invalid-feedback">
+                                                            <div
+                                                                *ngIf="driverArr.controls[i].get('id').errors.required">
+                                                                Required</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <i class="fa fa-trash text-danger delIconSize ml-2 pt-2"
+                                                        (click)="deletedriver(i)"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </perfect-scrollbar>
+                        </div>
+                    </div>
+
+                    <div *ngIf="showSubmitButton" class="text-right mb-4 ">
+                        <button type="submit" class="btn btn btn-primary " (click)="submit()">Submit</button>
+
+                    </div>
+                </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="nav"></div>
+
+
+
+
+    </form>
+
+</div>

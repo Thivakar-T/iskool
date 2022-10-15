@@ -1,0 +1,117 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-6">
+      <app-page-title title="Branch"></app-page-title>
+    </div>
+    <div class="col-xl-6">
+      <div class="text-right my-auto mb-4">
+        <button type="button" class="btn btn-success btn-sm mb-2" (click)="openbranch(branch)"><i class="mdi mdi-plus mr-1"></i>Add Branch
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <table id="branch" class="table table-bordered">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Degree</th>
+            <th> Long Name</th>
+            <th> Short Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr *ngFor="let branchList of branchArr;let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{branchList.degreeObj.name}}</td>
+            <td>{{branchList.longName}}</td>
+            <td>{{branchList.shortName}}</td>
+            <td class="">
+              <i class="fas fa-edit  text-success mr-2" (click)="editBranch(branchList, branch)"></i>
+              <i class="fa fa-trash text-danger" aria-hidden="true" (click)="openModal(dModal,branchList.id)"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #branch let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Branch</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" id="batch">
+    <form [formGroup]="branchform" autocomplete="off" (ngSubmit)="addBranch(modal)">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group  " formGroupName="degreeObj">
+            <label for="degree">Degree</label>
+            <ng-select [items]="degreeArr" formControlName="id" bindLabel="name" bindValue="id"
+              placeholder="Choose" [(ngModel)]="branchObj.degreeObj"
+              [ngClass]="{ 'is-invalid': branchSubmitted && g.controls['id'].errors || g.controls['id'].invalid && (g.controls['id'].dirty || g.controls['id'].touched)}">
+            </ng-select>
+            <div
+              *ngIf="branchSubmitted && g.controls['id'].errors || g.controls['id'].invalid && (g.controls['id'].dirty || g.controls['id'].touched)"
+              class="invalid-feedback">
+              <div *ngIf="g.controls['id'].errors.required">Required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12"> 
+          <div class="form-group  ">
+            <label for="longName"> Long Name</label>
+            <input class="form-control" id="longName" type="text" placeholder="Branch Long Name"
+              formControlName="longName" [(ngModel)]="branchObj.longName"
+              [ngClass]="{ 'is-invalid': branchSubmitted && b.longName.errors || b.longName.invalid && (b.longName.dirty || b.longName.touched)}">
+            <div
+              *ngIf="branchSubmitted && b.longName.errors || b.longName.invalid && (b.longName.dirty || b.longName.touched)"
+              class="invalid-feedback">
+              <div *ngIf="b.longName.errors.required">Required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group  ">
+            <label for="shortName"> Short Name</label>
+            <input class="form-control" id="shortName" type="text" placeholder="Branch Short Name"
+              formControlName="shortName" [(ngModel)]="branchObj.shortName"
+              [ngClass]="{ 'is-invalid': branchSubmitted && b.shortName.errors || b.shortName.invalid && (b.shortName.dirty || b.shortName.touched)}">
+            <div
+              *ngIf="branchSubmitted && b.shortName.errors || b.shortName.invalid && (b.shortName.dirty || b.shortName.touched)"
+              class="invalid-feedback">
+              <div *ngIf="b.shortName.errors.required">Required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-right">
+        <button type="submit" class="btn btn-primary btn-sm mb-2">{{buttonText}}</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #dModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm Delete</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div>
+    <h6 class="ml-3 mt-2">Are you sure to Delete this ?</h6>
+    <div class="text-right mt-2 mr-2">
+      <button type="button" class="btn btn-primary btn-sm ml-2 mb-3" (click)="deleteData(modal)">Yes</button>
+    </div>
+  </div>
+</ng-template>

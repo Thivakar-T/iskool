@@ -1,0 +1,295 @@
+<div class="container-fluid">
+  <div class="mb-3">
+
+    <div class="mb-2 pageHeading">
+      <h4 class="">Result Publish</h4>
+    </div>
+  </div>
+  <form [formGroup]="resultForm" autocomplete="off">
+    <div class="card-2 height">
+      <div class="card-body ">
+        <div class="row  ">
+          <div class="col-xl-3 ">
+            <div class="form-group pt-2">
+              <label for="exam">Exam</label>
+              <ng-select [items]="examArr" class="custom" placeholder="Choose" bindLabel="examName" bindValue="id"
+                formControlName="examId" id="exam" (change)="selectExam($event)"
+                [ngClass]="{ 'is-invalid': resultSubmitted && b.examId.errors || b.examId.invalid && (b.examId.dirty || b.examId.touched)}">
+              </ng-select>
+              <div
+                *ngIf="resultSubmitted && b.examId.errors || b.examId.invalid && (b.examId.dirty || b.examId.touched)"
+                class="invalid-feedback">
+                <div *ngIf="b.examId.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 ">
+            <div class="form-group pt-2 ">
+              <label for="yearId">Academic year</label>
+              <ng-select [items]="academicArr" class="custom" placeholder="Choose" bindLabel="name" bindValue="id"
+                formControlName="academicYearId" id="academicYearId" (change)="selectYear($event)"
+                [ngClass]="{ 'is-invalid': resultSubmitted && b.academicYearId.errors || b.academicYearId.invalid && (b.academicYearId.dirty || b.academicYearId.touched)}">
+              </ng-select>
+              <div
+                *ngIf="resultSubmitted && b.academicYearId.errors || b.academicYearId.invalid && (b.academicYearId.dirty || b.academicYearId.touched)"
+                class="invalid-feedback">
+                <div *ngIf="b.academicYearId.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3  ">
+            <div class="form-group pt-2">
+              <label for="standard">Standard</label>
+              <ng-select [items]="standardArr" class="custom" placeholder="Choose" bindLabel="name" bindValue="id"
+                formControlName="stdId" id="stdId" (change)="selectStandard($event)"
+                [ngClass]="{ 'is-invalid': resultSubmitted && b.stdId.errors || b.stdId.invalid && (b.stdId.dirty || b.stdId.touched)}">
+              </ng-select>
+              <div *ngIf="resultSubmitted && b.stdId.errors || b.stdId.invalid && (b.stdId.dirty || b.stdId.touched)"
+                class="invalid-feedback">
+                <div *ngIf="b.stdId.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-1">
+            <div class="text-right mt-3 ">
+              <button type="submit" class="btn btn-success  btn-md mt-3" (click)="search()">
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="enableresultCard">
+      <div class="card-2   mt-3 pt-2">
+        <label class="card-2-hedaing">Mark List</label>
+        <perfect-scrollbar class="" [config]="configData">
+        <div class="card-body markCard">
+          <div formArrayName="studentDtlArr">
+            <table id="result" class="table" style="width:100%">
+              <thead>
+                <tr>
+                  <th width="10%">S.No</th>
+                  <th width="15%">Roll Number</th>
+                  <th width="15%">Name</th>
+                  <th width="10%">Standard</th>
+                  <th width="10%">Section</th>
+                  <th width="15%">Mark Obtained</th>
+                  <th width="">Percentage</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let studentDtlObj of studentDtlArr().controls; let  empIndex=index"
+                [formGroupName]="empIndex">
+                <tr class="form">
+                  <td class="">
+                    <div class="mt-2">
+                      <span class="ml-3 mt-2">{{empIndex+1}}</span>
+                    </div>
+                  </td>
+                  <td class="form "><input class="form-control noBorderInput" id="rollNumber" type="text"
+                      placeholder="Roll Number" formControlName="rollNumber" readonly>
+                  </td>
+                  <td class="form "><input class="form-control noBorderInput" id="name" type="text"
+                      placeholder="Student Name" formControlName="name" readonly>
+                  </td>
+                  <td class="form "><input class="form-control noBorderInput" id="standardName" type="text"
+                      placeholder="Standard Name" formControlName="standardName" readonly>
+                  </td>
+                  <td class="form "><input class="form-control noBorderInput" id="sectionName" type="text"
+                      placeholder="Section Name" formControlName="sectionName" readonly>
+                  </td>
+                  <td class="form ">
+                    <div class="row display">
+                      <div class="col-5">
+                        <input class="form-control noBorderInput" id="practicalMark" type="text"
+                          placeholder="Optained Mark" formControlName="optainedMark" readonly>
+                      </div>
+                      <div class=" mt-2">/</div>
+                      <div class="col-5"><input class="form-control noBorderInput" id="practicalMark" type="text"
+                          placeholder="Total Mark" formControlName="totalMark" readonly></div>
+                      <!-- <div class="col-5"></div> -->
+                    </div>
+                  </td>
+                  <td class="form "><input class="form-control noBorderInput" id="percentage" type="text"
+                      placeholder="Percentage" formControlName="percentage" readonly>
+                  </td>
+                  <td class="text-center">
+                    <i class="fa fa-eye text-primary mt-2" aria-hidden="true"
+                      (click)="openModal(myModal,studentDtlObj)"></i>
+                  </td>
+
+                  <ng-template #myModal let-modal>
+                    <div class="modal-header">
+                      <h4 class="modal-title">Student Mark Break Up</h4>
+                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body" id="myModal">
+                      <div class="row">
+                        <div class="col-2">
+                          <p class="ml-2 ">Roll Number</p>
+                        </div>
+                        <div>
+                          <p class="">:</p>
+                        </div>
+                        <div class="col-2 text-left">
+                          {{studentMarkObj.rollNumber}}
+                        </div>
+                        <div class="col-2"></div>
+
+                        <div class="col-2">
+                          <p class="ml-2 ">Name </p>
+                        </div>
+                        <div>
+                          <p class="">:</p>
+                        </div>
+                        <div class="col-2 text-left">
+                          {{studentMarkObj.name}}
+                        </div>
+                        <!-- <div class="col-3"></div> -->
+
+                        <div class="col-2 ">
+                          <p class="ml-2 ">Standard</p>
+
+                        </div>
+                        <div>
+                          <p class="">:</p>
+                        </div>
+                        <div class="col-2 text-left">
+                          {{studentMarkObj.standardName}}
+                        </div>
+                        <div class="col-2"></div>
+
+                        <div class="col-2">
+                          <p class="ml-2 ">Section </p>
+                        </div>
+                        <div>
+                          <p class="">:</p>
+                        </div>
+                        <div class="col-2 text-left">
+                          {{studentMarkObj.sectionName}}
+                        </div>
+
+                        <div class="col-2 ">
+                          <p class="ml-2 ">Obtained Marks</p>
+
+                        </div>
+                        <div>
+                          <p class="">:</p>
+                        </div>
+                        <div class="col-2 text-left">
+                          {{studentMarkObj.optainedMark}}
+                        </div>
+                        <div class="col-2"></div>
+
+                        <div class="col-2">
+                          <p class="ml-2 ">Percentage</p>
+                        </div>
+                        <div>
+                          <p class="">:</p>
+                        </div>
+                        <div class="col-2 text-left">
+                          {{studentMarkObj.percentage}}
+                        </div>
+
+                      </div>
+                      <div class="card-2">
+                        <perfect-scrollbar class="" [config]="configData">
+                          <div class="card-body resultCard">
+                            <table id="result" class="table mt-2 mb-2">
+                              <thead>
+                                <tr>
+                                  <th width="1%">S.No</th>
+                                  <th width="2%">Subject</th>
+                                  <th width="3%">Practical</th>
+                                  <th width="3%">Theory</th>
+                                </tr>
+                              </thead>
+                              <tbody formArrayName="studentMarkList">
+                                <tr class="form"
+                                  *ngFor="let rollObj of studentMarkList(empIndex).controls; let skillIndex=index"
+                                  [formGroupName]="skillIndex">
+                                  <td><span class="ml-3">{{skillIndex+1}}</span></td>
+
+                                  <td class="form"><input class="form-control noBorderInput" id="subjectName"
+                                      type="text" placeholder="Subject Name" formControlName="subjectName" readonly>
+                                  </td>
+
+                                  <td class="form">
+                                    <div class="row ">
+                                      <div class="col-6">
+                                        <input class="form-control" id="name" type="number" placeholder="Min Mark"
+                                          formControlName="practicalOptaindeMark"
+                                          [readonly]="rollObj.value.subjectType == 'Theory' || readOnly == true">
+                                        <!-- [ngClass]="{ 'is-invalid': markSubmitted && studentMarkList(empIndex).controls[skillIndex].get('practicalOptaindeMark').errors || studentMarkList(empIndex).controls[skillIndex].get('practicalOptaindeMark').invalid && (studentMarkList(empIndex).controls[skillIndex].get('practicalOptaindeMark').dirty || studentMarkList(empIndex).controls[skillIndex].get('practicalOptaindeMark').touched)}"
+                                                <div
+                                                *ngIf="markSubmitted && studentMarkList(empIndex).controls[skillIndex].get('practicalOptaindeMark').errors || studentMarkList(empIndex).controls[skillIndex].get('practicalOptaindeMark').invalid && (studentMarkList(empIndex).controls[skillIndex].get('practicalOptaindeMark').dirty || studentMarkList(empIndex).controls[skillIndex].get('practicalOptaindeMark').touched)"
+                                                class="invalid-feedback">
+                                                <div
+                                                  *ngIf="studentMarkList(empIndex).controls[skillIndex].get('practicalOptaindeMark').errors.required">
+                                                  Required</div>
+                                              </div> -->
+
+                                      </div>
+                                      <div class="col-1 mt-2">/</div>
+                                      <div class="col-5"><input class="form-control" id="practicalMark" type="number"
+                                          placeholder="Max Mark" formControlName="practicalTotalMark" readonly></div>
+                                    </div>
+                                  </td>
+
+                                  <td class="form">
+                                    <div class="row ">
+                                      <div class="col-6">
+
+                                        <input class="form-control" id="name" type="number" placeholder="Min Mark"
+                                          formControlName="theroryOptaindeMark"
+                                          [readonly]="rollObj.value.subjectType == 'Practical' || readOnly == true">
+                                        <!-- [ngClass]="{ 'is-invalid': markSubmitted && studentMarkList(empIndex).controls[skillIndex].get('theroryOptaindeMark').errors || studentMarkList(empIndex).controls[skillIndex].get('theroryOptaindeMark').invalid && (studentMarkList(empIndex).controls[skillIndex].get('theroryOptaindeMark').dirty || studentMarkList(empIndex).controls[skillIndex].get('theroryOptaindeMark').touched)}"
+                                                <div
+                                                *ngIf="markSubmitted && studentMarkList(empIndex).controls[skillIndex].get('theroryOptaindeMark').errors || studentMarkList(empIndex).controls[skillIndex].get('theroryOptaindeMark').invalid && (studentMarkList(empIndex).controls[skillIndex].get('theroryOptaindeMark').dirty || studentMarkList(empIndex).controls[skillIndex].get('theroryOptaindeMark').touched)"
+                                                class="invalid-feedback">
+                                                <div
+                                                  *ngIf="studentMarkList(empIndex).controls[skillIndex].get('theroryOptaindeMark').errors.required">
+                                                  Required</div>
+                                              </div> -->
+                                      </div>
+                                      <div class="col-1 mt-2">/</div>
+                                      <div class="col-5"><input class="form-control" id="practicalMark" type="number"
+                                          placeholder="Max Mark" formControlName="theroryTotalMark" readonly></div>
+                                    </div>
+                                  </td>
+
+                                </tr>
+                              </tbody>
+                            </table>
+
+                          </div>
+                        </perfect-scrollbar>
+                      </div>
+                      <div *ngIf="publish" class="text-right mt-2">
+                        <button type="submit" class="btn btn-sm btn-primary mb-2" aria-label="Close"
+                          (click)="updateStudentMark(modal,empIndex)">Update</button>
+                      </div>
+                    </div>
+                  </ng-template>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+</perfect-scrollbar>
+      </div>
+      <div class="row">
+        <div class="col-6 text-left">
+          <!-- <button type="submit" class="btn btn-success mb-3" (click)="downloadPDF()"><i class="bx bx-download mr-1"></i>Download</button> -->
+        </div>
+
+        <div class="col-6 text-right">
+          <button *ngIf="publish" type="submit" class="btn btn-primary mb-3" (click)="resultPublish()">Publish</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

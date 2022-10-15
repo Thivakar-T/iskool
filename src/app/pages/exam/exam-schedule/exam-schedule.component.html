@@ -1,0 +1,162 @@
+<div class="container-fluid">
+  <!-- <app-page-title title="Exam Schedule"></app-page-title> -->
+  <div class="mb-3">
+    <div class="mb-2 pageHeading">
+      <h4 class="">Exam Schedule</h4>
+    </div>
+  </div>
+
+  <form [formGroup]="examForm" autocomplete="off">
+    <div class="row mt-2">
+      <div class="col-xl-12">
+        <div class="card-2">
+          <div class="card-body">
+            <div class="row">
+              <!-- <div class="col-sm-2"></div> -->
+              <div class="col-xl-3">
+                <div class="form-group">
+                  <span class="">
+                    <label for="yearId">Academic Year</label>
+                    <ng-select [items]="acadamicArray" id="yearId" bindLabel="name" bindValue="id" placeholder="Choose"
+                      formControlName="academicYearId" (change)="selectModule($event)"
+                      [ngClass]="{ 'is-invalid': searchSubmitted && f.academicYearId.errors || f.academicYearId.invalid && (f.academicYearId.dirty || f.academicYearId.touched)}">
+                    </ng-select>
+                    <div
+                      *ngIf="searchSubmitted && f.academicYearId.errors || f.academicYearId.invalid && (f.academicYearId.dirty || f.academicYearId.touched)"
+                      class="invalid-feedback">
+                      <div *ngIf="f.academicYearId.errors.required">Required</div>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-xl-3">
+                <div class="form-group">
+                  <span class="">
+                    <label for="standardId">Standard</label>
+                    <ng-select [items]="yearArr" id="stdId" bindLabel="name" bindValue="id" placeholder="Choose"
+                      formControlName="stdId" (change)="selectStdModule($event)"
+                      [ngClass]="{ 'is-invalid': searchSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)}">
+                    </ng-select>
+                    <div
+                      *ngIf="searchSubmitted && f.stdId.errors || f.stdId.invalid && (f.stdId.dirty || f.stdId.touched)"
+                      class="invalid-feedback">
+                      <div *ngIf="f.stdId.errors.required">Required</div>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="mt-1">
+                <button type="submit" class="btn btn-success  btn-md  mt-4" (click)="searchSubjectOffer()">
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="enableCard">
+          <div class="card-2 box ">
+            <label class="card-2-hedaing">Exam Schedule List</label>
+            <!-- <perfect-scrollbar class="" [config]="configData"> -->
+              <div class="card-body ShedulCard">
+                <div formArrayName="examScheduleDtlDTOList">
+                  <div class="row">
+                    <div class="col-sm-4 mb-1 ">
+                      <!-- <h6 class="mt-4">Component</h6> -->
+                    </div>
+                    <div class="col-sm-6"></div>
+                    <div class=" col-sm-2 text-right mb-1 ">
+                      <button type="button" class="btn btn-success btn-sm mb-2 " (click)="addexam()">
+                        <i class="mdi mdi-plus mr-1 mb-3"></i>Add Exam
+                      </button>
+                    </div>
+                  </div>
+
+                  <table id="example" class="table">
+                    <thead>
+                      <tr>
+                        <th width="25%">Exam</th>
+                        <th width="20%">Start Date</th>
+                        <th width="20%">End Date</th>
+                        <th width="10%">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let examObj of examscheduleArr.controls; let i = index" [formGroupName]="i">
+
+                        <td>
+                          <div class="col-12">
+                            <div class="form-group">
+                              <!-- <label for="name">Exam</label> -->
+                              <ng-select [items]="examArr" id="examId" bindLabel="examName" bindValue="id"
+                                placeholder="Choose" formControlName="examId" (change)="selectExamModule($event)"
+                                [ngClass]="{ 'is-invalid': scheduleSubmitted && examscheduleArr.controls[i].get('examId').errors || examscheduleArr.controls[i].get('examId').invalid && (examscheduleArr.controls[i].get('examId').dirty || examscheduleArr.controls[i].get('examId').touched)}">
+                              </ng-select>
+                              <div
+                                *ngIf="scheduleSubmitted && examscheduleArr.controls[i].get('examId').errors || examscheduleArr.controls[i].get('examId').invalid && (examscheduleArr.controls[i].get('examId').dirty || examscheduleArr.controls[i].get('examId').touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="examscheduleArr.controls[i].get('examId').errors.required">
+                                  Required</div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+
+                        <td>
+                          <div class="col-12">
+                            <div class="form-group">
+                              <!-- <label for="From Date">Start Date</label> -->
+                              <input class="form-control" ngbDatepicker #startDate="ngbDatepicker"
+                                (click)="startDate.toggle()" id="startDate" formControlName="startDate"
+                                class="form-control" placeholder="yyyy-mm-dd"
+                                [ngClass]="{ 'is-invalid': scheduleSubmitted && examscheduleArr.controls[i].get('startDate').errors || examscheduleArr.controls[i].get('startDate').invalid && (examscheduleArr.controls[i].get('startDate').dirty || examscheduleArr.controls[i].get('startDate').touched)}">
+                              <div
+                                *ngIf="scheduleSubmitted && examscheduleArr.controls[i].get('startDate').errors || examscheduleArr.controls[i].get('startDate').invalid && (examscheduleArr.controls[i].get('startDate').dirty || examscheduleArr.controls[i].get('startDate').touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="examscheduleArr.controls[i].get('startDate').errors.required">
+                                  Required</div>
+                              </div>
+                            </div>
+                          </div>
+
+                        <td>
+                          <div class="col-12">
+                            <div class="form-group">
+                              <!-- <label for="From Date">End Date</label> -->
+                              <input class="form-control" ngbDatepicker #endDate="ngbDatepicker"
+                                (click)="endDate.toggle()" id="endDate" formControlName="endDate" class="form-control"
+                                placeholder="yyyy-mm-dd"
+                                [ngClass]="{ 'is-invalid': scheduleSubmitted && examscheduleArr.controls[i].get('endDate').errors || examscheduleArr.controls[i].get('endDate').invalid && (examscheduleArr.controls[i].get('endDate').dirty || examscheduleArr.controls[i].get('endDate').touched)}">
+                              <div
+                                *ngIf="scheduleSubmitted && examscheduleArr.controls[i].get('endDate').errors || examscheduleArr.controls[i].get('endDate').invalid && (examscheduleArr.controls[i].get('endDate').dirty || examscheduleArr.controls[i].get('endDate').touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="examscheduleArr.controls[i].get('endDate').errors.required">
+                                  Required</div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </td>
+
+                        <td class="text-left"><i class="fa fa-trash text-danger delIconSize ml-3 mt-2 "
+                            (click)="deleteterm(i)"></i>
+                        </td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+              </div>
+            <!-- </perfect-scrollbar> -->
+          </div>
+          <div class="text-right">
+            <button type="submit" class="btn btn-primary btn-md mb-4" *ngIf="!examObj.id"
+              (click)="submit()">Submit</button>
+            <button *ngIf="examObj.id" type="submit" class="btn btn-primary btn-md mb-4" (click)="submit()"
+              aria-label="Close">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

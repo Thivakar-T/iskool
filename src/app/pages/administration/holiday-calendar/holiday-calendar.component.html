@@ -1,0 +1,111 @@
+<!-- image loader -->
+<!-- <div class="loader" *ngIf="loading">
+    <img src="assets/images/loader.gif">
+  </div> -->
+  <!-- <img src="assets/images/loader.gif" *ngIf="loading" > -->
+  <!-- / image loader -->
+  <div class="wrapper" id="loading">
+    <!-- <app-navbar></app-navbar> -->
+    <!-- <aside>
+      <app-sidebar></app-sidebar>
+    </aside> -->
+
+    <main class="content-area">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="container-fluid">
+            <!-- <div class="row">
+                <div class="col-lg-12">
+                    <div class="pageHeading">
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>My Holiday</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-p20 shadow">
+                                <div class="cardTitle-fix">Upload</div>
+                                <div class="form-group">
+                                    
+                                    <label class="btn btn-tertiary js-labelFile ml-0">
+                                        <input type="file" id="---" (change)="onFileChange($event)" class="input-file" />
+                                        <i class="icon fa fa-check"></i>
+                                        <i class="icon fa fa-upload" aria-hidden="true"></i>
+                                        <span class="js-fileName ml-3">Choose a file</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            
+        </div>
+          <div class="col-lg-12">
+            <div class="pageHeading">
+              <div class="row">
+                <div class="col-8">
+                  <div class="mb-2 pageHeading">
+                    <h4>My Holiday Calendar</h4>
+                  </div>
+                </div>
+                <div class="col-4 text-right">
+                  <!--<button type="submit" class="cta-btn-sm">Save</button>-->
+                  <button type="submit" class="btn btn-primary btn-sm min-width-100" style="margin-right:10px" (click)="prviousMonth()">Previous</button>
+  
+                  <span>{{displayMonth}}-{{displayYear}}</span>
+                  <button type="submit" class="btn btn-primary btn-sm min-width-100" style="margin-left:10px" (click)="nextMonth()">Next</button>
+              
+                </div>
+             
+              </div>
+              <mwl-calendar-month-view [viewDate]="viewDate">
+              </mwl-calendar-month-view>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card-2 p-3 mb-3 mt-0">
+                  <ng-scrollbar class="my-calendar-scroll">
+                    <mwl-calendar-month-view [viewDate]="viewDate">
+                    </mwl-calendar-month-view>
+                    <ng-template #customCellTemplate let-day="day" let-locale="locale">
+                      <div class="cal-cell-top">
+                        <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+                        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+                      </div>
+                      <small style="margin: 5px;"> {{ addText(day) }}</small>
+                    </ng-template>
+                    
+                    <div [ngSwitch]="view" *ngIf="!loading">
+                      <mwl-calendar-month-view
+                        *ngSwitchCase="'month'"
+                        [viewDate]="viewDate"
+                        [events]="events"
+                        (beforeViewRender)="beforeMonthViewRender($event)"
+                        [cellTemplate]="customCellTemplate">
+                      </mwl-calendar-month-view>
+                      <mwl-calendar-week-view
+                        *ngSwitchCase="'week'"
+                        [viewDate]="viewDate"
+                        [events]="events"
+                        (beforeViewRender)="beforeWeekViewRender($event)">
+                      </mwl-calendar-week-view>
+                      <mwl-calendar-day-view
+                        *ngSwitchCase="'day'"
+                        [viewDate]="viewDate"
+                        [events]="events"
+                        (beforeViewRender)="beforeDayViewRender($event)"\>
+                      </mwl-calendar-day-view>
+                    </div>
+                  </ng-scrollbar>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- <app-footer></app-footer> -->
+  </div>

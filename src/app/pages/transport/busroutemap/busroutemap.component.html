@@ -1,0 +1,96 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-6">
+            <app-page-title title="Vehicle Route"></app-page-title>
+        </div>
+        <div class="col-xl-6">
+            <div class="text-right my-auto mb-4">
+                <button type="button" class="btn btn-success btn-sm mb-2" (click)="openSubject(route)">
+                    <i class="mdi mdi-plus"></i> Add Mapping
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body size">
+            <table id="bus" class="table" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Vehicle Name</th>
+                        <th>Route Name</th>
+                        <th class="ml-auto">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of detail; let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{item.vehicleName}}</td>
+                        <td>{{item.routeName}}</td>
+                        <td>
+                            <i class="fas fa-edit  text-success mr-2" (click)="editBatch(item, route)"></i>
+                            <i class="fa fa-trash text-danger  ml-auto text-right" aria-hidden="true"
+                                (click)="openModal(dModal, item.id)"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-template #route let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Route Mapping</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" id="subject">
+        <form [formGroup]="busrouteForm" autocomplete="off" (ngSubmit)="addbusrouteForm(modal)">
+            <div class="col-12">
+                <div class="form-group ">
+                    <label >Vehicle Name</label>
+                    <ng-select [items]="busArr" formControlName="vehicleId" bindLabel="vehicleName" bindValue="id"
+                        placeholder="Choose" [(ngModel)]="busrouteObj.vehicleId"
+                        [ngClass]="{ 'is-invalid': busrouteSubmitted && f.vehicleId.errors || f.vehicleId.invalid && (f.vehicleId.dirty || f.vehicleId.touched)}">
+                    </ng-select>
+                    <div *ngIf="busrouteSubmitted && f.vehicleId.errors || f.vehicleId.invalid && (f.vehicleId.dirty || f.vehicleId.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="f.vehicleId.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group ">
+                    <label >Route Name</label>
+                    <ng-select [items]="locaArr" formControlName="transportRouteHdrId" bindLabel="routeName"
+                        bindValue="id" placeholder="Choose" [(ngModel)]="busrouteObj.transportRouteHdrId"
+                        [ngClass]="{ 'is-invalid': busrouteSubmitted && f.transportRouteHdrId.errors || f.transportRouteHdrId.invalid && (f.transportRouteHdrId.dirty || f.transportRouteHdrId.touched)}">
+                    </ng-select>
+                    <div *ngIf="busrouteSubmitted && f.transportRouteHdrId.errors || f.transportRouteHdrId.invalid && (f.transportRouteHdrId.dirty || f.transportRouteHdrId.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="f.transportRouteHdrId.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right">
+                <button type="submit" class="btn btn-sm btn-primary mb-2">{{buttonText}}</button>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #dModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Confirm Delete</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div>
+        <h6 class="ml-3 mt-2">Are you sure to Delete this ?</h6>
+        <div class="text-right mt-2 mr-2">
+            <button type="button" class="btn btn-primary ml-2 mb-3" (click)="deleteData(modal)">Yes</button>
+        </div>
+    </div>
+</ng-template>

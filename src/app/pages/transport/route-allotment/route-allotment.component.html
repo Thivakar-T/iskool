@@ -1,0 +1,172 @@
+<div class="container-fluid">
+  <!-- <app-page-title title=""></app-page-title> -->
+  <div class="mb-3 pageHeading">
+    <h4 class="">Route Allotment</h4>
+  </div>
+  <form [formGroup]="routeForm">
+    <div class="row mt-3">
+      <div class="col-xl-12">
+        <div class="card-2">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <span class="">
+                    <label>Route</label>
+                    <ng-select [items]="RouteArr" (change)="getAllot($event)" id="transportRouteHdrId"
+                      bindLabel="routeName" bindValue="id" placeholder="Choose" formControlName="transportRouteHdrId"
+                      [ngClass]="{ 'is-invalid': routeSubmitted && b.transportRouteHdrId.errors || b.transportRouteHdrId.invalid && (b.transportRouteHdrId.dirty || b.transportRouteHdrId.touched)}">
+                    </ng-select>
+                    <div
+                      *ngIf="routeSubmitted && b.transportRouteHdrId.errors || b.transportRouteHdrId.invalid && (b.transportRouteHdrId.dirty || b.transportRouteHdrId.touched)"
+                      class="invalid-feedback">
+                      <div *ngIf="b.transportRouteHdrId.errors.required">Required</div>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <span class="">
+                    <label for="vehicleId">Vehicle</label>
+                    <ng-select [items]="busArr" (change)="getAllotment($event)" id="vehicleId" bindLabel="vehicleName"
+                      bindValue="id" placeholder="Choose" formControlName="vehicleId" [ngClass]="{ 'is-invalid': routeSubmitted && b.vehicleId.errors || b.vehicleId.invalid
+                      && (b.vehicleId.dirty || b.vehicleId.touched)}">
+                    </ng-select>
+                    <div
+                      *ngIf="routeSubmitted && b.vehicleId.errors || b.vehicleId.invalid && (b.vehicleId.dirty || b.vehicleId.touched)"
+                      class="invalid-feedback">
+                      <div *ngIf="b.vehicleId.errors.required">Required</div>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <span class="">
+                    <label for="origin">Origin</label>
+                    <input id="origin" readonly class="form-control" placeholder="Origin" formControlName="origin"
+                      [ngClass]="{ 'is-invalid': routeSubmitted && b.origin.errors || b.origin.invalid && (b.origin.dirty || b.origin.touched)}"
+                      readonly>
+                    <div
+                      *ngIf="routeSubmitted && b.origin.errors || b.origin.invalid && (b.origin.dirty || b.origin.touched)"
+                      class="invalid-feedback">
+                      <div *ngIf="b.origin.errors.required">Required</div>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <span class="">
+                    <label for="destination">Destination</label>
+                    <input id="destination" readonly class="form-control" placeholder="Destination"
+                      formControlName="destination"
+                      [ngClass]="{ 'is-invalid': routeSubmitted && b.destination.errors || b.destination.invalid && (b.destination.dirty || b.destination.touched)}"
+                      readonly>
+                    <div
+                      *ngIf="routeSubmitted && b.destination.errors || b.destination.invalid && (b.destination.dirty || b.destination.touched)"
+                      class="invalid-feedback">
+                      <div *ngIf="b.destination.errors.required">Required</div>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="row mt-2" *ngIf="enableCard">
+              <div class="col-md-2 ml-auto">
+                <div class="form-group ml-auto">
+                  <u class="" (click)="openCat(dModal)">Stops</u>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="row" *ngIf="enableCard">
+    <div class="col-xl-12 ">
+      <div class="d-flex justify-content-end">
+        <div class="row">
+          <div class="col-xl-4"></div>
+          <div class="col-xl-4">
+            <div class="form-group">
+              <span class=" ">
+                <label for="Total">Total</label>
+                <input readonly class="form-control" id="total" [(ngModel)]="Obj.total">
+              </span>
+            </div>
+          </div>
+          <div class="col-xl-4">
+            <div class="form-group">
+              <span class=" ">
+                <label for="Selected">Selected</label>
+                <input readonly class="form-control" id="selected" [(ngModel)]="Obj.Selected">
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="enableCard">
+        <div class="card-2  mt-3">
+          <label class="card-2-hedaing">Route List</label>
+          <perfect-scrollbar class="" [config]="configData">
+            <div class="card-body routelist">
+              <table id="routeallotment" class="table   " style="width:100%">
+                <thead>
+                  <tr>
+                    <th width="10%" class="text-center">Select</th>
+                    <!-- <th width="10%">S.No</th> -->
+                    <th width="15%">Reg.No</th>
+                    <th width="15%">Name</th>
+                    <th width="10%">Standard</th>
+                    <th width="20%">Stop</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let studentObj of student; let i = index" style="width:100%">
+                  <tr>
+
+                    <td><input class="box ml-5 mt-1" id="selet" type="checkbox" [(ngModel)]="studentObj.isChecked"
+                        (change)="changed()">
+                    </td>
+                    <!-- <td>{{i+1}}</td> -->
+                    <td>{{studentObj.registrationNumber}}</td>
+                    <td>{{studentObj.studentName}}</td>
+                    <td>{{studentObj.standardName}}</td>
+                    <td>{{studentObj.stopName}}</td>
+                    <!-- <td> -->
+                    <!-- <i class="fas fa-edit text-success mr-2" (click)="editDegree(degreeData, degree)"></i> -->
+                    <!-- <i class="fa fa-trash text-danger" aria-hidden="true" (click)="openModal(dModal,degreeData.id)"></i> </td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+</perfect-scrollbar>
+        </div>
+      </div>
+      <div class="mb-4 text-right" *ngIf="enableCard">
+        <button type="button" class="btn btn-primary btn-md ml-1 text-right" (click)="submit()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #dModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Stop</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div>
+    <ul *ngFor="let stopList of transportRouteDtlList.studentList; let j = index">
+      <li>{{stopList.stopName}}</li>
+    </ul>
+    <!-- <div class="ml-3">Thanjavur</div>
+  <div class="ml-3">Orathanad</div> -->
+    <div class="text-right mt-2 mr-2">
+      <!-- <button type="button" class="btn btn-danger mb-3" (click)="modal.dismiss('Cross click')">No</button> -->
+      <!-- <button type="button" class="btn btn-primary ml-2 mb-3" (click)="deleteData(modal)">Yes</button> -->
+    </div>
+  </div>
+</ng-template>

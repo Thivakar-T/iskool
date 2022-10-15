@@ -1,0 +1,154 @@
+<div class="container-fluid">
+    <div class="mb-2">
+        <!-- <app-page-title title="Holiday"></app-page-title> -->
+        <div class="mb-2 pageHeading">
+            <h4 class="">  Holiday </h4>
+          </div>
+    </div>
+    <form [formGroup]="holidayForm" autocomplete="off" >
+        <div class="row">
+            <div class="col-lg-12">
+                <div class=" height card-2">
+                    <div class="card-body">
+                        <div class="row my-auto ">
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="form-group">
+                                    <label for="year">Academic Year</label>
+                                    <ng-select [items]="academicArr" formControlName="academicYearId" type="number" [(ngModel)]="holidayObj.academicYearId"
+                                        placeholder="Choose" bindLabel="name" bindValue="id" id="destinationName"
+                                        [ngClass]="{ 'is-invalid': holidaySubmitted && f.academicYearId.errors || f.academicYearId.invalid && (f.academicYearId.dirty || f.academicYearId.touched)}">
+                                    </ng-select>
+                                    <div *ngIf="holidaySubmitted && f.academicYearId.errors || f.academicYearId.invalid && (f.academicYearId.dirty || f.academicYearId.touched)"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.academicYearId.errors.required">Required</div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div formArrayName="holidayDtlDtoList">
+            <div class="card-2 cardBorder">
+                    <label class="card-2-hedaing">Holiday List</label>
+                <div class="card-body margin">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h6></h6>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class=" text-right mb-3 ml-3">
+
+                                <button type="button" class="btn btn-success btn-sm inner" (click)="addholiday()">
+                                    <i class="mdi mdi-plus mr-1 mb-3"></i>Add Holiday
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="holiday" class="table ">
+                        <thead>
+                            <tr>
+                                <th width="20%">Name</th>
+                                <th width="20%">Date</th>
+                                <th width="20%">Day</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let holidayObj of holidayArr.controls; let i = index" [formGroupName]="i">
+                                <td>
+                                    <div class="row">
+                                        <div class="col-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Name" name="name"
+                                            formControlName="name" id="name"
+                                            [ngClass]="{ 'is-invalid': holidaySubmitted && holidayArr.controls[i].get('name').errors || holidayArr.controls[i].get('name').invalid && (holidayArr.controls[i].get('name').dirty || holidayArr.controls[i].get('name').touched)}">
+                                        <div *ngIf="holidaySubmitted && holidayArr.controls[i].get('name').errors || holidayArr.controls[i].get('name').invalid && (holidayArr.controls[i].get('name').dirty || holidayArr.controls[i].get('name').touched)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="holidayArr.controls[i].get('name').errors.required">Required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-12">
+                                    <div class="form-group">
+
+                                        <input type="text" placeholder="yyyy-mm-dd" name="date" class="form-control" 
+                                            formControlName="date" id="Date" ngbDatepicker #date="ngbDatepicker"
+                                            (click)="date.toggle()"
+                                            [ngClass]="{ 'is-invalid': holidaySubmitted && holidayArr.controls[i].get('date').errors || holidayArr.controls[i].get('date').invalid && (holidayArr.controls[i].get('date').dirty || holidayArr.controls[i].get('date').touched)}">
+
+                                        <div *ngIf="holidaySubmitted && holidayArr.controls[i].get('date').errors || holidayArr.controls[i].get('date').invalid && (holidayArr.controls[i].get('date').dirty || holidayArr.controls[i].get('date').touched)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="holidayArr.controls[i].get('date').errors.required">
+                                                Required</div>
+                                        </div>
+
+                                    </div>
+                                    </div>
+                                    </div>
+                                </td>
+                                <td>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                        <div>
+                                            <ng-select [items]="dayArr"   placeholder="Choose" name="name" 
+                                                formControlName="dayId" bindLabel="name" bindValue="id"
+                                                [ngClass]="{ 'is-invalid': holidaySubmitted && holidayArr.controls[i].get('dayId').errors || holidayArr.controls[i].get('dayId').invalid && (holidayArr.controls[i].get('dayId').dirty || holidayArr.controls[i].get('dayId').touched)}">
+                                            </ng-select>
+                                            <div *ngIf="holidaySubmitted && holidayArr.controls[i].get('dayId').errors || holidayArr.controls[i].get('dayId').invalid && (holidayArr.controls[i].get('dayId').dirty || holidayArr.controls[i].get('dayId').touched)"
+                                                class="invalid-feedback">
+                                                <div *ngIf="holidayArr.controls[i].get('dayId').errors.required">
+                                                    Required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-12">
+                                    <div class="form-group">
+                                        <textarea class="form-control" formControlName="description" type="text" 
+                                            class="form-control" id="descriptionName" placeholder="Description"
+                                            [ngClass]="{ 'is-invalid': holidaySubmitted && holidayArr.controls[i].get('description').errors || holidayArr.controls[i].get('description').invalid && (holidayArr.controls[i].get('description').dirty || holidayArr.controls[i].get('description').touched)}">
+                                      </textarea>
+                                        <div *ngIf="holidaySubmitted && holidayArr.controls[i].get('description').errors || holidayArr.controls[i].get('description').invalid && (holidayArr.controls[i].get('description').dirty || holidayArr.controls[i].get('description').touched)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="holidayArr.controls[i].get('description').errors.required">
+                                                Required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                </td>
+                                <td><i class="fa fa-trash text-danger delIconSize ml-3 mt-2 "
+                                        (click)="deleteholiday(i)"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right mb-4">
+            <button type="submit" class="btn btn-primary  btn-md " *ngIf="!holidayObj.id" (click)="submit()">Submit</button>
+            <button type="submit" class="btn btn-primary  btn-md "  *ngIf="holidayObj.id" (click)="submit()">Update</button>
+
+        </div>
+    </form>
+</div>

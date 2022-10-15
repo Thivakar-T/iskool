@@ -1,0 +1,22 @@
+#border{
+    border: 0;
+    -webkit-appearance: none;
+}
+.card-min-height{
+    height:250px !important
+  }
+  .top{
+    margin-top: -11px;
+  }
+.table td {
+    padding-bottom: 0px !important;
+  
+}
+tr td{
+  padding-left: 0px !important;
+}
+.feecard{
+  min-height: fit-content !important;
+  max-height: 56vh !important;
+
+}

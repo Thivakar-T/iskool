@@ -1,0 +1,81 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-6">
+            <app-page-title title="shift"></app-page-title>
+        </div>
+        <div class="col-xl-6">
+            <div class="text-right my-auto ">
+                <button type="button" (click)="openGST(shift)" class="btn btn-success btn-sm mb-2 ">
+                    <i class="mdi mdi-plus  mb-3"></i>Add Shift
+                </button>
+            </div>
+        </div>
+    </div>
+
+<div class="card">
+    <div class="card-body">
+    <table id="example" class="table  mx-auto" style="width:100%">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr  *ngFor="let shiftList of shiftArr;let i = index">
+                <td>{{i+1}}</td>
+                <td>{{shiftList.name}}</td>
+                <td>
+                    <i class="fas fa-edit  text-success  " (click)="editShift(shiftList, shift)"></i>
+                    <i class="fa fa-trash text-danger ml-2" aria-hidden="true"
+                        (click)="openModal(dModal,shiftList.id)"></i>
+                </td>
+            </tr>
+    </table>
+</div>
+</div>
+</div>
+<ng-template #shift let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Shift</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" id="scheme">
+        <form [formGroup]="shiftForm" autocomplete="off" (ngSubmit)="addShift(modal)">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group has-float-label">
+                        <input class="form-control" [(ngModel)]="shiftObj.name" id="name" formControlName="name"
+                            type="text" class="form-control" placeholder="Name"
+                            [ngClass]="{ 'is-invalid': shiftSubmitted && f.name.errors || f.name.invalid && (f.name.dirty || f.name.touched)}">
+                        <label for="name">Name</label>
+                        <div *ngIf="shiftSubmitted && f.name.errors || f.name.invalid && (f.name.dirty || f.name.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="f.name.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right">
+                <button type="submit" class="btn btn-sm btn-primary mb-2">{{buttonText}}</button>
+            </div>
+        </form>
+    </div>
+</ng-template>
+<ng-template #dModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Confirm Delete</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div>
+        <h6 class="ml-3 mt-2">Are you sure to Delete this ?</h6>
+        <div class="text-right mt-2 mr-2">
+            <button type="button" class="btn btn-primary btn-sm ml-2 mb-3" (click)="deleteData(modal)">Yes</button>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,133 @@
+<div class="container-fluid">
+    <div class="mb-2 pageHeading">
+        <h4 class="">Student Academic Record</h4>
+    </div>
+    <form [formGroup]="studentAcademicRecordform" autocomplete="off">
+        <div class="card-2 mt-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xl-2">
+                        <div class="form-group  ">
+                            <span class="">
+                                <label for="name">Student Name</label>
+                                <input class="form-control" #studentName type="text" placeholder="Student Name"id="studentName" 
+                                    formControlName="studentName" (keyup)="SearchByName(studentName.value)"
+                                    [ngClass]="{ 'is-invalid': studentSubmitted && studentAcademicRecordform.controls['studentName'].errors || studentAcademicRecordform.controls['studentName'].invalid && (studentAcademicRecordform.controls['studentName'].dirty || studentAcademicRecordform.controls['studentName'].touched)}">
+                                <div *ngIf="studentSubmitted && studentAcademicRecordform.controls['studentName'].errors || studentAcademicRecordform.controls['studentName'].invalid && (studentAcademicRecordform.controls['studentName'].dirty || studentAcademicRecordform.controls['studentName'].touched)"
+                                    class="invalid-feedback">
+                                    <div *ngIf="studentAcademicRecordform.controls['studentName'].errors.required">Required</div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="my-auto pt-4">
+                        <P>OR</P>
+                      </div>
+                    <div class="col-xl-2">
+                        <div class="form-group  ">
+                            <label for="label-size">Registration Number</label>
+                            <input class="form-control" id="registrationNumber" #registrationNumber formControlName="registrationNumber"
+                                type="number" class="form-control" placeholder="Registration Number" (keyup)="SearchByRegNo(registrationNumber.value)"
+                                [ngClass]="{ 'is-invalid': studentSubmitted && studentAcademicRecordform.controls['registrationNumber'] ||studentAcademicRecordform.controls['registrationNumber'].invalid && (studentAcademicRecordform.controls['registrationNumber'].dirty ||studentAcademicRecordform.controls['registrationNumber'].touched)}">
+                            <div *ngIf="studentSubmitted &&studentAcademicRecordform.controls['registrationNumber'].errors || studentAcademicRecordform.controls['registrationNumber'].invalid && (studentAcademicRecordform.controls['registrationNumber'].dirty ||studentAcademicRecordform.controls['registrationNumber'].touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="studentAcademicRecordform.controls['registrationNumber'].errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="my-auto pt-4">
+                        <P>OR</P>
+                      </div>
+                    <div class="col-xl-2">
+                        <div class="form-group">
+                            <span class="">
+                                <label for="yearId">Academic Year</label>
+                                <ng-select [items]="acadamicArray" id="academicYearName" (change)="academicYearIdonlyshow()" bindLabel="name" bindValue="id"
+                                    placeholder="Choose" formControlName="academicYearId"   (change)="SelectYearModule($event)"
+                                    [ngClass]="{ 'is-invalid': studentSubmitted &&studentAcademicRecordform.controls['academicYearId'].errors ||studentAcademicRecordform.controls['academicYearId'].invalid && (studentAcademicRecordform.controls['academicYearId'].dirty || studentAcademicRecordform.controls['academicYearId'].touched)}">
+                                </ng-select>
+                                <div *ngIf="studentSubmitted && studentAcademicRecordform.controls['academicYearId'].errors ||studentAcademicRecordform.controls['academicYearId'].invalid && (studentAcademicRecordform.controls['academicYearId'].dirty || studentAcademicRecordform.controls['academicYearId'].touched)"
+                                    class="invalid-feedback">
+                                    <div *ngIf="studentAcademicRecordform.controls['academicYearId'].errors.required">Required</div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2">
+                        <div class="form-group ">
+                            <span class="">
+                                <label for="standard">Standard</label>
+                                <ng-select [items]="standardArr"  id="standardName" (change)="stdonlyshow()"  bindLabel="name" bindValue="id"
+                                    placeholder="Choose" formControlName="stdId"  (change)="selectStandardModule($event)"
+                                    [ngClass]="{ 'is-invalid': studentSubmitted && studentAcademicRecordform.controls['stdId'].errors || studentAcademicRecordform.controls['stdId'].invalid && (studentAcademicRecordform.controls['stdId'].dirty || studentAcademicRecordform.controls['stdId'].touched)}">
+                                </ng-select>
+                                <div *ngIf="studentSubmitted && studentAcademicRecordform.controls['stdId'].errors || studentAcademicRecordform.controls['stdId'].invalid && (studentAcademicRecordform.controls['stdId'].dirty || studentAcademicRecordform.controls['stdId'].touched)"
+                                    class="invalid-feedback">
+                                    <div *ngIf="studentAcademicRecordform.controls['stdId'].errors.required">Required</div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2">
+                        <div class="form-group ">
+                            <label for="name">Section Name</label>
+                            <ng-select [items]="sectionArr" bindLabel="name"  (change)="Sectiononlyshow()" bindValue="id" id="sectionName"
+                                formControlName="sectionId" placeholder="Choose"  (change)="SelectSectionModule($event)" 
+                                [ngClass]="{ 'is-invalid': studentSubmitted && studentAcademicRecordform.controls['sectionId'].errors ||studentAcademicRecordform.controls['sectionId'].invalid && (studentAcademicRecordform.controls['sectionId'].dirty || studentAcademicRecordform.controls['sectionId'].touched)}">
+                            </ng-select>
+                            <div *ngIf="studentSubmitted &&studentAcademicRecordform.controls['sectionId'].errors || studentAcademicRecordform.controls['sectionId'].invalid && (studentAcademicRecordform.controls['sectionId'].dirty || studentAcademicRecordform.controls['sectionId'].touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="studentAcademicRecordform.controls['sectionId'].errors.required">Required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="text-right mt-2">
+                            <button type="submit" class="btn btn-success mt-3" (click)="SearchStudent($event)">
+                                Search
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="row">
+                </div> -->
+            </div>
+        </div>
+        <div class="card-2 cardBorder  mt-3 " *ngIf="enableCard">
+            <label class="label-size card-2-hedaing">Student List</label>
+            <div class="card-body">
+
+                <br>
+                <table id="student" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Student Name</th>
+                            <th>Registration Number</th>
+                            <th>Standard</th>
+                            <th>Section</th>
+                            <th class="text-left">Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr  *ngFor="let search of searchStudentArr; let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{search.studentName}}</td>
+                            <td>{{search.registrationNumber}}</td>
+                            <td>{{search.standardName}}</td>
+                            <td>{{search.sectionName}}</td>
+                            <td class="text-left">
+                                <i class="fa fa-eye text-primary mr-2 " aria-hidden="true"
+                                    routerLink="/admission/student-academic-view/{{search.id}}"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+
+</div>

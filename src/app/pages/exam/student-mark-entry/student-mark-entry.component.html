@@ -1,0 +1,198 @@
+<div class="container-fluid">
+  <div class="mb-3">
+    <div class="mb-2 pageHeading">
+      <h4 class="">Student Mark Entry</h4>
+    </div>
+  </div>
+  <form [formGroup]="markEntryForm" autocomplete="off">
+    <div class="row ">
+      <div class="col-md-12">
+        <div class="card-2 height">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group  ">
+                  <label for="examId">Exam</label>
+                  <ng-select [items]="examArr" class="custom" placeholder="Choose" bindLabel="examName" bindValue="id"
+                    formControlName="examId" id="exam" (change)="selectExam($event)" [ngClass]="{ 'is-invalid': sectionAllotment && b.examId.errors || b.examId.invalid
+                                      && (b.examId.dirty || b.examId.touched)}">
+                  </ng-select>
+                  <div
+                    *ngIf="sectionAllotment && b.examId.errors || b.examId.invalid && (b.examId.dirty || b.examId.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="b.examId.errors.required">Required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group  ">
+                  <label for="academicYearId">Academic year</label>
+                  <ng-select [items]="academicArr" class="custom" placeholder="Choose" bindLabel="name" bindValue="id"
+                    formControlName="academicYearId" id="academicYear" (change)="selectYear($event)" [ngClass]="{ 'is-invalid': sectionAllotment && b.academicYearId.errors || b.academicYearId.invalid
+                                      && (b.academicYearId.dirty || b.academicYearId.touched)}">
+                  </ng-select>
+                  <div
+                    *ngIf="sectionAllotment && b.academicYearId.errors || b.academicYearId.invalid && (b.academicYearId.dirty || b.academicYearId.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="b.academicYearId.errors.required">Required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group ">
+                  <label for="standard">Standard</label>
+                  <ng-select [items]="standardArr" class="custom" placeholder="Choose" bindLabel="name" bindValue="id"
+                    formControlName="standardId" id="standardId" [ngClass]="{ 'is-invalid': sectionAllotment && b.standardId.errors || b.standardId.invalid
+                                      && (b.standardId.dirty || b.standardId.touched)}"
+                    (change)="selectStandard($event)">
+                  </ng-select>
+                  <div
+                    *ngIf="sectionAllotment && b.standardId.errors || b.standardId.invalid && (b.standardId.dirty || b.standardId.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="b.standardId.errors.required">Required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label for="section">Section</label>
+                  <ng-select [items]="sectionArr" class="custom" placeholder="Choose" bindLabel="name" bindValue="id"
+                    formControlName="sectionId" id="section" [ngClass]="{ 'is-invalid': sectionAllotment && b.sectionId.errors || b.sectionId.invalid
+                                      && (b.sectionId.dirty || b.sectionId.touched)}" (change)="selectSection($event)">
+                  </ng-select>
+                  <div
+                    *ngIf="sectionAllotment && b.sectionId.errors || b.sectionId.invalid && (b.sectionId.dirty || b.sectionId.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="b.sectionId.errors.required">Required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group ">
+                  <label for="subject">Subject</label>
+                  <ng-select [items]="subjectOfferArr" class="custom" placeholder="Choose" bindLabel="subjectName"
+                    bindValue="subjectOfferingDtlId" formControlName="subjectOfferingDtlId" id="subject" [ngClass]="{ 'is-invalid': sectionAllotment && b.subjectOfferingDtlId.errors || b.subjectOfferingDtlId.invalid
+                                      && (b.subjectOfferingDtlId.dirty || b.subjectOfferingDtlId.touched)}"
+                    (change)="selectSubject($event)">
+                  </ng-select>
+                  <div
+                    *ngIf="sectionAllotment && b.subjectOfferingDtlId.errors || b.subjectOfferingDtlId.invalid && (b.subjectOfferingDtlId.dirty || b.subjectOfferingDtlId.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="b.subjectOfferingDtlId.errors.required">Required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-1">
+                <div class="text-right mt-2">
+
+                  <button type="submit" class="btn btn-success  btn-md mt-3" (click)="search()">
+                    Search
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-2 cardBorder" id="activeNavId" *ngIf="enableMarkCard">
+      <label class="card-2-hedaing">Mark Entries</label>
+      <perfect-scrollbar class="" [config]="configData">
+        <div class="card-body markcard" formArrayName="markEntryDtlDtoList">
+          <br>
+          <table id="markentry" class="table " style="width:100%">
+            <thead>
+              <tr>
+                <th width="5%">Select</th>
+                <th width="15%">Roll Number</th>
+                <th width="25%">Name</th>
+                <th width="8%">Standard</th>
+                <th width="8%">Section</th>
+                <th class="text-center" width="20%">Practical Marks</th>
+                <th class="text-center" width="20%">Theory Marks</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let rollObj of markArr.controls; let i = index" [formGroupName]="i">
+              <tr class="form">
+                <td>
+                  <div class="mt-1">
+                    <input class="box ml-2 mt-2" id="selet" type="checkbox" formControlName="isChecked"
+                      (change)="checkEvent($event)">
+                  </div>
+                </td>
+                <td class="form noPadding">
+                  <input class="form-control" id="border" type="text" placeholder="Roll Number"
+                    formControlName="rollNumber" readonly>
+                </td>
+                <td class="form noPadding"><input class="form-control" id="border" type="text"
+                    placeholder="Student Name" formControlName="studentName" readonly>
+                </td>
+                <td class="form noPadding"><input class="form-control" id="border" type="text"
+                    placeholder="Standard Name" formControlName="standardName" readonly>
+                </td>
+                <td class="form noPadding"><input class="form-control" id="border" type="text"
+                    placeholder="Section Name" formControlName="sectionName" readonly>
+                </td>
+                <td class="form">
+                  <div class="row display">
+                    <div class="col-6">
+                      <input class="form-control" id="practicalMark" type="text" placeholder="Practical Mark"
+                        formControlName="practicalMark" [readonly]="subjectObj.subjectType == 'Theory'">
+                      <!-- <div *ngIf="markAllotment && markArr.controls[i].get('practicalMark').errors || markArr.controls[i].get('practicalMark').invalid && (markArr.controls[i].get('practicalMark').dirty || markArr.controls[i].get('practicalMark').touched)"
+                        class="invalid-feedback">
+                        <div
+                            *ngIf="markArr.controls[i].get('practicalMark').errors.required">
+                            Required</div>
+                    </div> -->
+                    </div>
+                    <div class="col-1 mt-2">/</div>
+                    <div class="col-5">
+                      <input class="form-control" id="practicalMark" type="text" placeholder="Max Practical Mark"
+                        formControlName="maxPracticalMark" readonly>
+                      <!-- <div *ngIf="markAllotment && markArr.controls[i].get('maxPracticalMark').errors || markArr.controls[i].get('maxPracticalMark').invalid && (markArr.controls[i].get('maxPracticalMark').dirty || markArr.controls[i].get('maxPracticalMark').touched)"
+                        class="invalid-feedback">
+                        <div
+                            *ngIf="markArr.controls[i].get('maxPracticalMark').errors.required">
+                            Required</div>
+                    </div> -->
+                    </div>
+                  </div>
+                </td>
+                <td class="form">
+                  <div class="row display">
+                    <div class="col-6">
+                      <input class="form-control" id="theoryMark" type="text" placeholder="Theory Mark"
+                        formControlName="theoryMark" [readonly]="subjectObj.subjectType == 'Practical'">
+                      <!-- <div *ngIf="markAllotment && markArr.controls[i].get('theoryMark').errors || markArr.controls[i].get('theoryMark').invalid && (markArr.controls[i].get('theoryMark').dirty || markArr.controls[i].get('theoryMark').touched)"
+                        class="invalid-feedback">
+                        <div
+                            *ngIf="markArr.controls[i].get('theoryMark').errors.required">
+                            Required</div>
+                    </div> -->
+                    </div>
+                    <div class="col-1 mt-2">/</div>
+                    <div class="col-5"><input class="form-control" id="theoryMark" type="text"
+                        placeholder="Max Theory Mark" formControlName="maxTheoryMark" readonly>
+                      <!-- <div *ngIf="markAllotment && markArr.controls[i].get('maxTheoryMark').errors || markArr.controls[i].get('maxTheoryMark').invalid && (markArr.controls[i].get('maxTheoryMark').dirty || markArr.controls[i].get('maxTheoryMark').touched)"
+                          class="invalid-feedback">
+                          <div
+                              *ngIf="markArr.controls[i].get('maxTheoryMark').errors.required">
+                              Required</div>
+                      </div> -->
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </form>
+  <div class="text-right mb-4" *ngIf="enableMarkCard">
+    <button type="submit" *ngIf="!entryObj.id" class="btn btn-md btn-primary" (click)="submit()">Submit</button>
+    <button *ngIf="entryObj.id" type="submit" class="btn btn-primary mb-2" (click)="submit()"
+      aria-label="Close">Update</button>
+  </div>
+</div>

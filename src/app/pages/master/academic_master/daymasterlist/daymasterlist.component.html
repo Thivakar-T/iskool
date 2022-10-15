@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <div class="">
+    <!-- <app-page-title title="DAY MASTER"></app-page-title> -->
+    <div class="mb-2 pageHeading">
+      <h4 class="">Day Master</h4>
+    </div>
+  </div>
+  <div class="card-2 cardBorder mt-3 ">
+    <div class="card-body  ">
+
+
+      <table id="daymaster" class="table table-bordered" style="width:100%">
+        <thead>
+          <tr>
+            <th>S.NO</th>
+            <th>Name</th>
+            <th>Short Name</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let daymasters of daymasterArr;let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{daymasters.name}}</td>
+            <td>{{daymasters.shortName}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
